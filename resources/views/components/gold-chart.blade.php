@@ -8,13 +8,25 @@
 
         <!-- Date Labels -->
         <div class="flex justify-between mt-4 px-2">
-            <div class="text-xs text-gray-600 text-center" style="width: 14.28%">11 Agustus</div>
-            <div class="text-xs text-gray-600 text-center" style="width: 14.28%">12 Agustus</div>
-            <div class="text-xs text-gray-600 text-center" style="width: 14.28%">13 Agustus</div>
-            <div class="text-xs text-gray-600 text-center" style="width: 14.28%">14 Agustus</div>
-            <div class="text-xs text-gray-600 text-center" style="width: 14.28%">15 Agustus</div>
-            <div class="text-xs text-gray-600 text-center" style="width: 14.28%">16 Agustus</div>
-            <div class="text-xs text-gray-600 text-center" style="width: 14.28%">17 Agustus</div>
+            @if(isset($charts) && count($charts) > 0)
+                @foreach($charts as $chart)
+                    @php
+                        $date = isset($chart['date']) ? \Carbon\Carbon::parse($chart['date']) : null;
+                        $label = $date ? $date->format('d M') : '';
+                    @endphp
+                    <div class="text-xs text-gray-600 text-center" style="width: {{ 100 / count($charts) }}%">
+                        {{ $label }}
+                    </div>
+                @endforeach
+            @else
+                <div class="text-xs text-gray-600 text-center" style="width: 14.28%">11 Agustus</div>
+                <div class="text-xs text-gray-600 text-center" style="width: 14.28%">12 Agustus</div>
+                <div class="text-xs text-gray-600 text-center" style="width: 14.28%">13 Agustus</div>
+                <div class="text-xs text-gray-600 text-center" style="width: 14.28%">14 Agustus</div>
+                <div class="text-xs text-gray-600 text-center" style="width: 14.28%">15 Agustus</div>
+                <div class="text-xs text-gray-600 text-center" style="width: 14.28%">16 Agustus</div>
+                <div class="text-xs text-gray-600 text-center" style="width: 14.28%">17 Agustus</div>
+            @endif
         </div>
     </div>
 </section>
@@ -25,10 +37,35 @@
     document.addEventListener('DOMContentLoaded', function() {
         const ctx = document.getElementById('goldPriceChart').getContext('2d');
         
-        // Data untuk 7 hari terakhir
-        const dates = ['11', '12', '13', '14', '15', '16', '17'];
-        const fullDates = ['11 Agustus', '12 Agustus', '13 Agustus', '14 Agustus', '15 Agustus', '16 Agustus', '17 Agustus'];
-        const prices = [1590000, 1605000, 1598000, 1610000, 1602000, 1595000, 1600000];
+        // Data dari API
+        @if(isset($charts) && count($charts) > 0)
+            const chartData = @json($charts);
+            
+            // Parse dates and create labels
+            const monthNamesFull = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+            
+            const dates = chartData.map(item => {
+                if (item.date) {
+                    const d = new Date(item.date);
+                    return d.getDate().toString();
+                }
+                return '';
+            });
+            
+            const fullDates = chartData.map(item => {
+                if (item.date) {
+                    const d = new Date(item.date);
+                    return d.getDate() + ' ' + monthNamesFull[d.getMonth()];
+                }
+                return '';
+            });
+            
+            const prices = chartData.map(item => parseFloat(item.price) || 0);
+        @else
+            const dates = ['11', '12', '13', '14', '15', '16', '17'];
+            const fullDates = ['11 Agustus', '12 Agustus', '13 Agustus', '14 Agustus', '15 Agustus', '16 Agustus', '17 Agustus'];
+            const prices = [1590000, 1605000, 1598000, 1610000, 1602000, 1595000, 1600000];
+        @endif
 
         const goldPriceChart = new Chart(ctx, {
             type: 'line',
@@ -60,7 +97,7 @@
                         display: false
                     },
                     tooltip: {
-                        enabled: true, // Pastikan tooltip diaktifkan
+                        enabled: true,
                         mode: 'nearest',
                         intersect: false,
                         backgroundColor: 'rgba(0, 0, 0, 0.8)',
@@ -70,7 +107,6 @@
                         displayColors: false,
                         callbacks: {
                             title: function(tooltipItems) {
-                                // Gunakan fullDates untuk tooltip
                                 return fullDates[tooltipItems[0].dataIndex];
                             },
                             label: function(context) {

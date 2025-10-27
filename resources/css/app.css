@@ -31,7 +31,7 @@ body {
 }
 
 [id] {
-  scroll-margin-top: 120px;
+    scroll-margin-top: 120px;
 }
 
 /* Slideshow Styles */
@@ -148,7 +148,7 @@ body {
 }
 
 .hero-dot.active {
-    background-color: #f59e0b !important;
+    background-color: #100f0f !important;
     transform: scale(1.3);
 }
 

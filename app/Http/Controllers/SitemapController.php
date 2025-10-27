@@ -10,6 +10,9 @@ class SitemapController extends Controller
 {
     public function index()
     {
+        $apiBaseUrl = env('API_BASE_URL', 'https://pms-testing.infokejadiansemarang.com/api/landing-page');
+        $verifySSL = env('API_VERIFY_SSL', true); // Default true untuk keamanan
+        
         $sitemap = '<?xml version="1.0" encoding="UTF-8"?>';
         $sitemap .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"';
         $sitemap .= ' xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">';
@@ -25,8 +28,8 @@ class SitemapController extends Controller
         // Get blogs from API for sitemap
         try {
             $blogsResponse = Http::withOptions([
-                'verify' => false,
-            ])->get('https://pms-testing.infokejadiansemarang.com/api/landing-page/blogs', [
+                'verify' => $verifySSL,
+            ])->get($apiBaseUrl . '/blogs', [
                 'page' => 1,
                 'per_page' => 100 // Get more blogs for sitemap
             ]);

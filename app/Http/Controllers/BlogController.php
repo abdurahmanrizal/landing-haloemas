@@ -9,11 +9,14 @@ class BlogController extends Controller
 {
     public function show($id)
     {
+        $apiBaseUrl = env('API_BASE_URL', 'https://pms-testing.infokejadiansemarang.com/api/landing-page');
+        $verifySSL = env('API_VERIFY_SSL', true); // Default true untuk keamanan
+        
         try {
             // Fetch blog detail
             $blogResponse = Http::withOptions([
-                'verify' => false,
-            ])->get("https://pms-testing.infokejadiansemarang.com/api/landing-page/blogs/{$id}");
+                'verify' => $verifySSL,
+            ])->get("{$apiBaseUrl}/blogs/{$id}");
             
             $blogData = $blogResponse->json()['data'] ?? null;
             

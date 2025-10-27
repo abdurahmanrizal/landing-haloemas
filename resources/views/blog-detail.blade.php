@@ -145,7 +145,8 @@
                 }
                 
                 this.loading = true;
-                fetch(`https://pms-testing.infokejadiansemarang.com/api/landing-page/search-blogs?limit=10&q=${this.searchQuery}`, {
+                const apiBaseUrl = '{{ env('API_BASE_URL', 'https://pms-testing.infokejadiansemarang.com/api/landing-page') }}';
+                fetch(`${apiBaseUrl}/search-blogs?limit=10&q=${this.searchQuery}`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',

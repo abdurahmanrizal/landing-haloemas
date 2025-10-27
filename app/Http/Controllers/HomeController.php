@@ -9,18 +9,21 @@ class HomeController extends Controller
 {
     public function index()
     {
+        $apiBaseUrl = env('API_BASE_URL', 'https://pms-testing.infokejadiansemarang.com/api/landing-page');
+        $verifySSL = env('API_VERIFY_SSL', true); // Default true untuk keamanan
+        
         try {
             // Banner
             $bannersResponse = Http::withOptions([
-                'verify' => false,
-            ])->get('https://pms-testing.infokejadiansemarang.com/api/landing-page/banners');
+                'verify' => $verifySSL,
+            ])->get($apiBaseUrl . '/banners');
 
             $banners = $bannersResponse->json()['data'] ?? [];
 
             // Harga Emas Murni (24K)
             $chartsResponse = Http::withOptions([
-                'verify' => false,
-            ])->get('https://pms-testing.infokejadiansemarang.com/api/landing-page/charts');
+                'verify' => $verifySSL,
+            ])->get($apiBaseUrl . '/charts');
 
             $chartsData = $chartsResponse->json()['data'] ?? [];
             $charts = $chartsData['charts'] ?? [];
@@ -29,8 +32,8 @@ class HomeController extends Controller
 
             // Harga Emas Semua Kadar
             $goldsResponse = Http::withOptions([
-                'verify' => false,
-            ])->get('https://pms-testing.infokejadiansemarang.com/api/landing-page/golds');
+                'verify' => $verifySSL,
+            ])->get($apiBaseUrl . '/golds');
 
             $goldsData = $goldsResponse->json()['data'] ?? [];
             $golds = $goldsData['items'] ?? [];
@@ -38,8 +41,8 @@ class HomeController extends Controller
 
             // Harga Logam Mulia
             $metalsResponse = Http::withOptions([
-                'verify' => false,
-            ])->get('https://pms-testing.infokejadiansemarang.com/api/landing-page/metals');
+                'verify' => $verifySSL,
+            ])->get($apiBaseUrl . '/metals');
             
             $metalsData = $metalsResponse->json()['data'] ?? [];
             $metals = $metalsData['items'] ?? [];
@@ -47,22 +50,22 @@ class HomeController extends Controller
             
             // Toko
             $storesResponse = Http::withOptions([
-                'verify' => false,
-            ])->get('https://pms-testing.infokejadiansemarang.com/api/landing-page/stores');
+                'verify' => $verifySSL,
+            ])->get($apiBaseUrl . '/stores');
             
             $stores = $storesResponse->json()['data'] ?? [];
             
             // Testimoni
             $testimoniesResponse = Http::withOptions([
-                'verify' => false,
-            ])->get('https://pms-testing.infokejadiansemarang.com/api/landing-page/testimonies');
+                'verify' => $verifySSL,
+            ])->get($apiBaseUrl . '/testimonies');
             
             $testimonies = $testimoniesResponse->json()['data'] ?? [];
             
             // Blogs
             $blogsResponse = Http::withOptions([
-                'verify' => false,
-            ])->get('https://pms-testing.infokejadiansemarang.com/api/landing-page/blogs', [
+                'verify' => $verifySSL,
+            ])->get($apiBaseUrl . '/blogs', [
                 'page' => 1,
                 'per_page' => 3
             ]);

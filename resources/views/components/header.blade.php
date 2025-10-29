@@ -3,10 +3,10 @@
         <nav class="bg-primary shadow-lg rounded-md border border-secondary h-14 sm:h-16 px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-full">
                 <!-- Logo -->
-                <div class="flex items-center space-x-2">
+                <a href="{{ route('home') }}" class="flex items-center space-x-2">
                     <img src="{{ asset('images/logo.svg') }}" alt="Halo Emas Logo" class="w-5 h-5 sm:w-6 sm:h-6 object-cover">
                     <span class="text-sm sm:text-base lg:text-lg font-bold text-white font-poppins">HALOEMAS.ID</span>
-                </div>
+                </a>
 
                 <!-- Desktop Navigation -->
                 <div class="hidden lg:flex items-center space-x-6 xl:space-x-8">
@@ -19,7 +19,7 @@
                 
                 <!-- Desktop CTA Button -->
                 <div class="">
-                    <a href="{{ route('home') }}#contact" class="bg-secondary hover:bg-yellow-300 text-black px-4 xl:px-6 py-2 font-normal transition-colors duration-200 text-center text-sm xl:text-base">
+                    <a href="https://wa.me/nomor_wa" target="_blank" class="bg-secondary hover:bg-yellow-300 text-black px-4 xl:px-6 py-2 font-normal transition-colors duration-200 text-center text-sm xl:text-base">
                         Hubungi Kami
                     </a>
                 </div>

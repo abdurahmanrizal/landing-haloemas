@@ -7,9 +7,15 @@
 @section('meta_keywords', 'blog emas, artikel emas, tips investasi emas, berita emas, ' . ($blog['category'] ?? 'berita emas'))
 
 @section('og_type', 'article')
-@section('og_title', $blog['title'] ?? 'Blog Halo Emas')
-@section('og_description', $blog['meta_desc'] ?? Str::limit(strip_tags($blog['content'] ?? ''), 160))
-@section('og_image', $blog['thumbnail'] ?? asset('images/logo.svg'))
+@section('og_url', url()->current())
+@section('og_title', $blog['og_title'] ?? $blog['meta_title'] ?? $blog['title'] ?? 'Blog Halo Emas')
+@section('og_description', $blog['og_description'] ?? $blog['meta_desc'] ?? Str::limit(strip_tags($blog['content'] ?? ''), 160))
+@section('og_image', $blog['og_image'] ?? $blog['thumbnail'] ?? asset('images/logo.svg'))
+
+@section('twitter_url', url()->current())
+@section('twitter_title', $blog['twitter_title'] ?? $blog['meta_title'] ?? $blog['title'] ?? 'Blog Halo Emas')
+@section('twitter_description', $blog['twitter_description'] ?? $blog['meta_desc'] ?? Str::limit(strip_tags($blog['content'] ?? ''), 160))
+@section('twitter_image', $blog['twitter_image'] ?? $blog['thumbnail'] ?? asset('images/logo.svg'))
 
 @push('structured_data')
 <script type="application/ld+json">

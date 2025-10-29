@@ -28,9 +28,9 @@
 
                 <!-- Sosial Media -->
                 <div class="flex gap-3 justify-center items-center">
-                    <a href="#" class="h-8 w-8 border border-secondary rounded-sm flex justify-center items-center" aria-label="Instagram"><img src="{{ asset('images/icons/instagram.svg') }}" alt="Instagram Icon"></a>
-                    <a href="#" class="h-8 w-8 border border-secondary rounded-sm flex justify-center items-center" aria-label="TikTok"><img src="{{ asset('images/icons/tiktok.svg') }}" alt="TikTok Icon"></a>
-                    <a href="#" class="h-8 w-8 border border-secondary rounded-sm flex justify-center items-center" aria-label="YouTube"><img src="{{ asset('images/icons/youtube.svg') }}" alt="YouTube Icon"></a>
+                    <a href="https://www.tiktok.com/@haloemasid?_t=ZS-90uiCMNYV89&_r=1" target="_blank" class="h-8 w-8 border border-secondary rounded-sm flex justify-center items-center" aria-label="Instagram"><img src="{{ asset('images/icons/instagram.svg') }}" alt="Instagram Icon"></a>
+                    <a href="https://www.instagram.com/haloemasid?igsh=MTc0ZXB0eWc4MWhzYQ==" target="_blank" class="h-8 w-8 border border-secondary rounded-sm flex justify-center items-center" aria-label="TikTok"><img src="{{ asset('images/icons/tiktok.svg') }}" alt="TikTok Icon"></a>
+                    <a href="https://www.youtube.com/@HaloEmas" target="_blank" class="h-8 w-8 border border-secondary rounded-sm flex justify-center items-center" aria-label="YouTube"><img src="{{ asset('images/icons/youtube.svg') }}" alt="YouTube Icon"></a>
                 </div>
             </div>
         </div>

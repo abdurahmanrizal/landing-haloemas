@@ -292,12 +292,26 @@
                     <div x-show="active === {{ $pageIndex }}" x-transition:enter="transition ease-out duration-300"
                         x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
                         class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 min-h-[280px]">
-                        @foreach ($chunk as $testimony)
-                            <div
-                                class="border border-gray-300 bg-white shadow-sm p-8 rounded-md flex flex-col justify-between">
-                                <p class="text-gray-800 italic leading-relaxed text-base mb-4">
-                                    "{{ $testimony['content'] }}"
-                                </p>
+                        @foreach ($chunk as $index => $testimony)
+                            @php
+                                $content = $testimony['content'] ?? '';
+                                $maxLength = 150;
+                                $isLong = strlen($content) > $maxLength;
+                                $truncated = $isLong ? substr($content, 0, $maxLength) . '...' : $content;
+                            @endphp
+                            <div x-data="{ expanded: false, isLong: {{ $isLong ? 'true' : 'false' }} }" class="border border-gray-300 bg-white shadow-sm p-8 rounded-md flex flex-col justify-between">
+                                <div class="mb-4">
+                                    <p class="text-gray-800 italic leading-relaxed text-base">
+                                        <span x-show="!expanded || !isLong">"{{ e($isLong ? $truncated : $content) }}"</span>
+                                        <span x-show="expanded && isLong" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100">"{{ e($content) }}"</span>
+                                    </p>
+                                    <button x-show="isLong" 
+                                            @click="expanded = !expanded"
+                                            class="text-yellow-600 hover:text-yellow-700 text-sm font-medium mt-2 transition-colors">
+                                        <span x-show="!expanded">Baca selengkapnya</span>
+                                        <span x-show="expanded">Sembunyikan</span>
+                                    </button>
+                                </div>
                                 <p class="text-sm text-gray-600 font-medium">{{ $testimony['name'] }}</p>
                             </div>
                         @endforeach

@@ -4,7 +4,7 @@
             <h2 class="text-xl md:text-2xl lg:text-3xl font-semibold">Butuh Info Lebih?</h2>
             <p class="text-sm md:text-md lg:text-base font-normal">Tinggal hubungi tim Haloemas.id, kami siap bantu jawab pertanyaan kamu.</p>
              <div class="mt-4">
-                <a href="https://wa.me/6281234567890" target="_blank" class="bg-secondary hover:bg-yellow-300 text-black px-4 xl:px-6 py-2 font-normal transition-colors duration-200 text-center text-sm xl:text-base">
+                <a href="https://wa.me/nomor_wa" target="_blank" class="bg-secondary hover:bg-yellow-300 text-black px-4 xl:px-6 py-2 font-normal transition-colors duration-200 text-center text-sm xl:text-base">
                     Hubungi Kami
                 </a>
             </div>
@@ -28,11 +28,12 @@
 
                 <!-- Sosial Media -->
                 <div class="flex gap-3 justify-center items-center">
-                    <a href="https://www.tiktok.com/@haloemasid?_t=ZS-90uiCMNYV89&_r=1" target="_blank" class="h-8 w-8 border border-secondary rounded-sm flex justify-center items-center" aria-label="Instagram"><img src="{{ asset('images/icons/instagram.svg') }}" alt="Instagram Icon"></a>
-                    <a href="https://www.instagram.com/haloemasid?igsh=MTc0ZXB0eWc4MWhzYQ==" target="_blank" class="h-8 w-8 border border-secondary rounded-sm flex justify-center items-center" aria-label="TikTok"><img src="{{ asset('images/icons/tiktok.svg') }}" alt="TikTok Icon"></a>
+                    <a href="https://www.instagram.com/haloemasid?igsh=MTc0ZXB0eWc4MWhzYQ==" target="_blank" class="h-8 w-8 border border-secondary rounded-sm flex justify-center items-center" aria-label="Instagram"><img src="{{ asset('images/icons/instagram.svg') }}" alt="Instagram Icon"></a>
+                    <a href="https://www.tiktok.com/@haloemasid?_t=ZS-90uiCMNYV89&_r=1" target="_blank" class="h-8 w-8 border border-secondary rounded-sm flex justify-center items-center" aria-label="TikTok"><img src="{{ asset('images/icons/tiktok.svg') }}" alt="TikTok Icon"></a>
                     <a href="https://www.youtube.com/@HaloEmas" target="_blank" class="h-8 w-8 border border-secondary rounded-sm flex justify-center items-center" aria-label="YouTube"><img src="{{ asset('images/icons/youtube.svg') }}" alt="YouTube Icon"></a>
                 </div>
             </div>
         </div>
     </div>
 </footer>
+

@@ -3,18 +3,17 @@
     <div class="hero-slideshow-container relative w-full h-screen">
         @if (isset($banners) && count($banners) > 0)
             @foreach ($banners as $index => $banner)
-                <div class="hero-slide {{ $index === 0 ? 'active' : '' }} relative w-full h-full">
+                <a href="{{ $banner['link'] }}" target="_blank" class="hero-slide {{ $index === 0 ? 'active' : '' }} relative w-full h-full">
+                    <img src="{{ $banner['image'] }}" alt="{{ $banner['title'] ?? 'Halo Emas - Banner Promosi ' . ($index + 1) }}"
+                        class="w-full h-full object-cover">
                     <div class="absolute inset-0 bg-gradient-to-r from-black/60 to-black/30 z-10"></div>
                     @if ($banner['link'])
-                        <a href="{{ $banner['link'] }}" target="_blank" class="block w-full h-full" aria-label="Banner Promosi {{ $index + 1 }}">
-                            <img src="{{ $banner['image'] }}" alt="{{ $banner['title'] ?? 'Halo Emas - Banner Promosi ' . ($index + 1) }}"
-                                class="w-full h-full object-cover">
-                        </a>
+                        <a href="{{ $banner['link'] }}" target="_blank" class="absolute inset-0 z-20" aria-label="Banner Promosi {{ $index + 1 }}"></a>
                     @else
                         <img src="{{ $banner['image'] }}" alt="{{ $banner['title'] ?? 'Halo Emas - Banner Promosi ' . ($index + 1) }}"
                             class="w-full h-full object-cover">
                     @endif
-                </div>
+                </a>
             @endforeach
         @else
             <div class="hero-slide active relative w-full h-full">

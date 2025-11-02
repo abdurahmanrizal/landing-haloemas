@@ -67,7 +67,7 @@ class HomeController extends Controller
                 'verify' => $verifySSL,
             ])->get($apiBaseUrl . '/blogs', [
                 'page' => 1,
-                'per_page' => 3
+                'per_page' => 3  // Load 3 blog pertama, setiap klik "Muat Lebih Banyak" akan menambah 3 blog berikutnya
             ]);
             
             $blogsData = $blogsResponse->json();

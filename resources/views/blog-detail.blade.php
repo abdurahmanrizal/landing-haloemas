@@ -210,7 +210,7 @@
                         <template x-if="blogs.length > 0">
                             <div>
                                 <template x-for="blog in blogs" :key="blog.id">
-                                    <a :href="`/blog/${blog.id}`"
+                                    <a :href="`/blog/${blog.slug}`"
                                         class="block group pb-4 border-b border-gray-200 last:border-b-0 last:pb-0 mt-4">
                                         <p class="text-xs text-gray-500 mb-2"
                                             x-text="`${formatDate(blog.date)} • Oleh ${blog.user_created_by || 'Admin'}`">
@@ -250,7 +250,7 @@
                 <h2 class="text-2xl font-semibold mb-6">Blog Terkait</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     @foreach ($relatedBlogs as $related)
-                        <a href="{{ route('blog.show', $related['id']) }}"
+                        <a href="{{ route('blog.show', $related['slug']) }}"
                             class="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300">
                             <div class="relative">
                                 @if (isset($related['thumbnail']) && $related['thumbnail'])

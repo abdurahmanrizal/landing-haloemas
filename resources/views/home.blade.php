@@ -367,7 +367,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
                 @foreach ($blogs as $blog)
                     <!-- Blog Card -->
-                    <a href="{{ route('blog.show', $blog['id']) }}"
+                    <a href="{{ route('blog.show', $blog['slug']) }}"
                         class="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300 block">
                         <div class="relative">
                             @if(isset($blog['thumbnail']) && $blog['thumbnail'])

@@ -269,41 +269,67 @@
         </div>
 
         @if (isset($testimonies) && count($testimonies) > 0)
-            @php
-                $itemsPerPage = 3;
-                $totalPages = ceil(count($testimonies) / $itemsPerPage);
-                $testimonyChunks = array_chunk($testimonies, $itemsPerPage);
-            @endphp
-
             <!-- Carousel -->
             <div x-data="{
+                testimonies: @js($testimonies ?? []),
+                itemsPerPage: 3,
                 active: 0,
-                totalPages: {{ $totalPages }},
+                init() {
+                    this.updateItemsPerPage();
+                    window.addEventListener('resize', () => this.updateItemsPerPage());
+                },
+                updateItemsPerPage() {
+                    const width = window.innerWidth;
+                    const oldItemsPerPage = this.itemsPerPage;
+                    if (width >= 1024) {
+                        this.itemsPerPage = 3; // lg: desktop
+                    } else if (width >= 768) {
+                        this.itemsPerPage = 2; // md: tablet
+                    } else {
+                        this.itemsPerPage = 1; // mobile
+                    }
+                    // Reset to first page if items per page changed
+                    if (oldItemsPerPage !== this.itemsPerPage) {
+                        this.active = 0;
+                    }
+                },
+                get totalPages() {
+                    return Math.ceil(this.testimonies.length / this.itemsPerPage);
+                },
+                get paginatedTestimonies() {
+                    const pages = [];
+                    for (let i = 0; i < this.testimonies.length; i += this.itemsPerPage) {
+                        pages.push(this.testimonies.slice(i, i + this.itemsPerPage));
+                    }
+                    return pages;
+                },
                 next() {
                     this.active = (this.active + 1) % this.totalPages;
                 },
                 prev() {
                     this.active = (this.active - 1 + this.totalPages) % this.totalPages;
                 }
-            }" class="relative px-12">
+            }" class="relative">
 
-                @foreach ($testimonyChunks as $pageIndex => $chunk)
-                    <!-- Slides Container Page {{ $pageIndex + 1 }} -->
-                    <div x-show="active === {{ $pageIndex }}" x-transition:enter="transition ease-out duration-300"
+                <template x-for="(page, pageIndex) in paginatedTestimonies" :key="pageIndex">
+                    <!-- Slides Container Page -->
+                    <div x-show="active === pageIndex" x-transition:enter="transition ease-out duration-300"
                         x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
-                        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 min-h-[280px]">
-                        @foreach ($chunk as $index => $testimony)
-                            @php
-                                $content = $testimony['content'] ?? '';
-                                $maxLength = 150;
-                                $isLong = strlen($content) > $maxLength;
-                                $truncated = $isLong ? substr($content, 0, $maxLength) . '...' : $content;
-                            @endphp
-                            <div x-data="{ expanded: false, isLong: {{ $isLong ? 'true' : 'false' }} }" class="border border-gray-300 bg-white shadow-sm p-8 rounded-md flex flex-col justify-between">
+                        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 min-h-[280px] px-12">
+                        <template x-for="(testimony, index) in page" :key="index">
+                            <div x-data="{ 
+                                expanded: false, 
+                                isLong: testimony.content ? testimony.content.length > 150 : false,
+                                truncated: testimony.content && testimony.content.length > 150 ? testimony.content.substring(0, 150) + '...' : (testimony.content || '')
+                            }" class="border border-gray-300 bg-white shadow-sm p-8 rounded-md flex flex-col justify-between">
                                 <div class="mb-4">
                                     <p class="text-gray-800 italic leading-relaxed text-base">
-                                        <span x-show="!expanded || !isLong">"{{ e($isLong ? $truncated : $content) }}"</span>
-                                        <span x-show="expanded && isLong" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100">"{{ e($content) }}"</span>
+                                        <template x-if="!expanded || !isLong">
+                                            <span x-text="isLong ? '&quot;' + truncated + '&quot;' : '&quot;' + (testimony.content || '') + '&quot;'"></span>
+                                        </template>
+                                        <template x-if="expanded && isLong">
+                                            <span x-show="expanded && isLong" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-text="'&quot;' + (testimony.content || '') + '&quot;'"></span>
+                                        </template>
                                     </p>
                                     <button x-show="isLong" 
                                             @click="expanded = !expanded"
@@ -312,37 +338,40 @@
                                         <span x-show="expanded">Sembunyikan</span>
                                     </button>
                                 </div>
-                                <p class="text-sm text-gray-600 font-medium">{{ $testimony['name'] }}</p>
+                                <p class="text-sm text-gray-600 font-medium" x-text="testimony.name || ''"></p>
                             </div>
-                        @endforeach
+                        </template>
                     </div>
-                @endforeach
+                </template>
 
                 <!-- Arrows -->
-                @if ($totalPages > 1)
-                    <button @click="prev()"
-                        class="absolute left-0 top-1/2 -translate-y-1/2 bg-[#FBE68E] w-10 h-10 rounded-sm hover:bg-yellow-400 transition flex items-center justify-center text-xl">
-                        ←
-                    </button>
+                <template x-if="totalPages > 1">
+                    <div>
+                        <button @click="prev()"
+                            class="flex absolute left-0 top-1/2 -translate-y-1/2 bg-[#FBE68E] w-10 h-10 rounded-sm hover:bg-yellow-400 transition items-center justify-center text-xl">
+                            ←
+                        </button>
 
-                    <button @click="next()"
-                        class="absolute right-0 top-1/2 -translate-y-1/2 bg-[#FBE68E] w-10 h-10 rounded-sm hover:bg-yellow-400 transition flex items-center justify-center text-xl">
-                        →
-                    </button>
+                        <button @click="next()"
+                            class="flex absolute right-0 top-1/2 -translate-y-1/2 bg-[#FBE68E] w-10 h-10 rounded-sm hover:bg-yellow-400 transition items-center justify-center text-xl">
+                            →
+                        </button>
+                    </div>
+                </template>
 
-                    <!-- Dots -->
+                <!-- Dots -->
+                <template x-if="totalPages > 1">
                     <div class="flex justify-center mt-8 space-x-2">
-                        @for ($i = 0; $i < $totalPages; $i++)
-                            <button @click="active = {{ $i }}"
+                        <template x-for="(page, pageIndex) in paginatedTestimonies" :key="pageIndex">
+                            <button @click="active = pageIndex"
                                 :class="{
-                                    'bg-black w-8': active === {{ $i }},
-                                    'bg-gray-400 w-3': active !==
-                                        {{ $i }}
+                                    'bg-black w-8': active === pageIndex,
+                                    'bg-gray-400 w-3': active !== pageIndex
                                 }"
                                 class="h-2 transition-all duration-300"></button>
-                        @endfor
+                        </template>
                     </div>
-                @endif
+                </template>
             </div>
         @else
             <!-- No testimonies message -->

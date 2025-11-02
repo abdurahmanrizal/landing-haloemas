@@ -19,12 +19,14 @@ function showHeroSlide(n) {
 
     if (slides.length === 0) return;
 
+    // Normalize slide index
     if (n > slides.length) {
-        heroSlideIndex = 1;
+        n = 1;
     }
     if (n < 1) {
-        heroSlideIndex = slides.length;
+        n = slides.length;
     }
+    heroSlideIndex = n;
 
     // Hide all slides
     for (let i = 0; i < slides.length; i++) {
@@ -59,7 +61,7 @@ function startHeroSlideshow() {
     heroSlideInterval = setInterval(function () {
         heroSlideIndex++;
         showHeroSlide(heroSlideIndex);
-    }, 6000);
+    }, 3000);
 }
 
 function resetHeroSlideshow() {

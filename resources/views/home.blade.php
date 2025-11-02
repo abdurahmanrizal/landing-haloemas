@@ -353,7 +353,44 @@
     </section>
 
 
-    <section id="blog" class="w-full md:w-[90%] max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 my-16 mt-32">
+    <section id="blog" class="w-full md:w-[90%] max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 my-16 mt-32" 
+        x-data="{
+            blogs: @js($blogs ?? []),
+            currentPage: {{ isset($blogsMeta) && isset($blogsMeta['current_page']) ? $blogsMeta['current_page'] : 1 }},
+            lastPage: {{ isset($blogsMeta) && isset($blogsMeta['last_page']) ? $blogsMeta['last_page'] : 1 }},
+            loading: false,
+            error: null,
+            apiBaseUrl: '{{ env('API_BASE_URL', 'https://pms-testing.infokejadiansemarang.com/api/landing-page') }}',
+            formatDate(date) {
+                const d = new Date(date);
+                const months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+                return `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
+            },
+            async loadMore() {
+                if (this.loading || this.currentPage >= this.lastPage) return;
+                
+                this.loading = true;
+                this.error = null;
+                
+                try {
+                    const response = await fetch(`${this.apiBaseUrl}/blogs?page=${this.currentPage + 1}&per_page=3`);
+                    const data = await response.json();
+                    
+                    if (data.success && data.data) {
+                        this.blogs = [...this.blogs, ...data.data];
+                        this.currentPage = data.metadata.pagination.current_page;
+                        this.lastPage = data.metadata.pagination.last_page;
+                    } else {
+                        this.error = 'Gagal memuat blog tambahan';
+                    }
+                } catch (err) {
+                    console.error('Error loading blogs:', err);
+                    this.error = 'Terjadi kesalahan saat memuat blog';
+                } finally {
+                    this.loading = false;
+                }
+            }
+        }">
         <div class="flex flex-col gap-2 justify-center items-center text-center mb-10">
             <h2 class="text-2xl md:text-3xl font-semibold">
                 Ngobrolin Emas di <span class="italic font-normal">Blog</span>
@@ -363,60 +400,66 @@
             </p>
         </div>
 
-        @if (isset($blogs) && count($blogs) > 0)
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
-                @foreach ($blogs as $blog)
-                    <!-- Blog Card -->
-                    <a href="{{ route('blog.show', $blog['slug']) }}"
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
+            <template x-if="blogs.length > 0">
+                <template x-for="blog in blogs" :key="blog.id">
+                    <a :href="`/blog/${blog.slug}`"
                         class="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300 block">
                         <div class="relative">
-                            @if(isset($blog['thumbnail']) && $blog['thumbnail'])
-                                <img src="{{ $blog['thumbnail'] }}"
-                                    alt="{{ $blog['title'] }}" class="w-full h-56 object-cover">
-                            @else
+                            <template x-if="blog.thumbnail">
+                                <img :src="blog.thumbnail" :alt="blog.title" class="w-full h-56 object-cover">
+                            </template>
+                            <template x-if="!blog.thumbnail">
                                 <div class="w-full h-56 bg-gray-200 flex items-center justify-center">
                                     <span class="text-gray-400">No Image</span>
                                 </div>
-                            @endif
+                            </template>
                         </div>
                         <div class="p-6">
-                            <span
-                                class="inline-block px-3 py-1 text-xs font-medium bg-gray-100 text-gray-700 rounded-full mb-3">
-                                {{ $blog['category'] ?? 'Berita Emas' }}
+                            <span class="inline-block px-3 py-1 text-xs font-medium bg-gray-100 text-gray-700 rounded-full mb-3">
+                                <span x-text="blog.category || 'Berita Emas'"></span>
                             </span>
-                            <p class="text-xs text-gray-500 mb-2">
-                                {{ \Carbon\Carbon::parse($blog['date'])->locale('id')->isoFormat('DD MMMM YYYY') }} •
-                                Oleh {{ $blog['user_created_by'] ?? 'Admin' }}
-                            </p>
-                            <h3 class="text-lg font-semibold text-gray-900 mb-2 line-clamp-2 hover:text-yellow-600 transition-colors">
-                                {{ $blog['title'] }}
-                            </h3>
-                            <p class="text-sm text-gray-600 line-clamp-3">
-                                {{ Str::limit($blog['title'], 120) }}
-                            </p>
+                            <p class="text-xs text-gray-500 mb-2" x-text="formatDate(blog.date) + ' • Oleh ' + (blog.user_created_by || 'Admin')"></p>
+                            <h3 class="text-lg font-semibold text-gray-900 mb-2 line-clamp-2 hover:text-yellow-600 transition-colors" x-text="blog.title"></h3>
+                            <p class="text-sm text-gray-600 line-clamp-3" x-text="blog.title.substring(0, 120) + (blog.title.length > 120 ? '...' : '')"></p>
                         </div>
                     </a>
-                @endforeach
-            </div>
-        @else
-            <!-- No blogs message -->
-            <div class="text-center py-12">
-                <p class="text-gray-500 text-lg">Belum ada artikel blog</p>
-            </div>
-        @endif
+                </template>
+            </template>
+
+            <template x-if="blogs.length === 0">
+                <div class="col-span-3 text-center py-12">
+                    <p class="text-gray-500 text-lg">Belum ada artikel blog</p>
+                </div>
+            </template>
+        </div>
 
         <!-- Load More Button -->
-        @if (isset($blogs) && count($blogs) >= 3)
-            <div class="flex justify-center mt-10">
-                <a href="#"
-                    class="px-8 py-3 border-2 border-gray-300 text-gray-700 font-medium rounded-md hover:bg-gray-50 transition-colors duration-300 flex items-center gap-2">
-                    Muat Lebih Banyak
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                    </svg>
-                </a>
+        <template x-if="blogs.length > 0">
+            <div class="flex flex-col items-center mt-10">
+                <template x-if="error">
+                    <p class="text-red-600 text-sm mb-4" x-text="error"></p>
+                </template>
+                <button @click="loadMore()"
+                    :disabled="loading || currentPage >= lastPage"
+                    class="px-8 py-3 border-2 border-gray-300 text-gray-700 font-medium rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-300 flex items-center gap-2">
+                    <template x-if="loading">
+                        <svg class="animate-spin h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                    </template>
+                    <template x-if="!loading">
+                        <span x-text="currentPage >= lastPage ? 'Semua Blog Dimuat' : 'Muat Lebih Banyak'"></span>
+                    </template>
+                    <template x-if="!loading && currentPage < lastPage">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </template>
+                </button>
             </div>
-        @endif
+        </template>
     </section>
 
 

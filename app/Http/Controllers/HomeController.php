@@ -70,9 +70,11 @@ class HomeController extends Controller
                 'per_page' => 3
             ]);
             
-            $blogs = $blogsResponse->json()['data'] ?? [];
+            $blogsData = $blogsResponse->json();
+            $blogs = $blogsData['data'] ?? [];
+            $blogsMeta = $blogsData['metadata']['pagination'] ?? null;
             
-            return view('home', compact('banners', 'charts', 'currentPrice', 'pricePercent', 'golds', 'goldsLastUpdate', 'metals', 'metalsLastUpdate', 'stores', 'testimonies', 'blogs'));
+            return view('home', compact('banners', 'charts', 'currentPrice', 'pricePercent', 'golds', 'goldsLastUpdate', 'metals', 'metalsLastUpdate', 'stores', 'testimonies', 'blogs', 'blogsMeta'));
         } catch (\Exception $e) {
             return view('home', [
                 'banners' => [], 
@@ -85,7 +87,8 @@ class HomeController extends Controller
                 'metalsLastUpdate' => now()->format('Y-m-d H:i:s'),
                 'stores' => [],
                 'testimonies' => [],
-                'blogs' => []
+                'blogs' => [],
+                'blogsMeta' => null
             ]);
         }
     }

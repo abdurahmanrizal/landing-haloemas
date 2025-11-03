@@ -2,13 +2,15 @@
 
 @section('title', 'Halo Emas - Cek Harga Emas Hari Ini & Toko Emas Terpercaya')
 
-@section('meta_description', 'Cek harga emas hari ini secara real-time. Temukan toko emas terpercaya dan dapatkan informasi lengkap seputar investasi emas di Halo Emas.')
+@section('meta_description', 'Cek harga emas hari ini secara real-time. Temukan toko emas terpercaya dan dapatkan
+informasi lengkap seputar investasi emas di Halo Emas.')
 
-@section('meta_keywords', 'harga emas hari ini, harga emas 24 karat, harga logam mulia, toko emas terdekat, investasi emas, harga emas antam, jual beli emas')
+@section('meta_keywords', 'harga emas hari ini, harga emas 24 karat, harga logam mulia, toko emas terdekat, investasi
+emas, harga emas antam, jual beli emas')
 
 @push('structured_data')
 <script type="application/ld+json">
-{
+    {
   "@context": "https://schema.org",
   "@type": "Organization",
   "name": "Halo Emas",
@@ -35,7 +37,7 @@
 </script>
 
 <script type="application/ld+json">
-{
+    {
   "@context": "https://schema.org",
   "@type": "WebSite",
   "name": "Halo Emas",
@@ -51,7 +53,7 @@
 
 @if(isset($stores) && count($stores) > 0)
 <script type="application/ld+json">
-{
+    {
   "@context": "https://schema.org",
   "@type": "ItemList",
   "itemListElement": [
@@ -81,196 +83,223 @@
 @endpush
 
 @section('content')
-    <!-- Hero Slideshow Section -->
-    @include('components.hero', ['banners' => $banners])
+<!-- Hero Slideshow Section -->
+@include('components.hero', ['banners' => $banners])
 
-    <!-- About Section -->
-    <section id="about" class="w-full md:w-[90%] max-w-6xl mx-auto flex flex-col items-center justify-center gap-4 px-4 sm:px-6 lg:px-8 py-10">
-        <div class="text-center lg:w-[560px] flex flex-col gap-1">
-            <h1 class="text-xl md:text-2xl lg:text-3xl font-semibold">Kenapa Harus Haloemas.id?</h1>
-            <p class="text-sm md:text-md lg:text-base font-normal">Kami pengen bikin pengalaman beli emas jadi gampang, aman,
-                dan bikin kamu nyaman.</p>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-4 lg:mt-8">
-            <!-- Card -->
-            <div class="flex flex-col gap-4 items-center">
-                <div
-                    class="w-12 h-12 flex justify-center items-center -rotate-6 bg-gradient-to-t from-[#FBE68E33] to-[#FBE68E1A]">
-                    <img class="rotate-6" src="{{ asset('images/icons/calculator-money.svg') }}" alt="Harga Selalu Update">
-                </div>
-                <div class="text-center w-[240px] flex flex-col gap-1">
-                    <h3 class="text-base font-semibold">Harga Selalu Update</h3>
-                    <span class="text-sm font-normal">Biar kamu nggak ketinggalan info harga terbaru.</span>
-                </div>
+<!-- About Section -->
+<section id="about"
+    class="w-full md:w-[90%] max-w-6xl mx-auto flex flex-col items-center justify-center gap-4 px-4 sm:px-6 lg:px-8 py-10">
+    <div class="text-center lg:w-[560px] flex flex-col gap-1">
+        <h1 class="text-xl md:text-2xl lg:text-3xl font-semibold">Kenapa Harus Haloemas.id?</h1>
+        <p class="text-sm md:text-md lg:text-base font-normal">Kami pengen bikin pengalaman beli emas jadi gampang,
+            aman,
+            dan bikin kamu nyaman.</p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-4 lg:mt-8">
+        <!-- Card -->
+        <div class="flex flex-col gap-4 items-center">
+            <div
+                class="w-12 h-12 flex justify-center items-center -rotate-6 bg-gradient-to-t from-[#FBE68E33] to-[#FBE68E1A]">
+                <img class="rotate-6" src="{{ asset('images/icons/calculator-money.svg') }}" alt="Harga Selalu Update">
             </div>
-            <!-- Card -->
-            <div class="flex flex-col gap-4 items-center">
-                <div
-                    class="w-12 h-12 flex justify-center items-center rotate-6 bg-gradient-to-t from-[#FBE68E33] to-[#FBE68E1A]">
-                    <img class="-rotate-6" src="{{ asset('images/icons/seller-store.svg') }}" alt="Toko Terpercaya">
-                </div>
-                <div class="text-center w-[240px] flex flex-col gap-1">
-                    <h3 class="text-base font-semibold">Toko Terpercaya</h3>
-                    <span class="text-sm font-normal">Semua toko partner udah terkurasi, jadi kamu bisa belanja dengan
-                        tenang.</span>
-                </div>
-            </div>
-            <!-- Card -->
-            <div class="flex flex-col gap-4 items-center">
-                <div
-                    class="w-12 h-12 flex justify-center items-center -rotate-6 bg-gradient-to-t from-[#FBE68E33] to-[#FBE68E1A]">
-                    <img class="rotate-6" src="{{ asset('images/icons/snap.svg') }}" alt="Mudah Diakses">
-                </div>
-                <div class="text-center w-[240px] flex flex-col gap-1">
-                    <h3 class="text-base font-semibold">Mudah Diakses</h3>
-                    <span class="text-sm font-normal">Cek harga, cari toko, atau baca tips emas kapan aja, di mana
-                        aja.</span>
-                </div>
-            </div>
-            <!-- Card -->
-            <div class="flex flex-col gap-4 items-center">
-                <div
-                    class="w-12 h-12 flex justify-center items-center rotate-6 bg-gradient-to-t from-[#FBE68E33] to-[#FBE68E1A]">
-                    <img class="-rotate-6" src="{{ asset('images/icons/shield-check.svg') }}" alt="Aman dan Transparan">
-                </div>
-                <div class="text-center w-[240px] flex flex-col gap-1">
-                    <h3 class="text-base font-semibold">Aman & Transparan</h3>
-                    <span class="text-sm font-normal">Kami jaga kepercayaan kamu dengan sistem yang jelas dan
-                        terpercaya.</span>
-                </div>
+            <div class="text-center w-[240px] flex flex-col gap-1">
+                <h3 class="text-base font-semibold">Harga Selalu Update</h3>
+                <span class="text-sm font-normal">Biar kamu nggak ketinggalan info harga terbaru.</span>
             </div>
         </div>
-    </section>
-
-    <!-- Harga Emas Section -->
-    <section id="harga-emas" class="w-full md:w-[90%] max-w-6xl mx-auto flex flex-col items-center justify-center gap-4 px-4 sm:px-6 lg:px-8 mt-32">
-        <div class="text-centerlg:w-[560px] justify-center items-center flex flex-col gap-3 text-center">
-            <span class="px-4 py-2 text-sm font-semibold w-fit bg-[#FEF9E4] border border-[#FBE68E]">
-                {{ \Carbon\Carbon::now()->locale('id')->isoFormat('DD MMMM YYYY') }}
-            </span>
-            <h2 class="text-xl md:text-2xl lg:text-3xl font-semibold">Harga Jual Emas Hari Ini</h2>
-            <p class="text-md md:text-md lg:text-base font-normal max-w-[644px]">Pantau harga emas terbaru setiap hari.
-                Transparan, gampang dicek, dan selalu update biar kamu lebih yakin sebelum jual.</p>
-        </div>
-
-        <div class="w-full flex flex-col gap-2 border p-5">
-            <div class="">
-                <h3 class="text-base font-semibold italic">Harga Emas Murni (24K)</h3>
-                <p class="text-xl font-semibold">Rp {{ number_format($currentPrice ?? 0, 0, ',', '.') }}</p>
-                <p class="text-sm font-normal">Per gram
-                    <span class="font-semibold {{ ($pricePercent ?? 0) >= 0 ? 'text-green-600' : 'text-red-600' }}">
-                        {{ ($pricePercent ?? 0) >= 0 ? '+' : '' }}{{ number_format($pricePercent ?? 0, 2) }}%
-                    </span>
-                </p>
+        <!-- Card -->
+        <div class="flex flex-col gap-4 items-center">
+            <div
+                class="w-12 h-12 flex justify-center items-center rotate-6 bg-gradient-to-t from-[#FBE68E33] to-[#FBE68E1A]">
+                <img class="-rotate-6" src="{{ asset('images/icons/seller-store.svg') }}" alt="Toko Terpercaya">
             </div>
-            @include('components.gold-chart', ['charts' => $charts])
-
-            @include('components.gold-table', ['golds' => $golds, 'lastUpdate' => $goldsLastUpdate])
+            <div class="text-center w-[240px] flex flex-col gap-1">
+                <h3 class="text-base font-semibold">Toko Terpercaya</h3>
+                <span class="text-sm font-normal">Semua toko partner udah terkurasi, jadi kamu bisa belanja dengan
+                    tenang.</span>
+            </div>
         </div>
-    </section>
+        <!-- Card -->
+        <div class="flex flex-col gap-4 items-center">
+            <div
+                class="w-12 h-12 flex justify-center items-center -rotate-6 bg-gradient-to-t from-[#FBE68E33] to-[#FBE68E1A]">
+                <img class="rotate-6" src="{{ asset('images/icons/snap.svg') }}" alt="Mudah Diakses">
+            </div>
+            <div class="text-center w-[240px] flex flex-col gap-1">
+                <h3 class="text-base font-semibold">Mudah Diakses</h3>
+                <span class="text-sm font-normal">Cek harga, cari toko, atau baca tips emas kapan aja, di mana
+                    aja.</span>
+            </div>
+        </div>
+        <!-- Card -->
+        <div class="flex flex-col gap-4 items-center">
+            <div
+                class="w-12 h-12 flex justify-center items-center rotate-6 bg-gradient-to-t from-[#FBE68E33] to-[#FBE68E1A]">
+                <img class="-rotate-6" src="{{ asset('images/icons/shield-check.svg') }}" alt="Aman dan Transparan">
+            </div>
+            <div class="text-center w-[240px] flex flex-col gap-1">
+                <h3 class="text-base font-semibold">Aman & Transparan</h3>
+                <span class="text-sm font-normal">Kami jaga kepercayaan kamu dengan sistem yang jelas dan
+                    terpercaya.</span>
+            </div>
+        </div>
+    </div>
+</section>
 
-    <section class="w-full md:w-[90%] max-w-6xl mx-auto flex flex-col items-center justify-center gap-4 px-4 sm:px-6 lg:px-8 mt-5 mb-32">
-        <div class="flex flex-col gap-1 w-full">
-            <div class="flex flex-col lg:flex-row justify-between mb-4">
-                <h2 class="text-xl font-semibold italic">Harga Logam Mulia</h2>
-                <p class="text-sm font-normal italic">
-                    Terakhir Update:
-                    @if (isset($metalsLastUpdate))
-                        {{ \Carbon\Carbon::parse($metalsLastUpdate)->locale('id')->isoFormat('DD MMMM YYYY • HH:mm') }}
+<!-- Harga Emas Section -->
+<section id="harga-emas"
+    class="w-full md:w-[90%] max-w-6xl mx-auto flex flex-col items-center justify-center gap-4 px-4 sm:px-6 lg:px-8 mt-32">
+    <div class="text-centerlg:w-[560px] justify-center items-center flex flex-col gap-3 text-center">
+        <span class="px-4 py-2 text-sm font-semibold w-fit bg-[#FEF9E4] border border-[#FBE68E]">
+            {{ \Carbon\Carbon::now()->locale('id')->isoFormat('DD MMMM YYYY') }}
+        </span>
+        <h2 class="text-xl md:text-2xl lg:text-3xl font-semibold">Harga Jual Emas Hari Ini</h2>
+        <p class="text-md md:text-md lg:text-base font-normal max-w-[644px]">Pantau harga emas terbaru setiap hari.
+            Transparan, gampang dicek, dan selalu update biar kamu lebih yakin sebelum jual.</p>
+    </div>
+
+    <div class="w-full flex flex-col gap-2 border p-5">
+        <div class="">
+            <h3 class="text-base font-semibold italic">Harga Emas Murni (24K)</h3>
+            <p class="text-xl font-semibold">Rp {{ number_format($currentPrice ?? 0, 0, ',', '.') }}</p>
+            <p class="text-sm font-normal">Per gram
+                <span class="font-semibold {{ ($pricePercent ?? 0) >= 0 ? 'text-green-600' : 'text-red-600' }}">
+                    {{ ($pricePercent ?? 0) >= 0 ? '+' : '' }}{{ number_format($pricePercent ?? 0, 2) }}%
+                </span>
+            </p>
+        </div>
+        @include('components.gold-chart', ['charts' => $charts])
+
+        @include('components.gold-table', ['golds' => $golds, 'lastUpdate' => $goldsLastUpdate])
+    </div>
+</section>
+
+<section
+    class="w-full md:w-[90%] max-w-6xl mx-auto flex flex-col items-center justify-center gap-4 px-4 sm:px-6 lg:px-8 mt-5 mb-32">
+    <div class="flex flex-col gap-1 w-full">
+        <div class="flex flex-col lg:flex-row justify-between mb-4">
+            <h2 class="text-xl font-semibold italic">Harga Logam Mulia</h2>
+            <p class="text-sm font-normal italic">
+                Terakhir Update:
+                @if (isset($metalsLastUpdate))
+                {{ \Carbon\Carbon::parse($metalsLastUpdate)->locale('id')->isoFormat('DD MMMM YYYY • HH:mm') }}
+                @else
+                -
+                @endif
+            </p>
+        </div>
+        <div class="overflow-x-auto shadow">
+            <table class="min-w-full border border-gray-200">
+                <thead class="bg-[#F7F2F6]">
+                    <tr class="text-left border-b">
+                        <th class="py-3 px-4 font-semibold text-gray-700">Kadar Karat</th>
+                        <th class="py-3 px-4 font-semibold text-gray-700">Harga per Gram</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200">
+                    @if (isset($metals) && count($metals) > 0)
+                    @foreach ($metals as $metal)
+                    <tr>
+                        <td class="py-3 px-4">Emas {{ $metal['name'] }}</td>
+                        <td class="py-3 px-4">Rp {{ number_format($metal['price'], 0, ',', '.') }}</td>
+                    </tr>
+                    @endforeach
                     @else
-                        -
+                    <tr>
+                        <td colspan="2" class="py-3 px-4 text-center text-gray-500">
+                            Data Logam Mulia belum tersedia
+                        </td>
+                    </tr>
                     @endif
-                </p>
-            </div>
-            <div class="overflow-x-auto shadow">
-                <table class="min-w-full border border-gray-200">
-                    <thead class="bg-[#F7F2F6]">
-                        <tr class="text-left border-b">
-                            <th class="py-3 px-4 font-semibold text-gray-700">Kadar Karat</th>
-                            <th class="py-3 px-4 font-semibold text-gray-700">Harga per Gram</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-gray-200">
-                        @if (isset($metals) && count($metals) > 0)
-                            @foreach ($metals as $metal)
-                                <tr>
-                                    <td class="py-3 px-4">Emas {{ $metal['name'] }}</td>
-                                    <td class="py-3 px-4">Rp {{ number_format($metal['price'], 0, ',', '.') }}</td>
-                                </tr>
-                            @endforeach
-                        @else
-                            <tr>
-                                <td colspan="2" class="py-3 px-4 text-center text-gray-500">
-                                    Data Logam Mulia belum tersedia
-                                </td>
-                            </tr>
-                        @endif
-                    </tbody>
-                </table>
-            </div>
+                </tbody>
+            </table>
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- Toko kami section -->
-    <section id="toko-kami" class="w-full md:w-[90%] max-w-6xl mx-auto flex flex-col items-center justify-center gap-6 px-4 sm:px-6 lg:px-8">
-        <!-- Judul dan deskripsi -->
-        <div class="w-full flex flex-col items-start justify-start gap-2">
-            <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold">
-                Jelajahi <span class="italic font-medium">Toko Emas</span> Pilihan di Haloemas.id
-            </h2>
-            <p class="text-gray-600 mt-2">
-                Dari toko lokal sampai brand ternama, semuanya terhubung lewat Haloemas.id.
-                Cari toko terdekat atau favoritmu, dan temukan koleksi emas terbaik dengan mudah.
-            </p>
-        </div>
+<!-- Toko kami section -->
+<section id="toko-kami"
+    class="w-full md:w-[90%] max-w-6xl mx-auto flex flex-col items-center justify-center gap-6 px-4 sm:px-6 lg:px-8">
+    <!-- Judul dan deskripsi -->
+    <div class="w-full flex flex-col items-start justify-start gap-2">
+        <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold">
+            Jelajahi <span class="italic font-medium">Toko Emas</span> Pilihan di Haloemas.id
+        </h2>
+        <p class="text-gray-600 mt-2">
+            Dari toko lokal sampai brand ternama, semuanya terhubung lewat Haloemas.id.
+            Cari toko terdekat atau favoritmu, dan temukan koleksi emas terbaik dengan mudah.
+        </p>
+    </div>
 
-        <!-- Grid toko -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6 w-full">
-            @if (isset($stores) && count($stores) > 0)
-                @foreach ($stores as $store)
-                    <!-- Kartu toko -->
-                    <div class="border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition">
-                        <img src="{{ $store['image'] }}" alt="{{ $store['name'] }}" class="w-full h-64 object-cover">
-                        <div class="p-4">
-                            <h2 class="font-semibold text-lg">{{ $store['name'] }}</h2>
-                            <p class="text-gray-600 text-sm mt-1">
-                                {{ $store['address'] }}
-                            </p>
-                            @if (isset($store['link_address']) && $store['link_address'])
-                                <a href="{{ $store['link_address'] }}" target="_blank"
-                                    class="text-gray-600 text-sm font-medium mt-2 inline-block hover:underline">
-                                    Lihat Maps ↗
-                                </a>
-                            @endif
-                        </div>
+    <!-- Grid toko -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6 w-full">
+        @if (isset($stores) && count($stores) > 0)
+        @foreach ($stores as $store)
+        <!-- Kartu toko -->
+        <div class="border border-gray-200 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition">
+            <img src="{{ $store['image'] }}" alt="{{ $store['name'] }}" class="w-full h-64 object-cover">
+            <div class="p-4">
+                <h2 class="font-semibold text-lg">{{ $store['name'] }}</h2>
+                <a href="{{ $store['link_address'] }}" target="_blank" rel="noopener noreferrer"
+                    class="{{ isset($store['link_address']) && $store['link_address'] ? 'cursor-pointer' : 'cursor-not-allowed'  }}">
+                    <div class="flex gap-2">
+                        <span class="text-gray-600 text-sm mt-1 hover:underline hover:text-gray-800 transition">
+                            {{ $store['address'] }}
+                        </span>
                     </div>
-                @endforeach
-            @else
-                <!-- No stores message -->
-                <div class="col-span-2 text-center py-12">
-                    <p class="text-gray-500 text-lg">Data toko belum tersedia</p>
+                </a>
+                <div class="flex gap-4">
+                    <a href="https://wa.me/{{ $store['phone'] }}" target="_blank" rel="noopener noreferrer"
+                        class="flex items-center justify-center p-2 bg-green-600 mt-2 text-sm text-white font-semibold max-w-[115px]">
+                        <div class="flex gap-2">
+                            <div class="flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    class="bi bi-whatsapp" viewBox="0 0 16 16">
+                                    <path
+                                        d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232" />
+                                </svg>
+                            </div>
+                            <span>Whatsapp</span>
+                        </div>
+                    </a>
+                    @if (isset($store['link_address']) && $store['link_address'])
+                    <div class="flex items-center">
+                        <a href="{{ $store['link_address'] }}" target="_blank"
+                            class="text-gray-600 text-sm font-medium mt-2 inline-block hover:underline">
+                            Lihat Maps ↗
+                        </a>
+                    </div>
+                    @endif
                 </div>
-            @endif
+            </div>
         </div>
-    </section>
-
-
-    <!-- Testimonial section -->
-    <section id="testimonial" class="w-full md:w-[90%] max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 my-16">
-        <div class="mb-10">
-            <h2 class="text-2xl md:text-3xl font-semibold">
-                Apa <span class="italic">Kata Mereka?</span>
-            </h2>
-            <p class="text-gray-600 mt-2">
-                Dari pelayanan ramah sampai harga yang transparan, banyak yang udah ngerasain pengalaman belanja emas bareng
-                Halo Emas.
-                Sekarang giliran kamu buat buktiin sendiri.
-            </p>
+        @endforeach
+        @else
+        <!-- No stores message -->
+        <div class="col-span-2 text-center py-12">
+            <p class="text-gray-500 text-lg">Data toko belum tersedia</p>
         </div>
+        @endif
+    </div>
+</section>
 
-        @if (isset($testimonies) && count($testimonies) > 0)
-            <!-- Carousel -->
-            <div x-data="{
+
+<!-- Testimonial section -->
+<section id="testimonial" class="w-full md:w-[90%] max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 my-16">
+    <div class="mb-10">
+        <h2 class="text-2xl md:text-3xl font-semibold">
+            Apa <span class="italic">Kata Mereka?</span>
+        </h2>
+        <p class="text-gray-600 mt-2">
+            Dari pelayanan ramah sampai harga yang transparan, banyak yang udah ngerasain pengalaman belanja emas bareng
+            Halo Emas.
+            Sekarang giliran kamu buat buktiin sendiri.
+        </p>
+    </div>
+
+    @if (isset($testimonies) && count($testimonies) > 0)
+    <!-- Carousel -->
+    <div x-data="{
                 testimonies: @js($testimonies ?? []),
                 itemsPerPage: 3,
                 active: 0,
@@ -311,79 +340,80 @@
                 }
             }" class="relative">
 
-                <template x-for="(page, pageIndex) in paginatedTestimonies" :key="pageIndex">
-                    <!-- Slides Container Page -->
-                    <div x-show="active === pageIndex" x-transition:enter="transition ease-out duration-300"
-                        x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
-                        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 min-h-[280px] px-12">
-                        <template x-for="(testimony, index) in page" :key="index">
-                            <div x-data="{ 
+        <template x-for="(page, pageIndex) in paginatedTestimonies" :key="pageIndex">
+            <!-- Slides Container Page -->
+            <div x-show="active === pageIndex" x-transition:enter="transition ease-out duration-300"
+                x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
+                class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 min-h-[280px] px-12">
+                <template x-for="(testimony, index) in page" :key="index">
+                    <div x-data="{ 
                                 expanded: false, 
                                 isLong: testimony.content ? testimony.content.length > 150 : false,
                                 truncated: testimony.content && testimony.content.length > 150 ? testimony.content.substring(0, 150) + '...' : (testimony.content || '')
-                            }" class="border border-gray-300 bg-white shadow-sm p-8 rounded-md flex flex-col justify-between">
-                                <div class="mb-4">
-                                    <p class="text-gray-800 italic leading-relaxed text-base">
-                                        <template x-if="!expanded || !isLong">
-                                            <span x-text="isLong ? '&quot;' + truncated + '&quot;' : '&quot;' + (testimony.content || '') + '&quot;'"></span>
-                                        </template>
-                                        <template x-if="expanded && isLong">
-                                            <span x-show="expanded && isLong" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-text="'&quot;' + (testimony.content || '') + '&quot;'"></span>
-                                        </template>
-                                    </p>
-                                    <button x-show="isLong" 
-                                            @click="expanded = !expanded"
-                                            class="text-yellow-600 hover:text-yellow-700 text-sm font-medium mt-2 transition-colors">
-                                        <span x-show="!expanded">Baca selengkapnya</span>
-                                        <span x-show="expanded">Sembunyikan</span>
-                                    </button>
-                                </div>
-                                <p class="text-sm text-gray-600 font-medium" x-text="testimony.name || ''"></p>
-                            </div>
-                        </template>
+                            }"
+                        class="border border-gray-300 bg-white shadow-sm p-8 rounded-md flex flex-col justify-between">
+                        <div class="mb-4">
+                            <p class="text-gray-800 italic leading-relaxed text-base">
+                                <template x-if="!expanded || !isLong">
+                                    <span
+                                        x-text="isLong ? '&quot;' + truncated + '&quot;' : '&quot;' + (testimony.content || '') + '&quot;'"></span>
+                                </template>
+                                <template x-if="expanded && isLong">
+                                    <span x-show="expanded && isLong"
+                                        x-transition:enter="transition ease-out duration-200"
+                                        x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
+                                        x-text="'&quot;' + (testimony.content || '') + '&quot;'"></span>
+                                </template>
+                            </p>
+                            <button x-show="isLong" @click="expanded = !expanded"
+                                class="text-yellow-600 hover:text-yellow-700 text-sm font-medium mt-2 transition-colors">
+                                <span x-show="!expanded">Baca selengkapnya</span>
+                                <span x-show="expanded">Sembunyikan</span>
+                            </button>
+                        </div>
+                        <p class="text-sm text-gray-600 font-medium" x-text="testimony.name || ''"></p>
                     </div>
                 </template>
+            </div>
+        </template>
 
-                <!-- Arrows -->
-                <template x-if="totalPages > 1">
-                    <div>
-                        <button @click="prev()"
-                            class="flex absolute left-0 top-1/2 -translate-y-1/2 bg-[#FBE68E] w-10 h-10 rounded-sm hover:bg-yellow-400 transition items-center justify-center text-xl">
-                            ←
-                        </button>
+        <!-- Arrows -->
+        <template x-if="totalPages > 1">
+            <div>
+                <button @click="prev()"
+                    class="flex absolute left-0 top-1/2 -translate-y-1/2 bg-[#FBE68E] w-10 h-10 rounded-sm hover:bg-yellow-400 transition items-center justify-center text-xl">
+                    ←
+                </button>
 
-                        <button @click="next()"
-                            class="flex absolute right-0 top-1/2 -translate-y-1/2 bg-[#FBE68E] w-10 h-10 rounded-sm hover:bg-yellow-400 transition items-center justify-center text-xl">
-                            →
-                        </button>
-                    </div>
-                </template>
+                <button @click="next()"
+                    class="flex absolute right-0 top-1/2 -translate-y-1/2 bg-[#FBE68E] w-10 h-10 rounded-sm hover:bg-yellow-400 transition items-center justify-center text-xl">
+                    →
+                </button>
+            </div>
+        </template>
 
-                <!-- Dots -->
-                <template x-if="totalPages > 1">
-                    <div class="flex justify-center mt-8 space-x-2">
-                        <template x-for="(page, pageIndex) in paginatedTestimonies" :key="pageIndex">
-                            <button @click="active = pageIndex"
-                                :class="{
+        <!-- Dots -->
+        <template x-if="totalPages > 1">
+            <div class="flex justify-center mt-8 space-x-2">
+                <template x-for="(page, pageIndex) in paginatedTestimonies" :key="pageIndex">
+                    <button @click="active = pageIndex" :class="{
                                     'bg-black w-8': active === pageIndex,
                                     'bg-gray-400 w-3': active !== pageIndex
-                                }"
-                                class="h-2 transition-all duration-300"></button>
-                        </template>
-                    </div>
+                                }" class="h-2 transition-all duration-300"></button>
                 </template>
             </div>
-        @else
-            <!-- No testimonies message -->
-            <div class="text-center py-12">
-                <p class="text-gray-500 text-lg">Belum ada testimoni</p>
-            </div>
-        @endif
-    </section>
+        </template>
+    </div>
+    @else
+    <!-- No testimonies message -->
+    <div class="text-center py-12">
+        <p class="text-gray-500 text-lg">Belum ada testimoni</p>
+    </div>
+    @endif
+</section>
 
 
-    <section id="blog" class="w-full md:w-[90%] max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 my-16 mt-32" 
-        x-data="{
+<section id="blog" class="w-full md:w-[90%] max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 my-16 mt-32" x-data="{
             blogs: @js($blogs ?? []),
             currentPage: {{ isset($blogsMeta) && isset($blogsMeta['current_page']) ? $blogsMeta['current_page'] : 1 }},
             lastPage: {{ isset($blogsMeta) && isset($blogsMeta['last_page']) ? $blogsMeta['last_page'] : 1 }},
@@ -420,76 +450,83 @@
                 }
             }
         }">
-        <div class="flex flex-col gap-2 justify-center items-center text-center mb-10">
-            <h2 class="text-2xl md:text-3xl font-semibold">
-                Ngobrolin Emas di <span class="italic font-normal">Blog</span>
-            </h2>
-            <p class="text-gray-600">
-                Temukan cerita, tips, dan info menarik tentang dunia emas. Belajar jadi lebih santai dan asik.
-            </p>
-        </div>
+    <div class="flex flex-col gap-2 justify-center items-center text-center mb-10">
+        <h2 class="text-2xl md:text-3xl font-semibold">
+            Ngobrolin Emas di <span class="italic font-normal">Blog</span>
+        </h2>
+        <p class="text-gray-600">
+            Temukan cerita, tips, dan info menarik tentang dunia emas. Belajar jadi lebih santai dan asik.
+        </p>
+    </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
-            <template x-if="blogs.length > 0">
-                <template x-for="blog in blogs" :key="blog.id">
-                    <a :href="`/blog/${blog.slug}`"
-                        class="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300 block">
-                        <div class="relative">
-                            <template x-if="blog.thumbnail">
-                                <img :src="blog.thumbnail" :alt="blog.title" class="w-full h-56 object-cover">
-                            </template>
-                            <template x-if="!blog.thumbnail">
-                                <div class="w-full h-56 bg-gray-200 flex items-center justify-center">
-                                    <span class="text-gray-400">No Image</span>
-                                </div>
-                            </template>
-                        </div>
-                        <div class="p-6">
-                            <span class="inline-block px-3 py-1 text-xs font-medium bg-gray-100 text-gray-700 rounded-full mb-3">
-                                <span x-text="blog.category || 'Berita Emas'"></span>
-                            </span>
-                            <p class="text-xs text-gray-500 mb-2" x-text="formatDate(blog.date) + ' • Oleh ' + (blog.user_created_by || 'Admin')"></p>
-                            <h3 class="text-lg font-semibold text-gray-900 mb-2 line-clamp-2 hover:text-yellow-600 transition-colors" x-text="blog.title"></h3>
-                            <p class="text-sm text-gray-600 line-clamp-3" x-text="blog.title.substring(0, 120) + (blog.title.length > 120 ? '...' : '')"></p>
-                        </div>
-                    </a>
-                </template>
-            </template>
-
-            <template x-if="blogs.length === 0">
-                <div class="col-span-3 text-center py-12">
-                    <p class="text-gray-500 text-lg">Belum ada artikel blog</p>
-                </div>
-            </template>
-        </div>
-
-        <!-- Load More Button -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
         <template x-if="blogs.length > 0">
-            <div class="flex flex-col items-center mt-10">
-                <template x-if="error">
-                    <p class="text-red-600 text-sm mb-4" x-text="error"></p>
-                </template>
-                <button @click="loadMore()"
-                    :disabled="loading || currentPage >= lastPage"
-                    class="px-8 py-3 border-2 border-gray-300 text-gray-700 font-medium rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-300 flex items-center gap-2">
-                    <template x-if="loading">
-                        <svg class="animate-spin h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                        </svg>
-                    </template>
-                    <template x-if="!loading">
-                        <span x-text="currentPage >= lastPage ? 'Semua Blog Dimuat' : 'Muat Lebih Banyak'"></span>
-                    </template>
-                    <template x-if="!loading && currentPage < lastPage">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                        </svg>
-                    </template>
-                </button>
+            <template x-for="blog in blogs" :key="blog.id">
+                <a :href="`/blog/${blog.slug}`"
+                    class="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300 block">
+                    <div class="relative">
+                        <template x-if="blog.thumbnail">
+                            <img :src="blog.thumbnail" :alt="blog.title" class="w-full h-56 object-cover">
+                        </template>
+                        <template x-if="!blog.thumbnail">
+                            <div class="w-full h-56 bg-gray-200 flex items-center justify-center">
+                                <span class="text-gray-400">No Image</span>
+                            </div>
+                        </template>
+                    </div>
+                    <div class="p-6">
+                        <span
+                            class="inline-block px-3 py-1 text-xs font-medium bg-gray-100 text-gray-700 rounded-full mb-3">
+                            <span x-text="blog.category || 'Berita Emas'"></span>
+                        </span>
+                        <p class="text-xs text-gray-500 mb-2"
+                            x-text="formatDate(blog.date) + ' • Oleh ' + (blog.user_created_by || 'Admin')"></p>
+                        <h3 class="text-lg font-semibold text-gray-900 mb-2 line-clamp-2 hover:text-yellow-600 transition-colors"
+                            x-text="blog.title"></h3>
+                        <p class="text-sm text-gray-600 line-clamp-3"
+                            x-text="blog.title.substring(0, 120) + (blog.title.length > 120 ? '...' : '')"></p>
+                    </div>
+                </a>
+            </template>
+        </template>
+
+        <template x-if="blogs.length === 0">
+            <div class="col-span-3 text-center py-12">
+                <p class="text-gray-500 text-lg">Belum ada artikel blog</p>
             </div>
         </template>
-    </section>
+    </div>
+
+    <!-- Load More Button -->
+    <template x-if="blogs.length > 0">
+        <div class="flex flex-col items-center mt-10">
+            <template x-if="error">
+                <p class="text-red-600 text-sm mb-4" x-text="error"></p>
+            </template>
+            <button @click="loadMore()" :disabled="loading || currentPage >= lastPage"
+                class="px-8 py-3 border-2 border-gray-300 text-gray-700 font-medium rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-300 flex items-center gap-2">
+                <template x-if="loading">
+                    <svg class="animate-spin h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none"
+                        viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
+                        </circle>
+                        <path class="opacity-75" fill="currentColor"
+                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                        </path>
+                    </svg>
+                </template>
+                <template x-if="!loading">
+                    <span x-text="currentPage >= lastPage ? 'Semua Blog Dimuat' : 'Muat Lebih Banyak'"></span>
+                </template>
+                <template x-if="!loading && currentPage < lastPage">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                    </svg>
+                </template>
+            </button>
+        </div>
+    </template>
+</section>
 
 
 

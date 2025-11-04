@@ -161,35 +161,47 @@
         </div>
 
         <div class="w-full flex flex-col gap-2 border p-5">
-            <div x-data="goldPriceComponent()" x-init="start()">
+            {{-- <div>
+            <div class="">
+                <h3 class="text-base font-semibold italic">Harga Emas Murni (24K)</h3>
+                <p class="text-xl font-semibold">Rp {{ number_format($currentPrice ?? 0, 0, ',', '.') }}</p>
+                <p class="text-sm font-normal">Per gram
+                    <span class="font-semibold {{ ($pricePercent ?? 0) >= 0 ? 'text-green-600' : 'text-red-600' }}">
+                        {{ $pricePercent ?? 0 }}
+                    </span>
+                </p>
+            </div>
+            @include('components.gold-chart', ['charts' => $charts])
+        </div> --}}
+            <div x-data="goldLive('http://pms-be.test/api/landing-page/charts', {
+                currentPrice: @js($currentPrice ?? 0),
+                pricePercent: @js($pricePercent ?? 0)
+            })" x-init="start()" x-on:beforeunload.window="stop()">
                 <div>
                     <h3 class="text-base font-semibold italic">Harga Emas Murni (24K)</h3>
 
                     <!-- Price -->
                     <p class="text-xl font-semibold">
-                        <span x-text="formatCurrency(currentPrice)"></span>
+                        <span x-text="formatCurrency(currentPrice)">
+                        </span>
                     </p>
 
                     <!-- Percent -->
                     <p class="text-sm font-normal">
                         Per gram
                         <span class="font-semibold" :class="pricePercent >= 0 ? 'text-green-600' : 'text-red-600'"
-                            x-text="pricePercent"></span>
+                            x-text="pricePercent">
+                        </span>
                     </p>
+                </div>
 
-                    <!-- Chart -->
-                    <div>
-                        {{-- initial chart from blade --}}
-                        @include('components.gold-chart')
-                    </div>
+                <!-- Chart -->
+                <div x-html="chartHtml">
+                    @include('components.gold-chart', ['charts' => $charts])
                 </div>
             </div>
-            <div>
-                @include('components.gold-table', [
-                    'golds' => $golds,
-                    'lastUpdate' => $goldsLastUpdate,
-                ])
-            </div>
+            @include('components.gold-table', ['golds' => $golds, 'lastUpdate' => $goldsLastUpdate])
+        </div>
     </section>
 
     <section
@@ -530,65 +542,53 @@
     </section>
 @endsection
 @push('scripts')
-    <script>
-        function goldPriceComponent() {
-            return {
-                currentPrice: @js($currentPrice ?? 0),
-                pricePercent: @js($pricePercent ?? 0),
-                // chartHtml: @js(view('components.gold-chart', ['charts' => $charts])->render()),
-                timer: null,
-                error: null,
-                apiBaseUrl: '{{ env('API_BASE_URL', 'https://pms-testing.infokejadiansemarang.com/api/landing-page') }}',
+<script>
+document.addEventListener('alpine:init', () => {
+  Alpine.data('goldLive', (url, seed) => ({
+    currentPrice: Number(seed.currentPrice || 0),
+    pricePercent: seed.pricePercent || '0%',
+    chartHtml: '',
+    timer: null,
+    error: null,
 
-                formatCurrency(n) {
-                    return new Intl.NumberFormat('id-ID', {
-                        style: 'currency',
-                        currency: 'IDR',
-                        maximumFractionDigits: 0
-                    }).format(n || 0);
-                },
-                async load() {
-                    try {
-                        const res = await fetch(`${this.apiBaseUrl}/charts`);
-                        if (!res.ok) throw new Error('HTTP ' + res.status);
-                        const data = await res.json();
+    formatCurrency(n) {
+      return new Intl.NumberFormat('id-ID', {
+        style: 'currency',
+        currency: 'IDR',
+        maximumFractionDigits: 0
+      }).format(n || 0);
+    },
 
-                        // handle keys
-                        if (data.data.price !== undefined) this.currentPrice = Number(data.data.price);
+    async load() {
+      try {
+        const res = await fetch(url, { headers: { 'Accept': 'application/json' } });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const data = await res.json();
 
-                        if (data.data.percent !== undefined) this.pricePercent = data.data.percent;
+        // Handle snake_case or camelCase keys
+        if (data.currentPrice !== undefined) this.currentPrice = Number(data.currentPrice);
+        if (data.current_price !== undefined) this.currentPrice = Number(data.current_price);
 
-                        // if (data?.data?.chartHTML) {
-                        //     // 1) destroy the existing chart instance first
-                        //     this.destroyChart();
+        if (data.pricePercent !== undefined) this.pricePercent = data.pricePercent;
+        if (data.price_percent !== undefined) this.pricePercent = data.price_percent;
 
-                        //     // 2) replace the HTML (canvas is recreated)
-                        //     this.chartHtml = data.data.chartHTML;
+        if (data.chartHtml) this.chartHtml = data.chartHtml;
+        else if (data.chart_html) this.chartHtml = data.chart_html;
+        else if (typeof data === 'string') this.chartHtml = data;
+      } catch (e) {
+        this.error = e.message;
+        console.error('Fetch error:', e);
+      }
+    },
 
-                        //     // 3) after DOM update, (optionally) init if your HTML doesn't auto-init
-                        //     this.$nextTick(() => this.initIfNeeded());
-                        // }
-                        this.error = null; // clear any previous error
-                    } catch (e) {
-                        this.error = e.message;
-                        console.error('Fetch error:', e);
-                    }
-                },
-
-                start() {
-                    // load immediately
-                    this.load();
-                    // clear existing timer if exists
-                    if (this.timer) clearInterval(this.timer);
-                    // reload every 60 seconds
-                    // this.timer = setInterval(() => this.load(), 60000);
-                    this.timer = setInterval(() => this.load(), 10000);
-                },
-
-                stop() {
-                    if (this.timer) clearInterval(this.timer);
-                }
-            };
-        }
-    </script>
+    start() {
+      this.load();
+      this.timer = setInterval(() => this.load(), 60000);
+    },
+    stop() {
+      if (this.timer) clearInterval(this.timer);
+    }
+  }));
+});
+</script>
 @endpush

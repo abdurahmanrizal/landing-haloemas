@@ -161,35 +161,47 @@
         </div>
 
         <div class="w-full flex flex-col gap-2 border p-5">
-            <div x-data="goldPriceComponent()" x-init="start()">
+            {{-- <div>
+            <div class="">
+                <h3 class="text-base font-semibold italic">Harga Emas Murni (24K)</h3>
+                <p class="text-xl font-semibold">Rp {{ number_format($currentPrice ?? 0, 0, ',', '.') }}</p>
+                <p class="text-sm font-normal">Per gram
+                    <span class="font-semibold {{ ($pricePercent ?? 0) >= 0 ? 'text-green-600' : 'text-red-600' }}">
+                        {{ $pricePercent ?? 0 }}
+                    </span>
+                </p>
+            </div>
+            @include('components.gold-chart', ['charts' => $charts])
+        </div> --}}
+            <div x-data="goldLive('http://pms-be.test/api/landing-page/charts', {
+                currentPrice: @js($currentPrice ?? 0),
+                pricePercent: @js($pricePercent ?? 0)
+            })" x-init="start()" x-on:beforeunload.window="stop()">
                 <div>
                     <h3 class="text-base font-semibold italic">Harga Emas Murni (24K)</h3>
 
                     <!-- Price -->
                     <p class="text-xl font-semibold">
-                        <span x-text="formatCurrency(currentPrice)"></span>
+                        <span x-text="formatCurrency(currentPrice)">
+                        </span>
                     </p>
 
                     <!-- Percent -->
                     <p class="text-sm font-normal">
                         Per gram
                         <span class="font-semibold" :class="pricePercent >= 0 ? 'text-green-600' : 'text-red-600'"
-                            x-text="pricePercent"></span>
+                            x-text="pricePercent">
+                        </span>
                     </p>
+                </div>
 
-                    <!-- Chart -->
-                    <div>
-                        {{-- initial chart from blade --}}
-                        @include('components.gold-chart')
-                    </div>
+                <!-- Chart -->
+                <div x-html="chartHtml">
+                    @include('components.gold-chart', ['charts' => $charts])
                 </div>
             </div>
-            <div>
-                @include('components.gold-table', [
-                    'golds' => $golds,
-                    'lastUpdate' => $goldsLastUpdate,
-                ])
-            </div>
+            @include('components.gold-table', ['golds' => $golds, 'lastUpdate' => $goldsLastUpdate])
+        </div>
     </section>
 
     <section
@@ -529,75 +541,54 @@
         </template>
     </section>
 @endsection
-
 @push('scripts')
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollToPlugin.min.js"></script>
 <script>
-document.addEventListener('DOMContentLoaded', function () {
-    if (window.gsap && window.ScrollToPlugin) {
-        gsap.registerPlugin(ScrollToPlugin);
+document.addEventListener('alpine:init', () => {
+  Alpine.data('goldLive', (url, seed) => ({
+    currentPrice: Number(seed.currentPrice || 0),
+    pricePercent: seed.pricePercent || '0%',
+    chartHtml: '',
+    timer: null,
+    error: null,
+
+    formatCurrency(n) {
+      return new Intl.NumberFormat('id-ID', {
+        style: 'currency',
+        currency: 'IDR',
+        maximumFractionDigits: 0
+      }).format(n || 0);
+    },
+
+    async load() {
+      try {
+        const res = await fetch(url, { headers: { 'Accept': 'application/json' } });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const data = await res.json();
+
+        // Handle snake_case or camelCase keys
+        if (data.currentPrice !== undefined) this.currentPrice = Number(data.currentPrice);
+        if (data.current_price !== undefined) this.currentPrice = Number(data.current_price);
+
+        if (data.pricePercent !== undefined) this.pricePercent = data.pricePercent;
+        if (data.price_percent !== undefined) this.pricePercent = data.price_percent;
+
+        if (data.chartHtml) this.chartHtml = data.chartHtml;
+        else if (data.chart_html) this.chartHtml = data.chart_html;
+        else if (typeof data === 'string') this.chartHtml = data;
+      } catch (e) {
+        this.error = e.message;
+        console.error('Fetch error:', e);
+      }
+    },
+
+    start() {
+      this.load();
+      this.timer = setInterval(() => this.load(), 60000);
+    },
+    stop() {
+      if (this.timer) clearInterval(this.timer);
     }
-
-    const getHeaderOffset = function () {
-        const header = document.querySelector('header');
-        const base = header ? header.offsetHeight : 0;
-        return base + 8;
-    };
-
-    const distanceTo = function (el) {
-        return Math.abs((el.getBoundingClientRect().top + window.pageYOffset) - window.pageYOffset);
-    };
-
-    const computeDuration = function (dist) {
-        const pxPerSec = 1200;
-        const raw = dist / pxPerSec;
-        return Math.min(1.2, Math.max(0.4, raw));
-    };
-
-    const links = document.querySelectorAll('a[href*="#"]:not([href="#"])');
-
-    links.forEach(function (link) {
-        link.addEventListener('click', function (e) {
-            const url = new URL(this.href, window.location.href);
-            const isSamePage = (url.origin === window.location.origin) && (url.pathname === window.location.pathname);
-            if (!isSamePage || !url.hash) return;
-
-            const targetId = url.hash.replace('#', '');
-            const target = document.getElementById(targetId);
-            if (!target) return;
-
-            e.preventDefault();
-
-            const dist = distanceTo(target);
-            const duration = computeDuration(dist);
-
-            gsap.to(window, {
-                duration: duration,
-                scrollTo: { y: target, offsetY: getHeaderOffset(), autoKill: true },
-                ease: 'power3.inOut'
-            });
-
-            if (history.pushState) {
-                history.pushState(null, '', '#' + targetId);
-            }
-        });
-    });
-
-    if (location.hash) {
-        const target = document.getElementById(location.hash.substring(1));
-        if (target) {
-            const dist = distanceTo(target);
-            const duration = computeDuration(dist);
-            setTimeout(function () {
-                gsap.to(window, {
-                    duration: duration,
-                    scrollTo: { y: target, offsetY: getHeaderOffset(), autoKill: true },
-                    ease: 'power3.inOut'
-                });
-            }, 0);
-        }
-    }
+  }));
 });
 </script>
 @endpush

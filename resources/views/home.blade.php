@@ -494,3 +494,75 @@
 
 
 @endsection
+
+@push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollToPlugin.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    if (window.gsap && window.ScrollToPlugin) {
+        gsap.registerPlugin(ScrollToPlugin);
+    }
+
+    const getHeaderOffset = function () {
+        const header = document.querySelector('header');
+        const base = header ? header.offsetHeight : 0;
+        return base + 8;
+    };
+
+    const distanceTo = function (el) {
+        return Math.abs((el.getBoundingClientRect().top + window.pageYOffset) - window.pageYOffset);
+    };
+
+    const computeDuration = function (dist) {
+        const pxPerSec = 1200;
+        const raw = dist / pxPerSec;
+        return Math.min(1.2, Math.max(0.4, raw));
+    };
+
+    const links = document.querySelectorAll('a[href*="#"]:not([href="#"])');
+
+    links.forEach(function (link) {
+        link.addEventListener('click', function (e) {
+            const url = new URL(this.href, window.location.href);
+            const isSamePage = (url.origin === window.location.origin) && (url.pathname === window.location.pathname);
+            if (!isSamePage || !url.hash) return;
+
+            const targetId = url.hash.replace('#', '');
+            const target = document.getElementById(targetId);
+            if (!target) return;
+
+            e.preventDefault();
+
+            const dist = distanceTo(target);
+            const duration = computeDuration(dist);
+
+            gsap.to(window, {
+                duration: duration,
+                scrollTo: { y: target, offsetY: getHeaderOffset(), autoKill: true },
+                ease: 'power3.inOut'
+            });
+
+            if (history.pushState) {
+                history.pushState(null, '', '#' + targetId);
+            }
+        });
+    });
+
+    if (location.hash) {
+        const target = document.getElementById(location.hash.substring(1));
+        if (target) {
+            const dist = distanceTo(target);
+            const duration = computeDuration(dist);
+            setTimeout(function () {
+                gsap.to(window, {
+                    duration: duration,
+                    scrollTo: { y: target, offsetY: getHeaderOffset(), autoKill: true },
+                    ease: 'power3.inOut'
+                });
+            }, 0);
+        }
+    }
+});
+</script>
+@endpush

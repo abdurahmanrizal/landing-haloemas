@@ -4,6 +4,7 @@
     class="bg-white py-8"
     x-data="goldChartComponent()"
     x-init="initChart()"
+    x-on:beforeunload.window="destroy()"
 >
     <div class="max-w-6xl mx-auto px-4">
         <!-- Chart Container -->
@@ -31,12 +32,10 @@
       chart: null,
       timer: null,
       apiBaseUrl: '{{ env('API_BASE_URL', 'https://pms-testing.infokejadiansemarang.com/api/landing-page') }}',
-      // local plain copies for the labels under the chart
       fullDates: [],
 
       // --- helpers ---------------------------------------------------------
       _plain(obj) {
-        // deep clone to strip reactivity/circulars
         return JSON.parse(JSON.stringify(obj));
       },
       _monthName(idx) {
@@ -46,18 +45,21 @@
       },
 
       async fetchDataAndRender() {
-        // 1) fetch
         const res = await fetch(`${this.apiBaseUrl}/charts`, { cache: 'no-store' });
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const json = await res.json();
 
-        // 2) build plain arrays (no Alpine refs)
-        const prices = [];
-        const labels = [];     // short (day number) for X axis
-        const fullDates = [];  // full dates for tooltip + below labels
+        const chartsData = json.data?.charts || json.charts || json;
+        if (!Array.isArray(chartsData) || chartsData.length === 0) {
+          console.warn('No chart data available');
+          return;
+        }
 
-        for (const item of json) {
-          // handle both {date: 'YYYY-MM-DD'} or ISO strings with time
+        const prices = [];
+        const labels = [];  
+        const fullDates = [];
+
+        for (const item of chartsData) {
           const d = new Date(item.date);
           const day = String(d.getDate());
           labels.push(day);
@@ -65,10 +67,8 @@
           fullDates.push(`${d.getDate()} ${this._monthName(d.getMonth())}`);
         }
 
-        // update the labels below the chart (Alpine DOM)
         this.fullDates = this._plain(fullDates);
 
-        // 3) init or update the chart with *plain* data
         const dataPlain = {
           labels: this._plain(labels),
           datasets: [{
@@ -94,7 +94,7 @@
           const ctx = document.getElementById('goldChart')?.getContext('2d');
           if (!ctx) return;
 
-          const self = this; // avoid using Alpine proxy in callbacks
+          const self = this; 
 
           this.chart = new window.Chart(ctx, {
             type: 'line',
@@ -141,14 +141,12 @@
             }
           });
 
-          // store plain titles for tooltip (no Alpine refs)
           this.chart.$fullDates = this._plain(fullDates);
         } else {
           // safe update path
           this.chart.data.labels = this._plain(labels);
           this.chart.data.datasets[0].data = this._plain(prices);
           this.chart.$fullDates = this._plain(fullDates);
-          // guard update inside try to avoid silent throw
           try { this.chart.update(); } catch (e) { console.error('Chart update error:', e); }
         }
       },
@@ -160,24 +158,35 @@
           console.error('Fetch Error on init:', e);
         }
 
-        // clear old timer if any (avoid duplicates)
         if (this.timer) clearInterval(this.timer);
+        
         this.timer = setInterval(async () => {
-          try { await this.fetchDataAndRender(); } 
-          catch (e) { console.error('Fetch Error (interval):', e); }
-        }, 60_000); // 1 minute
+          try { 
+            await this.fetchDataAndRender(); 
+          } 
+          catch (e) { 
+            console.error('Fetch Error (interval):', e); 
+          }
+        }, 60_000); 
 
-        // cleanup on component destroy
-        this.$watch('$el', (el, oldEl) => {
-          // nothing; placeholder to illustrate Alpine lifecycle usage
-        });
-        this.$nextTick(() => {
-          // when Alpine tears down the component
-          this.$root.addEventListener('alpine:destroy', () => {
-            if (this.timer) clearInterval(this.timer);
-            if (this.chart) { try { this.chart.destroy(); } catch {} }
-          }, { once: true });
-        });
+        this.$el.addEventListener('alpine:destroy', () => {
+          this.destroy();
+        }, { once: true });
+      },
+
+      destroy() {
+        if (this.timer) {
+          clearInterval(this.timer);
+          this.timer = null;
+        }
+        if (this.chart) {
+          try {
+            this.chart.destroy();
+            this.chart = null;
+          } catch (e) {
+            console.error('Error destroying chart:', e);
+          }
+        }
       }
     }));
   });

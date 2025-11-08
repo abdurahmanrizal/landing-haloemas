@@ -163,7 +163,7 @@
         <div class="w-full flex flex-col gap-2 border p-5">
             <div x-data="goldPriceComponent()" x-init="start()">
                 <div>
-                    <h3 class="text-base font-semibold italic">Harga Emas Murni (24K)</h3>
+                    <h3 class="text-base font-semibold italic">Harga Emas Murni</h3>
 
                     <!-- Price -->
                     <p class="text-xl font-semibold">
@@ -173,7 +173,7 @@
                     <!-- Percent -->
                     <p class="text-sm font-normal">
                         Per gram
-                        <span class="font-semibold" :class="pricePercent >= 0 ? 'text-green-600' : 'text-red-600'"
+                        <span class="font-semibold" :class="pricePercent.split('%')[0] >= 0 ? 'text-green-600' : 'text-red-600'"
                             x-text="pricePercent"></span>
                     </p>
 
@@ -531,73 +531,143 @@
 @endsection
 
 @push('scripts')
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollToPlugin.min.js"></script>
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    if (window.gsap && window.ScrollToPlugin) {
-        gsap.registerPlugin(ScrollToPlugin);
-    }
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollToPlugin.min.js"></script>
+    <script>
+        function goldPriceComponent() {
+            return {
+                currentPrice: @js($currentPrice ?? 0),
+                pricePercent: @js($pricePercent ?? 0),
+                // chartHtml: @js(view('components.gold-chart', ['charts' => $charts])->render()),
+                timer: null,
+                error: null,
+                apiBaseUrl: '{{ env('API_BASE_URL', 'https://pms-testing.infokejadiansemarang.com/api/landing-page') }}',
 
-    const getHeaderOffset = function () {
-        const header = document.querySelector('header');
-        const base = header ? header.offsetHeight : 0;
-        return base + 8;
-    };
+                formatCurrency(n) {
+                    return new Intl.NumberFormat('id-ID', {
+                        style: 'currency',
+                        currency: 'IDR',
+                        maximumFractionDigits: 0
+                    }).format(n || 0);
+                },
+                async load() {
+                    try {
+                        const res = await fetch(`${this.apiBaseUrl}/charts`);
+                        if (!res.ok) throw new Error('HTTP ' + res.status);
+                        const data = await res.json();
 
-    const distanceTo = function (el) {
-        return Math.abs((el.getBoundingClientRect().top + window.pageYOffset) - window.pageYOffset);
-    };
+                        // handle keys
+                        if (data.data.price !== undefined) this.currentPrice = Number(data.data.price);
 
-    const computeDuration = function (dist) {
-        const pxPerSec = 1200;
-        const raw = dist / pxPerSec;
-        return Math.min(1.2, Math.max(0.4, raw));
-    };
+                        if (data.data.percent !== undefined) this.pricePercent = data.data.percent;
 
-    const links = document.querySelectorAll('a[href*="#"]:not([href="#"])');
+                        // if (data?.data?.chartHTML) {
+                        //     // 1) destroy the existing chart instance first
+                        //     this.destroyChart();
 
-    links.forEach(function (link) {
-        link.addEventListener('click', function (e) {
-            const url = new URL(this.href, window.location.href);
-            const isSamePage = (url.origin === window.location.origin) && (url.pathname === window.location.pathname);
-            if (!isSamePage || !url.hash) return;
+                        //     // 2) replace the HTML (canvas is recreated)
+                        //     this.chartHtml = data.data.chartHTML;
 
-            const targetId = url.hash.replace('#', '');
-            const target = document.getElementById(targetId);
-            if (!target) return;
+                        //     // 3) after DOM update, (optionally) init if your HTML doesn't auto-init
+                        //     this.$nextTick(() => this.initIfNeeded());
+                        // }
+                        this.error = null; // clear any previous error
+                    } catch (e) {
+                        this.error = e.message;
+                        console.error('Fetch error:', e);
+                    }
+                },
 
-            e.preventDefault();
+                start() {
+                    // load immediately
+                    this.load();
+                    // clear existing timer if exists
+                    if (this.timer) clearInterval(this.timer);
+                    // reload every 60 seconds
+                    // this.timer = setInterval(() => this.load(), 60000);
+                    this.timer = setInterval(() => this.load(), 10000);
+                },
 
-            const dist = distanceTo(target);
-            const duration = computeDuration(dist);
+                stop() {
+                    if (this.timer) clearInterval(this.timer);
+                }
+            };
+        }
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            if (window.gsap && window.ScrollToPlugin) {
+                gsap.registerPlugin(ScrollToPlugin);
+            }
 
-            gsap.to(window, {
-                duration: duration,
-                scrollTo: { y: target, offsetY: getHeaderOffset(), autoKill: true },
-                ease: 'power3.inOut'
+            const getHeaderOffset = function() {
+                const header = document.querySelector('header');
+                const base = header ? header.offsetHeight : 0;
+                return base + 8;
+            };
+
+            const distanceTo = function(el) {
+                return Math.abs((el.getBoundingClientRect().top + window.pageYOffset) - window.pageYOffset);
+            };
+
+            const computeDuration = function(dist) {
+                const pxPerSec = 1200;
+                const raw = dist / pxPerSec;
+                return Math.min(1.2, Math.max(0.4, raw));
+            };
+
+            const links = document.querySelectorAll('a[href*="#"]:not([href="#"])');
+
+            links.forEach(function(link) {
+                link.addEventListener('click', function(e) {
+                    const url = new URL(this.href, window.location.href);
+                    const isSamePage = (url.origin === window.location.origin) && (url.pathname ===
+                        window.location.pathname);
+                    if (!isSamePage || !url.hash) return;
+
+                    const targetId = url.hash.replace('#', '');
+                    const target = document.getElementById(targetId);
+                    if (!target) return;
+
+                    e.preventDefault();
+
+                    const dist = distanceTo(target);
+                    const duration = computeDuration(dist);
+
+                    gsap.to(window, {
+                        duration: duration,
+                        scrollTo: {
+                            y: target,
+                            offsetY: getHeaderOffset(),
+                            autoKill: true
+                        },
+                        ease: 'power3.inOut'
+                    });
+
+                    if (history.pushState) {
+                        history.pushState(null, '', '#' + targetId);
+                    }
+                });
             });
 
-            if (history.pushState) {
-                history.pushState(null, '', '#' + targetId);
+            if (location.hash) {
+                const target = document.getElementById(location.hash.substring(1));
+                if (target) {
+                    const dist = distanceTo(target);
+                    const duration = computeDuration(dist);
+                    setTimeout(function() {
+                        gsap.to(window, {
+                            duration: duration,
+                            scrollTo: {
+                                y: target,
+                                offsetY: getHeaderOffset(),
+                                autoKill: true
+                            },
+                            ease: 'power3.inOut'
+                        });
+                    }, 0);
+                }
             }
         });
-    });
-
-    if (location.hash) {
-        const target = document.getElementById(location.hash.substring(1));
-        if (target) {
-            const dist = distanceTo(target);
-            const duration = computeDuration(dist);
-            setTimeout(function () {
-                gsap.to(window, {
-                    duration: duration,
-                    scrollTo: { y: target, offsetY: getHeaderOffset(), autoKill: true },
-                    ease: 'power3.inOut'
-                });
-            }, 0);
-        }
-    }
-});
-</script>
+    </script>
 @endpush

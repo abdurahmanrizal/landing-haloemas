@@ -93,7 +93,7 @@
         class="w-full md:w-[90%] max-w-6xl mx-auto flex flex-col items-center justify-center gap-4 px-4 sm:px-6 lg:px-8 py-10">
         <div class="text-center lg:w-[560px] flex flex-col gap-1">
             <h1 class="text-xl md:text-2xl lg:text-3xl font-semibold">Kenapa Harus Haloemas.id?</h1>
-            <p class="text-sm md:text-md lg:text-base font-normal">Kami pengen bikin pengalaman beli emas jadi gampang,
+            <p class="text-md md:text-md lg:text-xl font-normal">Kami pengen bikin pengalaman beli emas jadi gampang,
                 aman,
                 dan bikin kamu nyaman.</p>
         </div>
@@ -105,8 +105,8 @@
                     <img class="rotate-6" src="{{ asset('images/icons/calculator-money.svg') }}" alt="Harga Selalu Update">
                 </div>
                 <div class="text-center w-[240px] flex flex-col gap-1">
-                    <h3 class="text-base font-semibold">Harga Selalu Update</h3>
-                    <span class="text-sm font-normal">Biar kamu nggak ketinggalan info harga terbaru.</span>
+                    <h3 class="text-xl font-semibold">Harga Selalu Update</h3>
+                    <span class="text-md font-normal">Biar kamu nggak ketinggalan info harga terbaru.</span>
                 </div>
             </div>
             <!-- Card -->
@@ -116,8 +116,8 @@
                     <img class="-rotate-6" src="{{ asset('images/icons/seller-store.svg') }}" alt="Toko Terpercaya">
                 </div>
                 <div class="text-center w-[240px] flex flex-col gap-1">
-                    <h3 class="text-base font-semibold">Toko Terpercaya</h3>
-                    <span class="text-sm font-normal">Semua toko partner udah terkurasi, jadi kamu bisa belanja dengan
+                    <h3 class="text-xl font-semibold">Toko Terpercaya</h3>
+                    <span class="text-md font-normal">Semua toko partner udah terkurasi, jadi kamu bisa belanja dengan
                         tenang.</span>
                 </div>
             </div>
@@ -128,8 +128,8 @@
                     <img class="rotate-6" src="{{ asset('images/icons/snap.svg') }}" alt="Mudah Diakses">
                 </div>
                 <div class="text-center w-[240px] flex flex-col gap-1">
-                    <h3 class="text-base font-semibold">Mudah Diakses</h3>
-                    <span class="text-sm font-normal">Cek harga, cari toko, atau baca tips emas kapan aja, di mana
+                    <h3 class="text-xl font-semibold">Mudah Diakses</h3>
+                    <span class="text-md font-normal">Cek harga, cari toko, atau baca tips emas kapan aja, di mana
                         aja.</span>
                 </div>
             </div>
@@ -140,8 +140,8 @@
                     <img class="-rotate-6" src="{{ asset('images/icons/shield-check.svg') }}" alt="Aman dan Transparan">
                 </div>
                 <div class="text-center w-[240px] flex flex-col gap-1">
-                    <h3 class="text-base font-semibold">Aman & Transparan</h3>
-                    <span class="text-sm font-normal">Kami jaga kepercayaan kamu dengan sistem yang jelas dan
+                    <h3 class="text-xl font-semibold">Aman & Transparan</h3>
+                    <span class="text-md font-normal">Kami jaga kepercayaan kamu dengan sistem yang jelas dan
                         terpercaya.</span>
                 </div>
             </div>
@@ -152,87 +152,66 @@
     <section id="harga-emas"
         class="w-full md:w-[90%] max-w-6xl mx-auto flex flex-col items-center justify-center gap-4 px-4 sm:px-6 lg:px-8 mt-32">
         <div class="text-centerlg:w-[560px] justify-center items-center flex flex-col gap-3 text-center">
-            <span class="px-4 py-2 text-sm font-semibold w-fit bg-[#FEF9E4] border border-[#FBE68E]">
+            <span class="px-4 py-2 text-md font-semibold w-fit bg-[#FEF9E4] border border-[#FBE68E]">
                 {{ \Carbon\Carbon::now()->locale('id')->isoFormat('DD MMMM YYYY') }}
             </span>
             <h2 class="text-xl md:text-2xl lg:text-3xl font-semibold">Harga Jual Emas Hari Ini</h2>
-            <p class="text-md md:text-md lg:text-base font-normal max-w-[644px]">Pantau harga emas terbaru setiap hari.
+            <p class="text-md md:text-md lg:text-xl font-normal max-w-[644px]">Pantau harga emas terbaru setiap hari.
                 Transparan, gampang dicek, dan selalu update biar kamu lebih yakin sebelum jual.</p>
         </div>
 
-        <div class="w-full flex flex-col gap-2 border p-5">
-            <div x-data="goldPriceComponent()" x-init="start()">
-                <div>
-                    <h3 class="text-base font-semibold italic">Harga Emas Murni</h3>
-
-                    <!-- Price -->
-                    <p class="text-xl font-semibold">
-                        <span x-text="formatCurrency(currentPrice)"></span>
-                    </p>
-
-                    <!-- Percent -->
-                    <p class="text-sm font-normal">
-                        Per gram
-                        <span class="font-semibold" :class="pricePercent.split('%')[0] >= 0 ? 'text-green-600' : 'text-red-600'"
-                            x-text="pricePercent"></span>
-                    </p>
-
-                    <!-- Chart -->
-                    <div>
-                        {{-- initial chart from blade --}}
-                        @include('components.gold-chart')
-                    </div>
-                </div>
-            </div>
+        <div class="w-full flex flex-col border p-5 gap-4">
             <div>
                 @include('components.gold-table', [
                     'golds' => $golds,
                     'lastUpdate' => $goldsLastUpdate,
                 ])
             </div>
+            <div class="flex flex-col gap-1 w-full">
+                <div class="flex flex-col lg:flex-row justify-between mb-4">
+                    <h2 class="text-xl font-semibold italic">Harga Logam Mulia</h2>
+                    <p class="text-md font-normal italic">
+                        Terakhir Update:
+                        @if (isset($metalsLastUpdate))
+                            {{ \Carbon\Carbon::parse($metalsLastUpdate)->locale('id')->isoFormat('DD MMMM YYYY • HH:mm') }}
+                        @else
+                            -
+                        @endif
+                    </p>
+                </div>
+                <div class="overflow-x-auto shadow">
+                    <table class="min-w-full border border-gray-200">
+                        <thead class="bg-[#F7F2F6]">
+                            <tr class="text-left border-b">
+                                <th class="py-3 px-4 font-semibold text-gray-700">Kadar Karat</th>
+                                <th class="py-3 px-4 font-semibold text-gray-700">Harga per Gram</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200">
+                            @if (isset($metals) && count($metals) > 0)
+                                @foreach ($metals as $metal)
+                                    <tr>
+                                        <td class="py-3 px-4">Emas {{ $metal['name'] }}</td>
+                                        <td class="py-3 px-4">Rp {{ number_format($metal['price'], 0, ',', '.') }}</td>
+                                    </tr>
+                                @endforeach
+                            @else
+                                <tr>
+                                    <td colspan="2" class="py-3 px-4 text-center text-gray-500">
+                                        Data Logam Mulia belum tersedia
+                                    </td>
+                                </tr>
+                            @endif
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
     </section>
 
     <section
         class="w-full md:w-[90%] max-w-6xl mx-auto flex flex-col items-center justify-center gap-4 px-4 sm:px-6 lg:px-8 mt-5 mb-32">
-        <div class="flex flex-col gap-1 w-full">
-            <div class="flex flex-col lg:flex-row justify-between mb-4">
-                <h2 class="text-xl font-semibold italic">Harga Logam Mulia</h2>
-                <p class="text-sm font-normal italic">
-                    Terakhir Update:
-                    @if (isset($metalsLastUpdate))
-                        {{ \Carbon\Carbon::parse($metalsLastUpdate)->locale('id')->isoFormat('DD MMMM YYYY • HH:mm') }}
-                    @else
-                        -
-                    @endif
-                </p>
-            </div>
-            <div class="overflow-x-auto shadow">
-                <table class="min-w-full border border-gray-200">
-                    <thead class="bg-[#F7F2F6]">
-                        <tr class="text-left border-b">
-                            <th class="py-3 px-4 font-semibold text-gray-700">Kadar Karat</th>
-                            <th class="py-3 px-4 font-semibold text-gray-700">Harga per Gram</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-gray-200">
-                        @if (isset($metals) && count($metals) > 0)
-                            @foreach ($metals as $metal)
-                                <tr>
-                                    <td class="py-3 px-4">Emas {{ $metal['name'] }}</td>
-                                    <td class="py-3 px-4">Rp {{ number_format($metal['price'], 0, ',', '.') }}</td>
-                                </tr>
-                            @endforeach
-                        @else
-                            <tr>
-                                <td colspan="2" class="py-3 px-4 text-center text-gray-500">
-                                    Data Logam Mulia belum tersedia
-                                </td>
-                            </tr>
-                        @endif
-                    </tbody>
-                </table>
-            </div>
-        </div>
     </section>
 
     <!-- Toko kami section -->
@@ -250,7 +229,7 @@
         </div>
 
         <!-- Grid toko -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6 w-full">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6 w-full">
             @if (isset($stores) && count($stores) > 0)
                 @foreach ($stores as $store)
                     <!-- Kartu toko -->
@@ -258,15 +237,27 @@
                         <img src="{{ $store['image'] }}" alt="{{ $store['name'] }}" class="w-full h-64 object-cover">
                         <div class="p-4">
                             <h2 class="font-semibold text-lg">{{ $store['name'] }}</h2>
-                            <p class="text-gray-600 text-sm mt-1">
+                            <p class="text-gray-600 text-md mt-1">
                                 {{ $store['address'] }}
                             </p>
-                            @if (isset($store['link_address']) && $store['link_address'])
-                                <a href="{{ $store['link_address'] }}" target="_blank"
-                                    class="text-gray-600 text-sm font-medium mt-2 inline-block hover:underline">
-                                    Lihat Maps ↗
-                                </a>
-                            @endif
+                            @php
+                                $whatsappNumber = $store['whatsapp'] ?? ($store['phone'] ?? null);
+                                $sanitizedWhatsApp = $whatsappNumber ? preg_replace('/\D+/', '', $whatsappNumber) : null;
+                            @endphp
+                            <div class="mt-4 flex flex-col sm:flex-row gap-3 w-full">
+                                @if (isset($store['link_address']) && $store['link_address'])
+                                    <a href="{{ $store['link_address'] }}" target="_blank"
+                                        class="flex-1 inline-flex justify-center items-center gap-2 px-4 py-2 text-md font-semibold border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 transition text-center">
+                                        Lihat Maps ↗
+                                    </a>
+                                @endif
+                                @if ($sanitizedWhatsApp)
+                                    <a href="https://wa.me/{{ $sanitizedWhatsApp }}" target="_blank"
+                                        class="flex-1 inline-flex justify-center items-center gap-2 px-4 py-2 text-md font-semibold bg-green-500 text-white rounded-md hover:bg-green-600 transition text-center">
+                                        WhatsApp
+                                    </a>
+                                @endif
+                            </div>
                         </div>
                     </div>
                 @endforeach
@@ -349,7 +340,7 @@
                             }"
                                 class="border border-gray-300 bg-white shadow-sm p-8 rounded-md flex flex-col justify-between">
                                 <div class="mb-4">
-                                    <p class="text-gray-800 italic leading-relaxed text-base">
+                                    <p class="text-gray-800 italic leading-relaxed text-xl">
                                         <template x-if="!expanded || !isLong">
                                             <span
                                                 x-text="isLong ? '&quot;' + truncated + '&quot;' : '&quot;' + (testimony.content || '') + '&quot;'"></span>
@@ -362,12 +353,12 @@
                                         </template>
                                     </p>
                                     <button x-show="isLong" @click="expanded = !expanded"
-                                        class="text-yellow-600 hover:text-yellow-700 text-sm font-medium mt-2 transition-colors">
+                                        class="text-yellow-600 hover:text-yellow-700 text-md font-medium mt-2 transition-colors">
                                         <span x-show="!expanded">Baca selengkapnya</span>
                                         <span x-show="expanded">Sembunyikan</span>
                                     </button>
                                 </div>
-                                <p class="text-sm text-gray-600 font-medium" x-text="testimony.name || ''"></p>
+                                <p class="text-md text-gray-600 font-medium" x-text="testimony.name || ''"></p>
                             </div>
                         </template>
                     </div>
@@ -482,7 +473,7 @@
                                 x-text="formatDate(blog.date) + ' • Oleh ' + (blog.user_created_by || 'Admin')"></p>
                             <h3 class="text-lg font-semibold text-gray-900 mb-2 line-clamp-2 hover:text-yellow-600 transition-colors"
                                 x-text="blog.title"></h3>
-                            <p class="text-sm text-gray-600 line-clamp-3"
+                            <p class="text-md text-gray-600 line-clamp-3"
                                 x-text="blog.title.substring(0, 120) + (blog.title.length > 120 ? '...' : '')"></p>
                         </div>
                     </a>
@@ -500,7 +491,7 @@
         <template x-if="blogs.length > 0">
             <div class="flex flex-col items-center mt-10">
                 <template x-if="error">
-                    <p class="text-red-600 text-sm mb-4" x-text="error"></p>
+                    <p class="text-red-600 text-md mb-4" x-text="error"></p>
                 </template>
                 <button @click="loadMore()" :disabled="loading || currentPage >= lastPage"
                     class="px-8 py-3 border-2 border-gray-300 text-gray-700 font-medium rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-300 flex items-center gap-2">

@@ -93,7 +93,7 @@
         class="w-full md:w-[90%] max-w-6xl mx-auto flex flex-col items-center justify-center gap-4 px-4 sm:px-6 lg:px-8 py-10">
         <div class="text-center lg:w-[560px] flex flex-col gap-1">
             <h1 class="text-xl md:text-2xl lg:text-3xl font-semibold">Kenapa Harus Haloemas.id?</h1>
-            <p class="text-sm md:text-md lg:text-base font-normal">Kami pengen bikin pengalaman beli emas jadi gampang,
+            <p class="text-md md:text-md lg:text-xl font-normal">Kami pengen bikin pengalaman beli emas jadi gampang,
                 aman,
                 dan bikin kamu nyaman.</p>
         </div>
@@ -105,8 +105,8 @@
                     <img class="rotate-6" src="{{ asset('images/icons/calculator-money.svg') }}" alt="Harga Selalu Update">
                 </div>
                 <div class="text-center w-[240px] flex flex-col gap-1">
-                    <h3 class="text-base font-semibold">Harga Selalu Update</h3>
-                    <span class="text-sm font-normal">Biar kamu nggak ketinggalan info harga terbaru.</span>
+                    <h3 class="text-xl font-semibold">Harga Selalu Update</h3>
+                    <span class="text-md font-normal">Biar kamu nggak ketinggalan info harga terbaru.</span>
                 </div>
             </div>
             <!-- Card -->
@@ -116,8 +116,8 @@
                     <img class="-rotate-6" src="{{ asset('images/icons/seller-store.svg') }}" alt="Toko Terpercaya">
                 </div>
                 <div class="text-center w-[240px] flex flex-col gap-1">
-                    <h3 class="text-base font-semibold">Toko Terpercaya</h3>
-                    <span class="text-sm font-normal">Semua toko partner udah terkurasi, jadi kamu bisa belanja dengan
+                    <h3 class="text-xl font-semibold">Toko Terpercaya</h3>
+                    <span class="text-md font-normal">Semua toko partner udah terkurasi, jadi kamu bisa belanja dengan
                         tenang.</span>
                 </div>
             </div>
@@ -128,8 +128,8 @@
                     <img class="rotate-6" src="{{ asset('images/icons/snap.svg') }}" alt="Mudah Diakses">
                 </div>
                 <div class="text-center w-[240px] flex flex-col gap-1">
-                    <h3 class="text-base font-semibold">Mudah Diakses</h3>
-                    <span class="text-sm font-normal">Cek harga, cari toko, atau baca tips emas kapan aja, di mana
+                    <h3 class="text-xl font-semibold">Mudah Diakses</h3>
+                    <span class="text-md font-normal">Cek harga, cari toko, atau baca tips emas kapan aja, di mana
                         aja.</span>
                 </div>
             </div>
@@ -140,8 +140,8 @@
                     <img class="-rotate-6" src="{{ asset('images/icons/shield-check.svg') }}" alt="Aman dan Transparan">
                 </div>
                 <div class="text-center w-[240px] flex flex-col gap-1">
-                    <h3 class="text-base font-semibold">Aman & Transparan</h3>
-                    <span class="text-sm font-normal">Kami jaga kepercayaan kamu dengan sistem yang jelas dan
+                    <h3 class="text-xl font-semibold">Aman & Transparan</h3>
+                    <span class="text-md font-normal">Kami jaga kepercayaan kamu dengan sistem yang jelas dan
                         terpercaya.</span>
                 </div>
             </div>
@@ -152,56 +152,44 @@
     <section id="harga-emas"
         class="w-full md:w-[90%] max-w-6xl mx-auto flex flex-col items-center justify-center gap-4 px-4 sm:px-6 lg:px-8 mt-32">
         <div class="text-centerlg:w-[560px] justify-center items-center flex flex-col gap-3 text-center">
-            <span class="px-4 py-2 text-sm font-semibold w-fit bg-[#FEF9E4] border border-[#FBE68E]">
+            <span class="px-4 py-2 text-md font-semibold w-fit bg-[#FEF9E4] border border-[#FBE68E]">
                 {{ \Carbon\Carbon::now()->locale('id')->isoFormat('DD MMMM YYYY') }}
             </span>
             <h2 class="text-xl md:text-2xl lg:text-3xl font-semibold">Harga Jual Emas Hari Ini</h2>
-            <p class="text-md md:text-md lg:text-base font-normal max-w-[644px]">Pantau harga emas terbaru setiap hari.
+            <p class="text-md md:text-md lg:text-xl font-normal max-w-[644px]">Pantau harga emas terbaru setiap hari.
                 Transparan, gampang dicek, dan selalu update biar kamu lebih yakin sebelum jual.</p>
         </div>
 
         <div class="w-full flex flex-col gap-2 border p-5">
-            {{-- <div>
-            <div class="">
-                <h3 class="text-base font-semibold italic">Harga Emas Murni (24K)</h3>
-                <p class="text-xl font-semibold">Rp {{ number_format($currentPrice ?? 0, 0, ',', '.') }}</p>
-                <p class="text-sm font-normal">Per gram
-                    <span class="font-semibold {{ ($pricePercent ?? 0) >= 0 ? 'text-green-600' : 'text-red-600' }}">
-                        {{ $pricePercent ?? 0 }}
-                    </span>
-                </p>
-            </div>
-            @include('components.gold-chart', ['charts' => $charts])
-        </div> --}}
-            <div x-data="goldLive('http://pms-be.test/api/landing-page/charts', {
-                currentPrice: @js($currentPrice ?? 0),
-                pricePercent: @js($pricePercent ?? 0)
-            })" x-init="start()" x-on:beforeunload.window="stop()">
+            <div x-data="goldPriceComponent()" x-init="start()">
                 <div>
-                    <h3 class="text-base font-semibold italic">Harga Emas Murni (24K)</h3>
+                    <h3 class="text-xl font-semibold italic">Harga Emas Murni</h3>
 
                     <!-- Price -->
                     <p class="text-xl font-semibold">
-                        <span x-text="formatCurrency(currentPrice)">
-                        </span>
+                        <span x-text="formatCurrency(currentPrice)"></span>
                     </p>
 
                     <!-- Percent -->
-                    <p class="text-sm font-normal">
+                    <p class="text-md font-normal">
                         Per gram
-                        <span class="font-semibold" :class="pricePercent >= 0 ? 'text-green-600' : 'text-red-600'"
-                            x-text="pricePercent">
-                        </span>
+                        <span class="font-semibold" :class="pricePercent.split('%')[0] >= 0 ? 'text-green-600' : 'text-red-600'"
+                            x-text="pricePercent"></span>
                     </p>
-                </div>
 
-                <!-- Chart -->
-                <div x-html="chartHtml">
-                    @include('components.gold-chart', ['charts' => $charts])
+                    <!-- Chart -->
+                    <div>
+                        {{-- initial chart from blade --}}
+                        @include('components.gold-chart')
+                    </div>
                 </div>
             </div>
-            @include('components.gold-table', ['golds' => $golds, 'lastUpdate' => $goldsLastUpdate])
-        </div>
+            <div>
+                @include('components.gold-table', [
+                    'golds' => $golds,
+                    'lastUpdate' => $goldsLastUpdate,
+                ])
+            </div>
     </section>
 
     <section
@@ -209,7 +197,7 @@
         <div class="flex flex-col gap-1 w-full">
             <div class="flex flex-col lg:flex-row justify-between mb-4">
                 <h2 class="text-xl font-semibold italic">Harga Logam Mulia</h2>
-                <p class="text-sm font-normal italic">
+                <p class="text-md font-normal italic">
                     Terakhir Update:
                     @if (isset($metalsLastUpdate))
                         {{ \Carbon\Carbon::parse($metalsLastUpdate)->locale('id')->isoFormat('DD MMMM YYYY • HH:mm') }}
@@ -270,12 +258,12 @@
                         <img src="{{ $store['image'] }}" alt="{{ $store['name'] }}" class="w-full h-64 object-cover">
                         <div class="p-4">
                             <h2 class="font-semibold text-lg">{{ $store['name'] }}</h2>
-                            <p class="text-gray-600 text-sm mt-1">
+                            <p class="text-gray-600 text-md mt-1">
                                 {{ $store['address'] }}
                             </p>
                             @if (isset($store['link_address']) && $store['link_address'])
                                 <a href="{{ $store['link_address'] }}" target="_blank"
-                                    class="text-gray-600 text-sm font-medium mt-2 inline-block hover:underline">
+                                    class="text-gray-600 text-md font-medium mt-2 inline-block hover:underline">
                                     Lihat Maps ↗
                                 </a>
                             @endif
@@ -361,7 +349,7 @@
                             }"
                                 class="border border-gray-300 bg-white shadow-sm p-8 rounded-md flex flex-col justify-between">
                                 <div class="mb-4">
-                                    <p class="text-gray-800 italic leading-relaxed text-base">
+                                    <p class="text-gray-800 italic leading-relaxed text-xl">
                                         <template x-if="!expanded || !isLong">
                                             <span
                                                 x-text="isLong ? '&quot;' + truncated + '&quot;' : '&quot;' + (testimony.content || '') + '&quot;'"></span>
@@ -374,12 +362,12 @@
                                         </template>
                                     </p>
                                     <button x-show="isLong" @click="expanded = !expanded"
-                                        class="text-yellow-600 hover:text-yellow-700 text-sm font-medium mt-2 transition-colors">
+                                        class="text-yellow-600 hover:text-yellow-700 text-md font-medium mt-2 transition-colors">
                                         <span x-show="!expanded">Baca selengkapnya</span>
                                         <span x-show="expanded">Sembunyikan</span>
                                     </button>
                                 </div>
-                                <p class="text-sm text-gray-600 font-medium" x-text="testimony.name || ''"></p>
+                                <p class="text-md text-gray-600 font-medium" x-text="testimony.name || ''"></p>
                             </div>
                         </template>
                     </div>
@@ -494,7 +482,7 @@
                                 x-text="formatDate(blog.date) + ' • Oleh ' + (blog.user_created_by || 'Admin')"></p>
                             <h3 class="text-lg font-semibold text-gray-900 mb-2 line-clamp-2 hover:text-yellow-600 transition-colors"
                                 x-text="blog.title"></h3>
-                            <p class="text-sm text-gray-600 line-clamp-3"
+                            <p class="text-md text-gray-600 line-clamp-3"
                                 x-text="blog.title.substring(0, 120) + (blog.title.length > 120 ? '...' : '')"></p>
                         </div>
                     </a>
@@ -512,7 +500,7 @@
         <template x-if="blogs.length > 0">
             <div class="flex flex-col items-center mt-10">
                 <template x-if="error">
-                    <p class="text-red-600 text-sm mb-4" x-text="error"></p>
+                    <p class="text-red-600 text-md mb-4" x-text="error"></p>
                 </template>
                 <button @click="loadMore()" :disabled="loading || currentPage >= lastPage"
                     class="px-8 py-3 border-2 border-gray-300 text-gray-700 font-medium rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-300 flex items-center gap-2">
@@ -541,54 +529,145 @@
         </template>
     </section>
 @endsection
+
 @push('scripts')
-<script>
-document.addEventListener('alpine:init', () => {
-  Alpine.data('goldLive', (url, seed) => ({
-    currentPrice: Number(seed.currentPrice || 0),
-    pricePercent: seed.pricePercent || '0%',
-    chartHtml: '',
-    timer: null,
-    error: null,
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollToPlugin.min.js"></script>
+    <script>
+        function goldPriceComponent() {
+            return {
+                currentPrice: @js($currentPrice ?? 0),
+                pricePercent: @js($pricePercent ?? 0),
+                // chartHtml: @js(view('components.gold-chart', ['charts' => $charts])->render()),
+                timer: null,
+                error: null,
+                apiBaseUrl: '{{ env('API_BASE_URL', 'https://pms-testing.infokejadiansemarang.com/api/landing-page') }}',
 
-    formatCurrency(n) {
-      return new Intl.NumberFormat('id-ID', {
-        style: 'currency',
-        currency: 'IDR',
-        maximumFractionDigits: 0
-      }).format(n || 0);
-    },
+                formatCurrency(n) {
+                    return new Intl.NumberFormat('id-ID', {
+                        style: 'currency',
+                        currency: 'IDR',
+                        maximumFractionDigits: 0
+                    }).format(n || 0);
+                },
+                async load() {
+                    try {
+                        const res = await fetch(`${this.apiBaseUrl}/charts`);
+                        if (!res.ok) throw new Error('HTTP ' + res.status);
+                        const data = await res.json();
 
-    async load() {
-      try {
-        const res = await fetch(url, { headers: { 'Accept': 'application/json' } });
-        if (!res.ok) throw new Error('HTTP ' + res.status);
-        const data = await res.json();
+                        // handle keys
+                        if (data.data.price !== undefined) this.currentPrice = Number(data.data.price);
 
-        // Handle snake_case or camelCase keys
-        if (data.currentPrice !== undefined) this.currentPrice = Number(data.currentPrice);
-        if (data.current_price !== undefined) this.currentPrice = Number(data.current_price);
+                        if (data.data.percent !== undefined) this.pricePercent = data.data.percent;
 
-        if (data.pricePercent !== undefined) this.pricePercent = data.pricePercent;
-        if (data.price_percent !== undefined) this.pricePercent = data.price_percent;
+                        // if (data?.data?.chartHTML) {
+                        //     // 1) destroy the existing chart instance first
+                        //     this.destroyChart();
 
-        if (data.chartHtml) this.chartHtml = data.chartHtml;
-        else if (data.chart_html) this.chartHtml = data.chart_html;
-        else if (typeof data === 'string') this.chartHtml = data;
-      } catch (e) {
-        this.error = e.message;
-        console.error('Fetch error:', e);
-      }
-    },
+                        //     // 2) replace the HTML (canvas is recreated)
+                        //     this.chartHtml = data.data.chartHTML;
 
-    start() {
-      this.load();
-      this.timer = setInterval(() => this.load(), 60000);
-    },
-    stop() {
-      if (this.timer) clearInterval(this.timer);
-    }
-  }));
-});
-</script>
+                        //     // 3) after DOM update, (optionally) init if your HTML doesn't auto-init
+                        //     this.$nextTick(() => this.initIfNeeded());
+                        // }
+                        this.error = null; // clear any previous error
+                    } catch (e) {
+                        this.error = e.message;
+                        console.error('Fetch error:', e);
+                    }
+                },
+
+                start() {
+                    // load immediately
+                    this.load();
+                    // clear existing timer if exists
+                    if (this.timer) clearInterval(this.timer);
+                    // reload every 60 seconds
+                    // this.timer = setInterval(() => this.load(), 60000);
+                    this.timer = setInterval(() => this.load(), 10000);
+                },
+
+                stop() {
+                    if (this.timer) clearInterval(this.timer);
+                }
+            };
+        }
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            if (window.gsap && window.ScrollToPlugin) {
+                gsap.registerPlugin(ScrollToPlugin);
+            }
+
+            const getHeaderOffset = function() {
+                const header = document.querySelector('header');
+                const base = header ? header.offsetHeight : 0;
+                return base + 8;
+            };
+
+            const distanceTo = function(el) {
+                return Math.abs((el.getBoundingClientRect().top + window.pageYOffset) - window.pageYOffset);
+            };
+
+            const computeDuration = function(dist) {
+                const pxPerSec = 1200;
+                const raw = dist / pxPerSec;
+                return Math.min(1.2, Math.max(0.4, raw));
+            };
+
+            const links = document.querySelectorAll('a[href*="#"]:not([href="#"])');
+
+            links.forEach(function(link) {
+                link.addEventListener('click', function(e) {
+                    const url = new URL(this.href, window.location.href);
+                    const isSamePage = (url.origin === window.location.origin) && (url.pathname ===
+                        window.location.pathname);
+                    if (!isSamePage || !url.hash) return;
+
+                    const targetId = url.hash.replace('#', '');
+                    const target = document.getElementById(targetId);
+                    if (!target) return;
+
+                    e.preventDefault();
+
+                    const dist = distanceTo(target);
+                    const duration = computeDuration(dist);
+
+                    gsap.to(window, {
+                        duration: duration,
+                        scrollTo: {
+                            y: target,
+                            offsetY: getHeaderOffset(),
+                            autoKill: true
+                        },
+                        ease: 'power3.inOut'
+                    });
+
+                    if (history.pushState) {
+                        history.pushState(null, '', '#' + targetId);
+                    }
+                });
+            });
+
+            if (location.hash) {
+                const target = document.getElementById(location.hash.substring(1));
+                if (target) {
+                    const dist = distanceTo(target);
+                    const duration = computeDuration(dist);
+                    setTimeout(function() {
+                        gsap.to(window, {
+                            duration: duration,
+                            scrollTo: {
+                                y: target,
+                                offsetY: getHeaderOffset(),
+                                autoKill: true
+                            },
+                            ease: 'power3.inOut'
+                        });
+                    }, 0);
+                }
+            }
+        });
+    </script>
 @endpush

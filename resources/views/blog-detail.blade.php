@@ -95,13 +95,13 @@
 
                 <!-- Breadcrumb -->
                 <div class="mb-6">
-                    <span class="inline-block px-3 py-1 text-sm font-medium bg-gray-100 text-gray-700 rounded-full">
+                    <span class="inline-block px-3 py-1 text-md font-medium bg-gray-100 text-gray-700 rounded-full">
                         {{ $blog['category'] ?? 'Berita Emas' }}
                     </span>
                 </div>
 
                 <!-- Meta Info -->
-                <p class="text-sm text-gray-500 mb-4">
+                <p class="text-md text-gray-500 mb-4">
                     {{ \Carbon\Carbon::parse($blog['date'])->locale('id')->isoFormat('DD MMMM YYYY') }} •
                     Oleh {{ $blog['user_created_by'] ?? 'Admin' }}
                 </p>
@@ -210,7 +210,7 @@
                     <!-- Loading State -->
                     <div x-show="loading" class="text-center py-8">
                         <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-yellow-600"></div>
-                        <p class="text-sm text-gray-500 mt-2">Mencari...</p>
+                        <p class="text-md text-gray-500 mt-2">Mencari...</p>
                     </div>
 
                     <!-- Blog List -->
@@ -223,7 +223,7 @@
                                         <p class="text-xs text-gray-500 mb-2"
                                             x-text="`${formatDate(blog.date)} • Oleh ${blog.user_created_by || 'Admin'}`">
                                         </p>
-                                        <h4 class="text-sm font-semibold text-gray-900 line-clamp-2 group-hover:text-yellow-600 transition-colors"
+                                        <h4 class="text-md font-semibold text-gray-900 line-clamp-2 group-hover:text-yellow-600 transition-colors"
                                             x-text="blog.title"></h4>
                                     </a>
                                 </template>
@@ -231,7 +231,7 @@
                         </template>
 
                         <template x-if="blogs.length === 0">
-                            <p class="text-sm text-gray-500">Tidak ada blog ditemukan</p>
+                            <p class="text-md text-gray-500">Tidak ada blog ditemukan</p>
                         </template>
                     </div>
                 </div>
@@ -242,7 +242,7 @@
                                 <h3 class="text-lg font-semibold mb-4">Tag</h3>
                                 <div class="flex flex-wrap gap-2">
                                     @foreach ($tags as $tag)
-    <span class="px-3 py-1 text-sm bg-gray-100 text-gray-700 rounded-full">
+    <span class="px-3 py-1 text-md bg-gray-100 text-gray-700 rounded-full">
                                             {{ $tag['name'] }}
                                         </span>
     @endforeach
@@ -280,7 +280,7 @@
                                     •
                                     Oleh {{ $related['user_created_by'] ?? 'Admin' }}
                                 </p>
-                                <h3 class="text-base font-semibold text-gray-900 line-clamp-2">
+                                <h3 class="text-xl font-semibold text-gray-900 line-clamp-2">
                                     {{ $related['title'] }}
                                 </h3>
                             </div>

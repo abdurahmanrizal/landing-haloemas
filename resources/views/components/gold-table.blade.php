@@ -1,7 +1,7 @@
 <div class="flex flex-col gap-1 w-full px-4 lg:px-0 max-w-6xl">
     <div class="flex flex-col lg:flex-row justify-between mb-4">
-        <h1 class="text-base font-semibold italic">Harga Emas Semua Kadar</h1>
-        <p class="text-sm font-normal italic">
+        <h1 class="text-xl font-semibold italic">Harga Emas Semua Kadar</h1>
+        <p class="text-md font-normal italic">
             Terakhir Update:
             @if (isset($lastUpdate))
                 {{ \Carbon\Carbon::parse($lastUpdate)->locale('id')->isoFormat('DD MMMM YYYY • HH:mm') }}

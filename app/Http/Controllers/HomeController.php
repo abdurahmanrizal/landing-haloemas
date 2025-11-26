@@ -10,7 +10,7 @@ class HomeController extends Controller
     public function index()
     {
         $apiBaseUrl = env('API_BASE_URL', 'https://pms-testing.infokejadiansemarang.com/api/landing-page');
-        $verifySSL = env('API_VERIFY_SSL', true); // Default true untuk keamanan
+        $verifySSL = env('API_VERIFY_SSL', false); // Default true untuk keamanan
         
         try {
             // Banner

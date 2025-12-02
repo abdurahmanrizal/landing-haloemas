@@ -5,21 +5,21 @@
                 <!-- Logo -->
                 <a href="{{ route('home') }}" class="flex items-center space-x-2">
                     <img src="{{ asset('images/logo.svg') }}" alt="Halo Emas Logo" class="w-5 h-5 sm:w-6 sm:h-6 object-cover">
-                    <span class="text-sm sm:text-base lg:text-lg font-bold text-white font-poppins">HALOEMAS.ID</span>
+                    <span class="text-md sm:text-lg lg:text-lg font-normal text-white font-poppins">HALOEMAS.ID</span>
                 </a>
 
                 <!-- Desktop Navigation -->
                 <div class="hidden lg:flex items-center space-x-6 xl:space-x-8">
-                    <a href="{{ route('home') }}#hero" class="text-white hover:text-secondary transition-colors duration-200 font-normal text-sm xl:text-base">Home</a>
-                    <a href="{{ route('home') }}#harga-emas" class="text-white hover:text-secondary transition-colors duration-200 font-normal text-sm xl:text-base">Harga Emas</a>
-                    <a href="{{ route('home') }}#toko-kami" class="text-white hover:text-secondary transition-colors duration-200 font-normal text-sm xl:text-base">Toko Kami</a>
-                    <a href="{{ route('home') }}#testimonial" class="text-white hover:text-secondary transition-colors duration-200 font-normal text-sm xl:text-base">Testimoni</a>
-                    <a href="{{ route('home') }}#blog" class="text-white hover:text-secondary transition-colors duration-200 font-normal text-sm xl:text-base">Blog</a>
+                    <a href="{{ route('home') }}#hero" class="text-white font-bold hover:text-secondary transition-colors duration-200 text-md xl:text-lg">Home</a>
+                    <a href="{{ route('home') }}#harga-emas" class="text-white font-bold hover:text-secondary transition-colors duration-200 text-md xl:text-lg">Harga Emas</a>
+                    <a href="{{ route('home') }}#toko-kami" class="text-white font-bold hover:text-secondary transition-colors duration-200 text-md xl:text-lg">Lokasi</a>
+                    <a href="{{ route('home') }}#testimonial" class="text-white font-bold hover:text-secondary transition-colors duration-200 text-md xl:text-lg">Testimoni</a>
+                    <a href="{{ route('home') }}#blog" class="text-white font-bold hover:text-secondary transition-colors duration-200 text-md xl:text-lg">Blog</a>
                 </div>
                 
                 <!-- Desktop CTA Button -->
                 <div class="">
-                    <a href="https://wa.me/nomor_wa" target="_blank" class="bg-secondary hover:bg-yellow-300 text-black px-4 xl:px-6 py-2 font-normal transition-colors duration-200 text-center text-sm xl:text-base">
+                    <a href="mailto:support@haloemas.id" class="bg-secondary hover:bg-yellow-300 text-black px-4 xl:px-6 py-2 font-bold transition-colors duration-200 text-center text-md xl:text-xl">
                         Hubungi Kami
                     </a>
                 </div>

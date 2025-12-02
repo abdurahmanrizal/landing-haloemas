@@ -85,8 +85,8 @@
     @endpush
 
 @section('content')
-<!-- Hero Slideshow Section -->
-@include('components.hero', ['banners' => $banners])
+    <!-- Hero Slideshow Section -->
+    @include('components.hero', ['banners' => $banners])
 
     <!-- About Section -->
     <section id="about"
@@ -160,58 +160,79 @@
                 Transparan, gampang dicek, dan selalu update biar kamu lebih yakin sebelum jual.</p>
         </div>
 
-        <div class="w-full flex flex-col gap-4">
+        <div class="w-full flex flex-col gap-2 border p-5">
+            <div x-data="goldPriceComponent()" x-init="start()">
+                <div>
+                    <h3 class="text-xl font-semibold italic">Harga Emas Murni</h3>
+
+                    <!-- Price -->
+                    <p class="text-xl font-semibold">
+                        <span x-text="formatCurrency(currentPrice)"></span>
+                    </p>
+
+                    <!-- Percent -->
+                    <p class="text-md font-normal">
+                        Per gram
+                        <span class="font-semibold" :class="pricePercent.split('%')[0] >= 0 ? 'text-green-600' : 'text-red-600'"
+                            x-text="pricePercent"></span>
+                    </p>
+
+                    <!-- Chart -->
+                    <div>
+                        {{-- initial chart from blade --}}
+                        @include('components.gold-chart')
+                    </div>
+                </div>
+            </div>
             <div>
                 @include('components.gold-table', [
                     'golds' => $golds,
                     'lastUpdate' => $goldsLastUpdate,
                 ])
             </div>
-            <div class="flex flex-col gap-1 w-full">
-                <div class="flex flex-col lg:flex-row justify-between mb-4">
-                    <h2 class="text-xl font-semibold italic">Harga Logam Mulia</h2>
-                    <p class="text-md font-normal italic">
-                        Terakhir Update:
-                        @if (isset($metalsLastUpdate))
-                            {{ \Carbon\Carbon::parse($metalsLastUpdate)->locale('id')->isoFormat('DD MMMM YYYY • HH:mm') }}
-                        @else
-                            -
-                        @endif
-                    </p>
-                </div>
-                <div class="overflow-x-auto shadow max-h-[300px] overflow-y-auto pe-2">
-                    <table class="min-w-full border border-gray-200">
-                        <thead class="bg-[#F7F2F6]">
-                            <tr class="text-left border-b">
-                                <th class="py-3 px-4 font-semibold text-gray-700">Kadar Karat</th>
-                                <th class="py-3 px-4 font-semibold text-gray-700">Harga per Gram</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-gray-200">
-                            @if (isset($metals) && count($metals) > 0)
-                                @foreach ($metals as $metal)
-                                    <tr>
-                                        <td class="py-3 px-4">Emas {{ $metal['name'] }}</td>
-                                        <td class="py-3 px-4">Rp {{ number_format($metal['price'], 0, ',', '.') }}</td>
-                                    </tr>
-                                @endforeach
-                            @else
-                                <tr>
-                                    <td colspan="2" class="py-3 px-4 text-center text-gray-500">
-                                        Data Logam Mulia belum tersedia
-                                    </td>
-                                </tr>
-                            @endif
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
     </section>
 
     <section
         class="w-full md:w-[90%] max-w-6xl mx-auto flex flex-col items-center justify-center gap-4 px-4 sm:px-6 lg:px-8 mt-5 mb-32">
+        <div class="flex flex-col gap-1 w-full">
+            <div class="flex flex-col lg:flex-row justify-between mb-4">
+                <h2 class="text-xl font-semibold italic">Harga Logam Mulia</h2>
+                <p class="text-md font-normal italic">
+                    Terakhir Update:
+                    @if (isset($metalsLastUpdate))
+                        {{ \Carbon\Carbon::parse($metalsLastUpdate)->locale('id')->isoFormat('DD MMMM YYYY • HH:mm') }}
+                    @else
+                        -
+                    @endif
+                </p>
+            </div>
+            <div class="overflow-x-auto shadow">
+                <table class="min-w-full border border-gray-200">
+                    <thead class="bg-[#F7F2F6]">
+                        <tr class="text-left border-b">
+                            <th class="py-3 px-4 font-semibold text-gray-700">Kadar Karat</th>
+                            <th class="py-3 px-4 font-semibold text-gray-700">Harga per Gram</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200">
+                        @if (isset($metals) && count($metals) > 0)
+                            @foreach ($metals as $metal)
+                                <tr>
+                                    <td class="py-3 px-4">Emas {{ $metal['name'] }}</td>
+                                    <td class="py-3 px-4">Rp {{ number_format($metal['price'], 0, ',', '.') }}</td>
+                                </tr>
+                            @endforeach
+                        @else
+                            <tr>
+                                <td colspan="2" class="py-3 px-4 text-center text-gray-500">
+                                    Data Logam Mulia belum tersedia
+                                </td>
+                            </tr>
+                        @endif
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </section>
 
     <!-- Toko kami section -->
@@ -229,7 +250,7 @@
         </div>
 
         <!-- Grid toko -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6 w-full">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6 w-full">
             @if (isset($stores) && count($stores) > 0)
                 @foreach ($stores as $store)
                     <!-- Kartu toko -->
@@ -237,45 +258,15 @@
                         <img src="{{ $store['image'] }}" alt="{{ $store['name'] }}" class="w-full h-64 object-cover">
                         <div class="p-4">
                             <h2 class="font-semibold text-lg">{{ $store['name'] }}</h2>
-                            @php
-                                $whatsappNumber = $store['whatsapp'] ?? ($store['phone'] ?? null);
-                                $sanitizedWhatsApp = $whatsappNumber ? preg_replace('/\D+/', '', $whatsappNumber) : null;
-                                // Format: +62 xxx xxxx xxxx
-                                if ($sanitizedWhatsApp) {
-                                    // Jika sudah ada 62 di depan, hapus
-                                    if (substr($sanitizedWhatsApp, 0, 2) == '62') {
-                                        $sanitizedWhatsApp = substr($sanitizedWhatsApp, 2);
-                                    }
-                                    // Format menjadi +62 xxx xxxx xxxx
-                                    if (strlen($sanitizedWhatsApp) >= 9) {
-                                        $formattedWhatsApp = '+62' . substr($sanitizedWhatsApp, 0, 3) . substr($sanitizedWhatsApp, 3, 4) . substr($sanitizedWhatsApp, 7);
-                                        $sanitizedWhatsApp = '62'. $sanitizedWhatsApp; // Untuk link wa.me
-                                    } else {
-                                        $formattedWhatsApp = '+' . $sanitizedWhatsApp;
-                                    }
-                                } else {
-                                    $formattedWhatsApp = null;
-                                }
-                            @endphp
-                            @if ($formattedWhatsApp)
-                                <div class="flex items-center gap-2 mt-2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#25D366" class="w-5 h-5">
-                                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
-                                    </svg>
-                                    <a href="https://wa.me/{{ $formattedWhatsApp }}" target="_blank" class="text-gray-600 text-md hover:underline">{{ $formattedWhatsApp }}</a>
-                                </div>
-                            @endif
                             <p class="text-gray-600 text-md mt-1">
                                 {{ $store['address'] }}
                             </p>
-                            <div class="mt-4 flex items-center gap-4">
-                                @if (isset($store['link_address']) && $store['link_address'])
-                                    <a href="{{ $store['link_address'] }}" target="_blank"
-                                        class="text-gray-600 text-md font-medium hover:underline">
-                                        Lihat Maps ↗
-                                    </a>
-                                @endif
-                            </div>
+                            @if (isset($store['link_address']) && $store['link_address'])
+                                <a href="{{ $store['link_address'] }}" target="_blank"
+                                    class="text-gray-600 text-md font-medium mt-2 inline-block hover:underline">
+                                    Lihat Maps ↗
+                                </a>
+                            @endif
                         </div>
                     </div>
                 @endforeach
@@ -289,20 +280,21 @@
     </section>
 
 
-<!-- Testimonial section -->
-<section id="testimonial" class="w-full md:w-[90%] max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 my-16">
-    <div class="mb-10">
-        <h2 class="text-2xl md:text-3xl font-semibold">
-            Apa <span class="italic">Kata Mereka?</span>
-        </h2>
-        <p class="text-gray-600 mt-2">
-            Dari pelayanan ramah sampai harga yang transparan, banyak yang udah ngerasain pengalaman belanja emas bareng
-            Halo Emas.
-            Sekarang giliran kamu buat buktiin sendiri.
-        </p>
-    </div>
+    <!-- Testimonial section -->
+    <section id="testimonial" class="w-full md:w-[90%] max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 my-16">
+        <div class="mb-10">
+            <h2 class="text-2xl md:text-3xl font-semibold">
+                Apa <span class="italic">Kata Mereka?</span>
+            </h2>
+            <p class="text-gray-600 mt-2">
+                Dari pelayanan ramah sampai harga yang transparan, banyak yang udah ngerasain pengalaman belanja emas bareng
+                Halo Emas.
+                Sekarang giliran kamu buat buktiin sendiri.
+            </p>
+        </div>
 
         @if (isset($testimonies) && count($testimonies) > 0)
+            <!-- Carousel -->
             <div x-data="{
                 testimonies: @js($testimonies ?? []),
                 itemsPerPage: 3,
@@ -315,12 +307,13 @@
                     const width = window.innerWidth;
                     const oldItemsPerPage = this.itemsPerPage;
                     if (width >= 1024) {
-                        this.itemsPerPage = 3;
+                        this.itemsPerPage = 3; // lg: desktop
                     } else if (width >= 768) {
-                        this.itemsPerPage = 2;
+                        this.itemsPerPage = 2; // md: tablet
                     } else {
-                        this.itemsPerPage = 1;
+                        this.itemsPerPage = 1; // mobile
                     }
+                    // Reset to first page if items per page changed
                     if (oldItemsPerPage !== this.itemsPerPage) {
                         this.active = 0;
                     }
@@ -334,60 +327,77 @@
                         pages.push(this.testimonies.slice(i, i + this.itemsPerPage));
                     }
                     return pages;
+                },
+                next() {
+                    this.active = (this.active + 1) % this.totalPages;
+                },
+                prev() {
+                    this.active = (this.active - 1 + this.totalPages) % this.totalPages;
                 }
             }" class="relative">
+
                 <template x-for="(page, pageIndex) in paginatedTestimonies" :key="pageIndex">
+                    <!-- Slides Container Page -->
                     <div x-show="active === pageIndex" x-transition:enter="transition ease-out duration-300"
                         x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
-                        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 min-h-[320px] px-4">
+                        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 min-h-[280px] px-12">
                         <template x-for="(testimony, index) in page" :key="index">
-                            <div class="flex flex-col gap-4">
-                                <template x-if="testimony.embed">
-                                    <div class="testimonial-embed w-full aspect-[3/4] rounded-xl overflow-hidden">
-                                        <div x-html="testimony.embed" class="w-full h-full"></div>
-                                    </div>
-                                </template>
-                                <template x-if="!testimony.embed">
-                                    <div x-data="{
-                                        expanded: false,
-                                        isLong: testimony.content ? testimony.content.length > 150 : false,
-                                        truncated: testimony.content && testimony.content.length > 150 ? testimony.content.substring(0, 150) + '...' : (testimony.content || ''),
-                                        full: testimony.content || ''
-                                    }" class="bg-white rounded-xl p-6 flex flex-col gap-3">
-                                        <p class="text-gray-800 italic leading-relaxed text-xl">
-                                            <template x-if="!expanded || !isLong">
-                                                <span
-                                                    x-text="isLong ? '&quot;' + truncated + '&quot;' : '&quot;' + full + '&quot;'"></span>
-                                            </template>
-                                            <template x-if="expanded && isLong">
-                                                <span x-show="expanded && isLong"
-                                                    x-transition:enter="transition ease-out duration-200"
-                                                    x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
-                                                    x-text="'&quot;' + full + '&quot;'"></span>
-                                            </template>
-                                        </p>
-                                        <button x-show="isLong" @click="expanded = !expanded"
-                                            class="text-yellow-600 hover:text-yellow-700 text-md font-medium transition-colors text-left">
-                                            <span x-show="!expanded">Baca selengkapnya</span>
-                                            <span x-show="expanded">Sembunyikan</span>
-                                        </button>
-                                    </div>
-                                </template>
-                                <!-- <p class="text-md text-gray-600 font-medium" x-text="testimony.name || ''"></p> -->
+                            <div x-data="{
+                                expanded: false,
+                                isLong: testimony.content ? testimony.content.length > 150 : false,
+                                truncated: testimony.content && testimony.content.length > 150 ? testimony.content.substring(0, 150) + '...' : (testimony.content || '')
+                            }"
+                                class="border border-gray-300 bg-white shadow-sm p-8 rounded-md flex flex-col justify-between">
+                                <div class="mb-4">
+                                    <p class="text-gray-800 italic leading-relaxed text-xl">
+                                        <template x-if="!expanded || !isLong">
+                                            <span
+                                                x-text="isLong ? '&quot;' + truncated + '&quot;' : '&quot;' + (testimony.content || '') + '&quot;'"></span>
+                                        </template>
+                                        <template x-if="expanded && isLong">
+                                            <span x-show="expanded && isLong"
+                                                x-transition:enter="transition ease-out duration-200"
+                                                x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
+                                                x-text="'&quot;' + (testimony.content || '') + '&quot;'"></span>
+                                        </template>
+                                    </p>
+                                    <button x-show="isLong" @click="expanded = !expanded"
+                                        class="text-yellow-600 hover:text-yellow-700 text-md font-medium mt-2 transition-colors">
+                                        <span x-show="!expanded">Baca selengkapnya</span>
+                                        <span x-show="expanded">Sembunyikan</span>
+                                    </button>
+                                </div>
+                                <p class="text-md text-gray-600 font-medium" x-text="testimony.name || ''"></p>
                             </div>
                         </template>
                     </div>
                 </template>
 
+                <!-- Arrows -->
+                <template x-if="totalPages > 1">
+                    <div>
+                        <button @click="prev()"
+                            class="flex absolute left-0 top-1/2 -translate-y-1/2 bg-[#FBE68E] w-10 h-10 rounded-sm hover:bg-yellow-400 transition items-center justify-center text-xl">
+                            ←
+                        </button>
+
+                        <button @click="next()"
+                            class="flex absolute right-0 top-1/2 -translate-y-1/2 bg-[#FBE68E] w-10 h-10 rounded-sm hover:bg-yellow-400 transition items-center justify-center text-xl">
+                            →
+                        </button>
+                    </div>
+                </template>
+
+                <!-- Dots -->
                 <template x-if="totalPages > 1">
                     <div class="flex justify-center mt-8 space-x-2">
                         <template x-for="(page, pageIndex) in paginatedTestimonies" :key="pageIndex">
                             <button @click="active = pageIndex"
                                 :class="{
                                     'bg-black w-8': active === pageIndex,
-                                    'bg-gray-300 w-3': active !== pageIndex
+                                    'bg-gray-400 w-3': active !== pageIndex
                                 }"
-                                class="h-2 rounded-full transition-all duration-300"></button>
+                                class="h-2 transition-all duration-300"></button>
                         </template>
                     </div>
                 </template>
@@ -439,14 +449,14 @@
                 }
             }
         }">
-    <div class="flex flex-col gap-2 justify-center items-center text-center mb-10">
-        <h2 class="text-2xl md:text-3xl font-semibold">
-            Ngobrolin Emas di <span class="italic font-normal">Blog</span>
-        </h2>
-        <p class="text-gray-600">
-            Temukan cerita, tips, dan info menarik tentang dunia emas. Belajar jadi lebih santai dan asik.
-        </p>
-    </div>
+        <div class="flex flex-col gap-2 justify-center items-center text-center mb-10">
+            <h2 class="text-2xl md:text-3xl font-semibold">
+                Ngobrolin Emas di <span class="italic font-normal">Blog</span>
+            </h2>
+            <p class="text-gray-600">
+                Temukan cerita, tips, dan info menarik tentang dunia emas. Belajar jadi lebih santai dan asik.
+            </p>
+        </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
             <template x-if="blogs.length > 0">
@@ -479,12 +489,12 @@
                 </template>
             </template>
 
-        <template x-if="blogs.length === 0">
-            <div class="col-span-3 text-center py-12">
-                <p class="text-gray-500 text-lg">Belum ada artikel blog</p>
-            </div>
-        </template>
-    </div>
+            <template x-if="blogs.length === 0">
+                <div class="col-span-3 text-center py-12">
+                    <p class="text-gray-500 text-lg">Belum ada artikel blog</p>
+                </div>
+            </template>
+        </div>
 
         <!-- Load More Button -->
         <template x-if="blogs.length > 0">

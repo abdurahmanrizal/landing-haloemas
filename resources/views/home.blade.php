@@ -305,89 +305,172 @@
         @if (isset($testimonies) && count($testimonies) > 0)
             <div x-data="{
                 testimonies: @js($testimonies ?? []),
-                itemsPerPage: 3,
-                active: 0,
+                scrollContainer: null,
+                canScrollLeft: false,
+                canScrollRight: true,
+                activeDot: 0,
+                cardWidth: 320,
+                gap: 24,
                 init() {
-                    this.updateItemsPerPage();
-                    window.addEventListener('resize', () => this.updateItemsPerPage());
+                    this.$nextTick(() => {
+                        this.scrollContainer = this.$refs.scrollContainer;
+                        this.updateCardWidth();
+                        // Delay sedikit untuk memastikan container sudah ter-render
+                        setTimeout(() => {
+                            this.updateScrollButtons();
+                            this.updateActiveDot();
+                        }, 100);
+                    });
+                    window.addEventListener('resize', () => {
+                        this.updateCardWidth();
+                        setTimeout(() => {
+                            this.updateScrollButtons();
+                            this.updateActiveDot();
+                        }, 100);
+                    });
                 },
-                updateItemsPerPage() {
-                    const width = window.innerWidth;
-                    const oldItemsPerPage = this.itemsPerPage;
-                    if (width >= 1024) {
-                        this.itemsPerPage = 3;
-                    } else if (width >= 768) {
-                        this.itemsPerPage = 2;
+                updateCardWidth() {
+                    if (window.innerWidth < 640) {
+                        this.cardWidth = 280;
                     } else {
-                        this.itemsPerPage = 1;
-                    }
-                    if (oldItemsPerPage !== this.itemsPerPage) {
-                        this.active = 0;
+                        this.cardWidth = 320;
                     }
                 },
-                get totalPages() {
-                    return Math.ceil(this.testimonies.length / this.itemsPerPage);
+                get itemsPerView() {
+                    if (!this.scrollContainer) return 1;
+                    const containerWidth = this.scrollContainer.clientWidth;
+                    const cardWidthWithGap = this.cardWidth + this.gap;
+                    const calculated = containerWidth / cardWidthWithGap;
+                    return Math.max(1, Math.floor(calculated));
                 },
-                get paginatedTestimonies() {
-                    const pages = [];
-                    for (let i = 0; i < this.testimonies.length; i += this.itemsPerPage) {
-                        pages.push(this.testimonies.slice(i, i + this.itemsPerPage));
+                get totalDots() {
+                    if (!this.scrollContainer || this.testimonies.length === 0) return 1;
+                    const itemsPerView = this.itemsPerView || 1;
+                    const total = Math.ceil(this.testimonies.length / itemsPerView);
+                    return Math.max(1, total);
+                },
+                updateScrollButtons() {
+                    if (!this.scrollContainer) return;
+                    this.canScrollLeft = this.scrollContainer.scrollLeft > 0;
+                    this.canScrollRight = this.scrollContainer.scrollLeft < (this.scrollContainer.scrollWidth - this.scrollContainer.clientWidth - 10);
+                },
+                updateActiveDot() {
+                    if (!this.scrollContainer) return;
+                    const scrollLeft = this.scrollContainer.scrollLeft;
+                    const cardWidthWithGap = this.cardWidth + this.gap;
+                    const itemsPerView = this.itemsPerView || 1;
+                    const pageWidth = cardWidthWithGap * itemsPerView;
+                    
+                    // Hitung dot index berdasarkan posisi scroll dengan threshold
+                    // Gunakan Math.floor untuk mendapatkan page yang sedang terlihat
+                    let currentPage = Math.floor((scrollLeft + (pageWidth / 2)) / pageWidth);
+                    
+                    // Pastikan tidak melebihi total dots
+                    currentPage = Math.max(0, Math.min(currentPage, this.totalDots - 1));
+                    this.activeDot = currentPage;
+                },
+                scrollLeft() {
+                    if (this.scrollContainer) {
+                        const itemsPerView = this.itemsPerView || 1;
+                        const cardWidthWithGap = this.cardWidth + this.gap;
+                        const pageWidth = cardWidthWithGap * itemsPerView;
+                        this.scrollContainer.scrollBy({ left: -pageWidth, behavior: 'smooth' });
+                        setTimeout(() => {
+                            this.updateScrollButtons();
+                            this.updateActiveDot();
+                        }, 300);
                     }
-                    return pages;
+                },
+                scrollRight() {
+                    if (this.scrollContainer) {
+                        const itemsPerView = this.itemsPerView || 1;
+                        const cardWidthWithGap = this.cardWidth + this.gap;
+                        const pageWidth = cardWidthWithGap * itemsPerView;
+                        this.scrollContainer.scrollBy({ left: pageWidth, behavior: 'smooth' });
+                        setTimeout(() => {
+                            this.updateScrollButtons();
+                            this.updateActiveDot();
+                        }, 300);
+                    }
+                },
+                scrollToDot(dotIndex) {
+                    if (!this.scrollContainer) return;
+                    const itemsPerView = this.itemsPerView || 1;
+                    const cardWidthWithGap = this.cardWidth + this.gap;
+                    const pageWidth = cardWidthWithGap * itemsPerView;
+                    const scrollAmount = pageWidth * dotIndex;
+                    this.scrollContainer.scrollTo({ left: scrollAmount, behavior: 'smooth' });
+                    setTimeout(() => {
+                        this.updateScrollButtons();
+                        this.updateActiveDot();
+                    }, 300);
                 }
             }" class="relative">
-                <template x-for="(page, pageIndex) in paginatedTestimonies" :key="pageIndex">
-                    <div x-show="active === pageIndex" x-transition:enter="transition ease-out duration-300"
-                        x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
-                        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 min-h-[320px] px-4">
-                        <template x-for="(testimony, index) in page" :key="index">
-                            <div class="flex flex-col gap-4">
-                                <template x-if="testimony.embed">
-                                    <div class="testimonial-embed w-full aspect-[3/4] rounded-xl overflow-hidden">
-                                        <div x-html="testimony.embed" class="w-full h-full"></div>
-                                    </div>
-                                </template>
-                                <template x-if="!testimony.embed">
-                                    <div x-data="{
-                                        expanded: false,
-                                        isLong: testimony.content ? testimony.content.length > 150 : false,
-                                        truncated: testimony.content && testimony.content.length > 150 ? testimony.content.substring(0, 150) + '...' : (testimony.content || ''),
-                                        full: testimony.content || ''
-                                    }" class="bg-white rounded-xl p-6 flex flex-col gap-3">
-                                        <p class="text-gray-800 italic leading-relaxed text-xl">
-                                            <template x-if="!expanded || !isLong">
-                                                <span
-                                                    x-text="isLong ? '&quot;' + truncated + '&quot;' : '&quot;' + full + '&quot;'"></span>
-                                            </template>
-                                            <template x-if="expanded && isLong">
-                                                <span x-show="expanded && isLong"
-                                                    x-transition:enter="transition ease-out duration-200"
-                                                    x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
-                                                    x-text="'&quot;' + full + '&quot;'"></span>
-                                            </template>
-                                        </p>
-                                        <button x-show="isLong" @click="expanded = !expanded"
-                                            class="text-yellow-600 hover:text-yellow-700 text-md font-medium transition-colors text-left">
-                                            <span x-show="!expanded">Baca selengkapnya</span>
-                                            <span x-show="expanded">Sembunyikan</span>
-                                        </button>
-                                    </div>
-                                </template>
-                                <!-- <p class="text-md text-gray-600 font-medium" x-text="testimony.name || ''"></p> -->
-                            </div>
-                        </template>
+                <!-- Scroll Container -->
+                <div x-ref="scrollContainer" @scroll="updateScrollButtons(); updateActiveDot();" 
+                    class="flex gap-6 overflow-x-auto scrollbar-hide pb-4" 
+                    style="scrollbar-width: none; -ms-overflow-style: none;">
+                    <template x-for="(testimony, index) in testimonies" :key="index">
+                        <div class="flex-shrink-0 w-[280px] sm:w-[320px]">
+                            <template x-if="testimony.embed">
+                                <div class="testimonial-embed w-full h-[373px] sm:h-[426px] rounded-xl overflow-hidden">
+                                    <div x-html="testimony.embed" class="w-full h-full"></div>
+                                </div>
+                            </template>
+                            <template x-if="!testimony.embed">
+                                <div x-data="{
+                                    expanded: false,
+                                    isLong: testimony.content ? testimony.content.length > 150 : false,
+                                    truncated: testimony.content && testimony.content.length > 150 ? testimony.content.substring(0, 150) + '...' : (testimony.content || ''),
+                                    full: testimony.content || ''
+                                }" class="bg-white rounded-xl p-6 flex flex-col gap-3 h-[373px] sm:h-[426px]">
+                                    <p class="text-gray-800 italic leading-relaxed text-xl">
+                                        <template x-if="!expanded || !isLong">
+                                            <span
+                                                x-text="isLong ? '&quot;' + truncated + '&quot;' : '&quot;' + full + '&quot;'"></span>
+                                        </template>
+                                        <template x-if="expanded && isLong">
+                                            <span x-show="expanded && isLong"
+                                                x-transition:enter="transition ease-out duration-200"
+                                                x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
+                                                x-text="'&quot;' + full + '&quot;'"></span>
+                                        </template>
+                                    </p>
+                                    <button x-show="isLong" @click="expanded = !expanded"
+                                        class="text-yellow-600 hover:text-yellow-700 text-md font-medium transition-colors text-left">
+                                        <span x-show="!expanded">Baca selengkapnya</span>
+                                        <span x-show="expanded">Sembunyikan</span>
+                                    </button>
+                                </div>
+                            </template>
+                        </div>
+                    </template>
+                </div>
+
+                <!-- Navigation Buttons -->
+                <template x-if="testimonies.length > 1">
+                    <div>
+                        <button @click="scrollLeft()" x-show="canScrollLeft"
+                            class="hidden sm:flex absolute left-0 top-1/2 -translate-y-1/2 bg-white shadow-lg w-10 h-10 rounded-full items-center justify-center hover:bg-gray-50 transition z-10">
+                            ←
+                        </button>
+                        <button @click="scrollRight()" x-show="canScrollRight"
+                            class="hidden sm:flex absolute right-0 top-1/2 -translate-y-1/2 bg-white shadow-lg w-10 h-10 rounded-full items-center justify-center hover:bg-gray-50 transition z-10">
+                            →
+                        </button>
                     </div>
                 </template>
 
-                <template x-if="totalPages > 1">
-                    <div class="flex justify-center mt-8 space-x-2">
-                        <template x-for="(page, pageIndex) in paginatedTestimonies" :key="pageIndex">
-                            <button @click="active = pageIndex"
+                <!-- Dots Navigation -->
+                <template x-if="testimonies.length > 1 && totalDots > 1">
+                    <div class="flex justify-center mt-6 space-x-2">
+                        <template x-for="(dot, index) in Array(totalDots).fill(0)" :key="index">
+                            <button @click="scrollToDot(index)"
                                 :class="{
-                                    'bg-black w-8': active === pageIndex,
-                                    'bg-gray-300 w-3': active !== pageIndex
+                                    'bg-black w-8': activeDot === index,
+                                    'bg-gray-300 w-3': activeDot !== index
                                 }"
-                                class="h-2 rounded-full transition-all duration-300"></button>
+                                class="h-2 rounded-full transition-all duration-300 hover:bg-gray-400"></button>
                         </template>
                     </div>
                 </template>

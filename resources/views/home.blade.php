@@ -303,7 +303,6 @@
         </div>
 
         @if (isset($testimonies) && count($testimonies) > 0)
-            <!-- Carousel -->
             <div x-data="{
                 testimonies: @js($testimonies ?? []),
                 itemsPerPage: 3,
@@ -316,13 +315,12 @@
                     const width = window.innerWidth;
                     const oldItemsPerPage = this.itemsPerPage;
                     if (width >= 1024) {
-                        this.itemsPerPage = 3; // lg: desktop
+                        this.itemsPerPage = 3;
                     } else if (width >= 768) {
-                        this.itemsPerPage = 2; // md: tablet
+                        this.itemsPerPage = 2;
                     } else {
-                        this.itemsPerPage = 1; // mobile
+                        this.itemsPerPage = 1;
                     }
-                    // Reset to first page if items per page changed
                     if (oldItemsPerPage !== this.itemsPerPage) {
                         this.active = 0;
                     }
@@ -336,77 +334,60 @@
                         pages.push(this.testimonies.slice(i, i + this.itemsPerPage));
                     }
                     return pages;
-                },
-                next() {
-                    this.active = (this.active + 1) % this.totalPages;
-                },
-                prev() {
-                    this.active = (this.active - 1 + this.totalPages) % this.totalPages;
                 }
             }" class="relative">
-
                 <template x-for="(page, pageIndex) in paginatedTestimonies" :key="pageIndex">
-                    <!-- Slides Container Page -->
                     <div x-show="active === pageIndex" x-transition:enter="transition ease-out duration-300"
                         x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
-                        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 min-h-[280px] px-12">
+                        class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 min-h-[320px] px-4">
                         <template x-for="(testimony, index) in page" :key="index">
-                            <div x-data="{
-                                expanded: false,
-                                isLong: testimony.content ? testimony.content.length > 150 : false,
-                                truncated: testimony.content && testimony.content.length > 150 ? testimony.content.substring(0, 150) + '...' : (testimony.content || '')
-                            }"
-                                class="border border-gray-300 bg-white shadow-sm p-8 rounded-md flex flex-col justify-between">
-                                <div class="mb-4">
-                                    <p class="text-gray-800 italic leading-relaxed text-xl">
-                                        <template x-if="!expanded || !isLong">
-                                            <span
-                                                x-text="isLong ? '&quot;' + truncated + '&quot;' : '&quot;' + (testimony.content || '') + '&quot;'"></span>
-                                        </template>
-                                        <template x-if="expanded && isLong">
-                                            <span x-show="expanded && isLong"
-                                                x-transition:enter="transition ease-out duration-200"
-                                                x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
-                                                x-text="'&quot;' + (testimony.content || '') + '&quot;'"></span>
-                                        </template>
-                                    </p>
-                                    <button x-show="isLong" @click="expanded = !expanded"
-                                        class="text-yellow-600 hover:text-yellow-700 text-md font-medium mt-2 transition-colors">
-                                        <span x-show="!expanded">Baca selengkapnya</span>
-                                        <span x-show="expanded">Sembunyikan</span>
-                                    </button>
-                                </div>
-                                <p class="text-md text-gray-600 font-medium" x-text="testimony.name || ''"></p>
+                            <div class="flex flex-col gap-4">
+                                <template x-if="testimony.embed">
+                                    <div class="testimonial-embed w-full aspect-[3/4] rounded-xl overflow-hidden">
+                                        <div x-html="testimony.embed" class="w-full h-full"></div>
+                                    </div>
+                                </template>
+                                <template x-if="!testimony.embed">
+                                    <div x-data="{
+                                        expanded: false,
+                                        isLong: testimony.content ? testimony.content.length > 150 : false,
+                                        truncated: testimony.content && testimony.content.length > 150 ? testimony.content.substring(0, 150) + '...' : (testimony.content || ''),
+                                        full: testimony.content || ''
+                                    }" class="bg-white rounded-xl p-6 flex flex-col gap-3">
+                                        <p class="text-gray-800 italic leading-relaxed text-xl">
+                                            <template x-if="!expanded || !isLong">
+                                                <span
+                                                    x-text="isLong ? '&quot;' + truncated + '&quot;' : '&quot;' + full + '&quot;'"></span>
+                                            </template>
+                                            <template x-if="expanded && isLong">
+                                                <span x-show="expanded && isLong"
+                                                    x-transition:enter="transition ease-out duration-200"
+                                                    x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
+                                                    x-text="'&quot;' + full + '&quot;'"></span>
+                                            </template>
+                                        </p>
+                                        <button x-show="isLong" @click="expanded = !expanded"
+                                            class="text-yellow-600 hover:text-yellow-700 text-md font-medium transition-colors text-left">
+                                            <span x-show="!expanded">Baca selengkapnya</span>
+                                            <span x-show="expanded">Sembunyikan</span>
+                                        </button>
+                                    </div>
+                                </template>
+                                <!-- <p class="text-md text-gray-600 font-medium" x-text="testimony.name || ''"></p> -->
                             </div>
                         </template>
                     </div>
                 </template>
 
-                <!-- Arrows -->
-                <template x-if="totalPages > 1">
-                    <div>
-                        <button @click="prev()"
-                            class="flex absolute left-0 top-1/2 -translate-y-1/2 bg-[#FBE68E] w-10 h-10 rounded-sm hover:bg-yellow-400 transition items-center justify-center text-xl">
-                            ←
-                        </button>
-
-                        <button @click="next()"
-                            class="flex absolute right-0 top-1/2 -translate-y-1/2 bg-[#FBE68E] w-10 h-10 rounded-sm hover:bg-yellow-400 transition items-center justify-center text-xl">
-                            →
-                        </button>
-                    </div>
-                </template>
-
-                <!-- Dots -->
                 <template x-if="totalPages > 1">
                     <div class="flex justify-center mt-8 space-x-2">
                         <template x-for="(page, pageIndex) in paginatedTestimonies" :key="pageIndex">
                             <button @click="active = pageIndex"
                                 :class="{
                                     'bg-black w-8': active === pageIndex,
-                                    'bg-gray-400 w-3': active !== pageIndex
+                                    'bg-gray-300 w-3': active !== pageIndex
                                 }"
-                                class="h-2 transition-all duration-300"></button>
+                                class="h-2 rounded-full transition-all duration-300"></button>
                         </template>
                     </div>
                 </template>

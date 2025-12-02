@@ -248,8 +248,8 @@
                                     }
                                     // Format menjadi +62 xxx xxxx xxxx
                                     if (strlen($sanitizedWhatsApp) >= 9) {
-                                        $formattedWhatsApp = '+62 ' . substr($sanitizedWhatsApp, 0, 3) . ' ' . substr($sanitizedWhatsApp, 3, 4) . ' ' . substr($sanitizedWhatsApp, 7);
-                                        $sanitizedWhatsApp = '62' . $sanitizedWhatsApp; // Untuk link wa.me
+                                        $formattedWhatsApp = '+62' . substr($sanitizedWhatsApp, 0, 3) . substr($sanitizedWhatsApp, 3, 4) . substr($sanitizedWhatsApp, 7);
+                                        $sanitizedWhatsApp = '62'. $sanitizedWhatsApp; // Untuk link wa.me
                                     } else {
                                         $formattedWhatsApp = '+' . $sanitizedWhatsApp;
                                     }

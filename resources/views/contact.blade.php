@@ -45,7 +45,7 @@
 
 
             <!-- Address Card -->
-            <a href="https://maps.google.com/?q=Jl.+MH.+Thamrin+no+33,+Cikokol,+Kota+Tangerang"
+            <a href="https://maps.app.goo.gl/cWorbpaX5xHjmcRd8"
             target="_blank"
             class="block bg-white border border-gray-200 p-6 shadow-sm hover:shadow-md transition rounded-md">
                 <div class="w-12 h-12 bg-[#FBE68E33] -rotate-6 rounded-md flex items-center justify-center mb-4">

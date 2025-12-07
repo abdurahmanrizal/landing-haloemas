@@ -92,7 +92,7 @@
     <section id="about"
         class="w-full md:w-[90%] max-w-6xl mx-auto flex flex-col items-center justify-center gap-4 px-4 sm:px-6 lg:px-8 py-10">
         <div class="text-center lg:w-[560px] flex flex-col gap-1">
-            <h1 class="text-xl md:text-2xl lg:text-3xl font-semibold">Kenapa Harus Haloemas.id?</h1>
+            <h1 class="text-xl md:text-2xl lg:text-3xl font-bold">Kenapa Harus Haloemas.id?</h1>
             <p class="text-md md:text-md lg:text-xl font-normal">Kami pengen bikin pengalaman beli emas jadi gampang,
                 aman,
                 dan bikin kamu nyaman.</p>
@@ -105,7 +105,7 @@
                     <img class="rotate-6" src="{{ asset('images/icons/calculator-money.svg') }}" alt="Harga Selalu Update">
                 </div>
                 <div class="text-center w-[240px] flex flex-col gap-1">
-                    <h3 class="text-xl font-semibold">Harga Selalu Update</h3>
+                    <h3 class="text-xl font-bold">Harga Selalu Update</h3>
                     <span class="text-md font-normal">Biar kamu nggak ketinggalan info harga terbaru.</span>
                 </div>
             </div>
@@ -140,7 +140,7 @@
                     <img class="-rotate-6" src="{{ asset('images/icons/shield-check.svg') }}" alt="Aman dan Transparan">
                 </div>
                 <div class="text-center w-[240px] flex flex-col gap-1">
-                    <h3 class="text-xl font-semibold">Aman & Transparan</h3>
+                    <h3 class="text-xl font-bold">Aman & Transparan</h3>
                     <span class="text-md font-normal">Kami jaga kepercayaan kamu dengan sistem yang jelas dan
                         terpercaya.</span>
                 </div>
@@ -155,7 +155,7 @@
             <span class="px-4 py-2 text-md font-semibold w-fit bg-[#FEF9E4] border border-[#FBE68E]">
                 {{ \Carbon\Carbon::now()->locale('id')->isoFormat('DD MMMM YYYY') }}
             </span>
-            <h2 class="text-xl md:text-2xl lg:text-3xl font-semibold">Harga Jual Emas Hari Ini</h2>
+            <h2 class="text-xl md:text-2xl lg:text-3xl font-bold">Harga Jual Emas Hari Ini</h2>
             <p class="text-md md:text-md lg:text-xl font-normal max-w-[644px]">Pantau harga emas terbaru setiap hari.
                 Transparan, gampang dicek, dan selalu update biar kamu lebih yakin sebelum jual.</p>
         </div>
@@ -169,7 +169,7 @@
             </div>
             <div class="flex flex-col gap-1 w-full">
                 <div class="flex flex-col lg:flex-row justify-between mb-4">
-                    <h2 class="text-xl font-semibold italic">Harga Logam Mulia</h2>
+                    <h2 class="text-xl font-bold italic">Harga Logam Mulia</h2>
                     <p class="text-md font-normal italic">
                         Terakhir Update:
                         @if (isset($metalsLastUpdate))
@@ -292,7 +292,7 @@
 <!-- Testimonial section -->
 <section id="testimonial" class="w-full md:w-[90%] max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 my-16">
     <div class="mb-10">
-        <h2 class="text-2xl md:text-3xl font-semibold">
+        <h2 class="text-2xl md:text-3xl font-bold">
             Apa <span class="italic">Kata Mereka?</span>
         </h2>
         <p class="text-gray-600 mt-2">
@@ -523,8 +523,8 @@
             }
         }">
     <div class="flex flex-col gap-2 justify-center items-center text-center mb-10">
-        <h2 class="text-2xl md:text-3xl font-semibold">
-            Ngobrolin Emas di <span class="italic font-normal">Blog</span>
+        <h2 class="text-2xl md:text-3xl font-bold">
+            Ngobrolin Emas di <span class="italic font-bold">Blog</span>
         </h2>
         <p class="text-gray-600">
             Temukan cerita, tips, dan info menarik tentang dunia emas. Belajar jadi lebih santai dan asik.

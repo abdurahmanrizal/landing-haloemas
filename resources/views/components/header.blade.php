@@ -19,7 +19,7 @@
                 
                 <!-- Desktop CTA Button -->
                 <div class="">
-                    <a href="mailto:support@haloemas.id" class="bg-secondary hover:bg-yellow-300 text-black px-4 xl:px-6 py-2 font-bold transition-colors duration-200 text-center text-md xl:text-xl">
+                    <a href="{{ route('contact') }}" target="_blank" class="bg-secondary hover:bg-yellow-300 text-black px-4 xl:px-6 py-2 font-bold transition-colors duration-200 text-center text-md xl:text-xl">
                         Hubungi Kami
                     </a>
                 </div>

@@ -269,12 +269,12 @@
                                 {{ $store['address'] }}
                             </p>
                             <div class="mt-4 flex items-center gap-4">
-                                @if (isset($store['link_address']) && $store['link_address'])
-                                    <a href="{{ $store['link_address'] }}" target="_blank"
+                            @if (isset($store['link_address']) && $store['link_address'])
+                                <a href="{{ $store['link_address'] }}" target="_blank"
                                         class="text-gray-600 text-md font-medium hover:underline">
-                                        Lihat Maps ↗
-                                    </a>
-                                @endif
+                                    Lihat Maps ↗
+                                </a>
+                            @endif
                             </div>
                         </div>
                     </div>
@@ -418,9 +418,9 @@
                                 </div>
                             </template>
                             <template x-if="!testimony.embed">
-                                <div x-data="{
-                                    expanded: false,
-                                    isLong: testimony.content ? testimony.content.length > 150 : false,
+                            <div x-data="{
+                                expanded: false,
+                                isLong: testimony.content ? testimony.content.length > 150 : false,
                                     truncated: testimony.content && testimony.content.length > 150 ? testimony.content.substring(0, 150) + '...' : (testimony.content || ''),
                                     full: testimony.content || ''
                                 }" class="bg-white rounded-xl p-6 flex flex-col gap-3 h-[373px] sm:h-[426px]">
@@ -443,9 +443,9 @@
                                     </button>
                                 </div>
                             </template>
-                        </div>
-                    </template>
-                </div>
+                            </div>
+                        </template>
+                    </div>
 
                 <!-- Navigation Buttons -->
                 <template x-if="testimonies.length > 1">

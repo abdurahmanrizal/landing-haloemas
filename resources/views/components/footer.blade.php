@@ -1,10 +1,10 @@
 <footer id="contact" class="bg-primary text-white">
     <div class="w-full md:w-[90%] max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div class="flex flex-col justify-center items-center gap-2 text-center">
-            <h2 class="text-xl md:text-2xl lg:text-3xl font-semibold">Butuh Info Lebih?</h2>
+            <h2 class="text-xl md:text-2xl lg:text-3xl font-semibold">Konsultasi Gratis</h2>
             <p class="text-sm md:text-md lg:text-base font-normal">Tinggal hubungi tim Haloemas.id, kami siap bantu jawab pertanyaan kamu.</p>
              <div class="mt-4">
-                <a href="https://wa.me/nomor_wa" target="_blank" class="bg-secondary hover:bg-yellow-300 text-black px-4 xl:px-6 py-2 font-normal transition-colors duration-200 text-center text-sm xl:text-base">
+                <a href="{{ route('contact') }}" target="_blank" class="bg-secondary hover:bg-yellow-300 text-black px-4 xl:px-6 py-2 font-normal transition-colors duration-200 text-center text-sm xl:text-base">
                     Hubungi Kami
                 </a>
             </div>

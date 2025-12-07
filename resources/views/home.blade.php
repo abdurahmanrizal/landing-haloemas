@@ -85,8 +85,8 @@
     @endpush
 
 @section('content')
-    <!-- Hero Slideshow Section -->
-    @include('components.hero', ['banners' => $banners])
+<!-- Hero Slideshow Section -->
+@include('components.hero', ['banners' => $banners])
 
     <!-- About Section -->
     <section id="about"
@@ -220,7 +220,7 @@
         <!-- Judul dan deskripsi -->
         <div class="w-full flex flex-col items-start justify-start gap-2">
             <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold">
-                Jelajahi <span class="italic font-medium">Toko Emas</span> Pilihan di Haloemas.id
+                Jelajahi <span class="italic font-bold">Lokasi</span> Pilihan di Haloemas.id
             </h2>
             <p class="text-gray-600 mt-2">
                 Dari toko lokal sampai brand ternama, semuanya terhubung lewat Haloemas.id.
@@ -289,18 +289,18 @@
     </section>
 
 
-    <!-- Testimonial section -->
-    <section id="testimonial" class="w-full md:w-[90%] max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 my-16">
-        <div class="mb-10">
-            <h2 class="text-2xl md:text-3xl font-semibold">
-                Apa <span class="italic">Kata Mereka?</span>
-            </h2>
-            <p class="text-gray-600 mt-2">
-                Dari pelayanan ramah sampai harga yang transparan, banyak yang udah ngerasain pengalaman belanja emas bareng
-                Halo Emas.
-                Sekarang giliran kamu buat buktiin sendiri.
-            </p>
-        </div>
+<!-- Testimonial section -->
+<section id="testimonial" class="w-full md:w-[90%] max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 my-16">
+    <div class="mb-10">
+        <h2 class="text-2xl md:text-3xl font-semibold">
+            Apa <span class="italic">Kata Mereka?</span>
+        </h2>
+        <p class="text-gray-600 mt-2">
+            Dari pelayanan ramah sampai harga yang transparan, banyak yang udah ngerasain pengalaman belanja emas bareng
+            Halo Emas.
+            Sekarang giliran kamu buat buktiin sendiri.
+        </p>
+    </div>
 
         @if (isset($testimonies) && count($testimonies) > 0)
             <div x-data="{
@@ -522,14 +522,14 @@
                 }
             }
         }">
-        <div class="flex flex-col gap-2 justify-center items-center text-center mb-10">
-            <h2 class="text-2xl md:text-3xl font-semibold">
-                Ngobrolin Emas di <span class="italic font-normal">Blog</span>
-            </h2>
-            <p class="text-gray-600">
-                Temukan cerita, tips, dan info menarik tentang dunia emas. Belajar jadi lebih santai dan asik.
-            </p>
-        </div>
+    <div class="flex flex-col gap-2 justify-center items-center text-center mb-10">
+        <h2 class="text-2xl md:text-3xl font-semibold">
+            Ngobrolin Emas di <span class="italic font-normal">Blog</span>
+        </h2>
+        <p class="text-gray-600">
+            Temukan cerita, tips, dan info menarik tentang dunia emas. Belajar jadi lebih santai dan asik.
+        </p>
+    </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
             <template x-if="blogs.length > 0">
@@ -562,12 +562,12 @@
                 </template>
             </template>
 
-            <template x-if="blogs.length === 0">
-                <div class="col-span-3 text-center py-12">
-                    <p class="text-gray-500 text-lg">Belum ada artikel blog</p>
-                </div>
-            </template>
-        </div>
+        <template x-if="blogs.length === 0">
+            <div class="col-span-3 text-center py-12">
+                <p class="text-gray-500 text-lg">Belum ada artikel blog</p>
+            </div>
+        </template>
+    </div>
 
         <!-- Load More Button -->
         <template x-if="blogs.length > 0">

@@ -220,7 +220,7 @@
         <!-- Judul dan deskripsi -->
         <div class="w-full flex flex-col items-start justify-start gap-2">
             <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold">
-                Jelajahi <span class="italic font-bold">Lokasi</span> Pilihan di Haloemas.id
+                Kunjungi <span class="italic font-bold">Lokasi</span> Haloemas.id
             </h2>
             <p class="text-gray-600 mt-2">
                 Dari toko lokal sampai brand ternama, semuanya terhubung lewat Haloemas.id.

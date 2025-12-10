@@ -14,7 +14,7 @@
         <table class="min-w-full border border-gray-200">
             <thead class="bg-[#F7F2F6]">
                 <tr class="text-left border-b">
-                    <th class="py-3 px-4 font-semibold text-gray-700">Kadar Karat</th>
+                    <th class="py-3 px-4 font-semibold text-gray-700">Karat</th>
                     <th class="py-3 px-4 font-semibold text-gray-700">Harga per Gram</th>
                 </tr>
             </thead>
@@ -22,7 +22,7 @@
                 @if (isset($golds) && count($golds) > 0)
                     @foreach ($golds as $gold)
                         <tr>
-                            <td class="py-3 px-4">Emas {{ $gold['name'] }}</td>
+                            <td class="py-3 px-4">{{ $gold['name'] }}</td>
                             <td class="py-3 px-4">Rp {{ number_format($gold['price'], 0, ',', '.') }}</td>
                         </tr>
                     @endforeach

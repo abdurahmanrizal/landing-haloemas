@@ -3,8 +3,10 @@
         <nav class="bg-primary shadow-lg rounded-md border border-secondary h-14 sm:h-16 px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-full">
                 <!-- Logo -->
-                <a href="{{ route('home') }}" class="flex items-center space-x-2">
-                    <img src="{{ asset('images/logo.png') }}" alt="Halo Emas Logo" class="h-6 sm:h-8 w-auto object-contain">
+                {{-- <a href="{{ route('home') }}" class="flex items-center space-x-2"> --}}
+                <a href="{{ route('home') }}" class="w-[150px] flex items-center space-x-2">
+                    {{-- <img src="{{ asset('images/logo-new.png') }}" alt="Halo Emas Logo" class="h-6 sm:h-8 w-auto object-contain"> --}}
+                    <img src="{{ asset('images/logo-new.png') }}" alt="Halo Emas Logo" class="h-10 w-full object-cover">
                 </a>
 
                 <!-- Desktop Navigation -->

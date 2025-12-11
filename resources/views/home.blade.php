@@ -102,47 +102,44 @@
             <div class="flex flex-col gap-4 items-center">
                 <div
                     class="w-12 h-12 flex justify-center items-center -rotate-6 bg-gradient-to-t from-[#FBE68E33] to-[#FBE68E1A]">
-                    <img class="rotate-6" src="{{ asset('images/icons/calculator-money.svg') }}" alt="Harga Selalu Update">
+                    <img class="rotate-6" src="{{ asset('images/icons/calculator-money.svg') }}" alt="Harga Beli Emas Lebih Tinggi">
                 </div>
                 <div class="text-center w-[240px] flex flex-col gap-1">
-                    <h3 class="text-xl font-bold">Harga Selalu Update</h3>
-                    <span class="text-md font-normal">Biar kamu nggak ketinggalan info harga terbaru.</span>
+                    <h3 class="text-xl font-bold">Harga Beli Emas Lebih Tinggi</h3>
+                    <span class="text-md font-normal">Kami menghadirkan nilai terbaik agar setiap gram emas Anda dihargai maksimal.</span>
                 </div>
             </div>
             <!-- Card -->
             <div class="flex flex-col gap-4 items-center">
                 <div
                     class="w-12 h-12 flex justify-center items-center rotate-6 bg-gradient-to-t from-[#FBE68E33] to-[#FBE68E1A]">
-                    <img class="-rotate-6" src="{{ asset('images/icons/seller-store.svg') }}" alt="Toko Terpercaya">
+                    <img class="-rotate-6" src="{{ asset('images/icons/seller-store.svg') }}" alt="Penilaian Profesional & Akurat">
                 </div>
                 <div class="text-center w-[240px] flex flex-col gap-1">
-                    <h3 class="text-xl font-semibold">Toko Terpercaya</h3>
-                    <span class="text-md font-normal">Semua toko partner udah terkurasi, jadi kamu bisa belanja dengan
-                        tenang.</span>
+                    <h3 class="text-xl font-semibold">Penilaian Profesional & Akurat</h3>
+                    <span class="text-md font-normal">Proses cek kadar dan berat dilakukan dengan alat canggih modern yang presisi.</span>
                 </div>
             </div>
             <!-- Card -->
             <div class="flex flex-col gap-4 items-center">
                 <div
                     class="w-12 h-12 flex justify-center items-center -rotate-6 bg-gradient-to-t from-[#FBE68E33] to-[#FBE68E1A]">
-                    <img class="rotate-6" src="{{ asset('images/icons/snap.svg') }}" alt="Mudah Diakses">
+                    <img class="rotate-6" src="{{ asset('images/icons/shield-check.svg') }}" alt="Transparansi Tanpa Kompromi">
                 </div>
                 <div class="text-center w-[240px] flex flex-col gap-1">
-                    <h3 class="text-xl font-semibold">Mudah Diakses</h3>
-                    <span class="text-md font-normal">Cek harga, cari toko, atau baca tips emas kapan aja, di mana
-                        aja.</span>
+                    <h3 class="text-xl font-semibold">Transparansi Tanpa Kompromi</h3>
+                    <span class="text-md font-normal">Setiap langkah penilaian ditunjukkan di depan Anda — jelas, jujur, dan tanpa biaya tersembunyi.</span>
                 </div>
             </div>
             <!-- Card -->
             <div class="flex flex-col gap-4 items-center">
                 <div
                     class="w-12 h-12 flex justify-center items-center rotate-6 bg-gradient-to-t from-[#FBE68E33] to-[#FBE68E1A]">
-                    <img class="-rotate-6" src="{{ asset('images/icons/shield-check.svg') }}" alt="Aman dan Transparan">
+                    <img class="-rotate-6" src="{{ asset('images/icons/time.svg') }}" alt="Proses Cepat & Sangat Praktis">
                 </div>
                 <div class="text-center w-[240px] flex flex-col gap-1">
-                    <h3 class="text-xl font-bold">Aman & Transparan</h3>
-                    <span class="text-md font-normal">Kami jaga kepercayaan kamu dengan sistem yang jelas dan
-                        terpercaya.</span>
+                    <h3 class="text-xl font-bold">Proses Cepat & Sangat Praktis</h3>
+                    <span class="text-md font-normal">Datang – cek – langsung cair tanpa ribet tanpa potongan. Cocok buat Anda yang punya waktu terbatas.</span>
                 </div>
             </div>
         </div>
@@ -191,7 +188,7 @@
                             @if (isset($metals) && count($metals) > 0)
                                 @foreach ($metals as $metal)
                                     <tr>
-                                        <td class="py-3 px-4">Emas {{ $metal['name'] }}</td>
+                                        <td class="py-3 px-4">{{ $metal['name'] }}</td>
                                         <td class="py-3 px-4">Rp {{ number_format($metal['price'], 0, ',', '.') }}</td>
                                     </tr>
                                 @endforeach

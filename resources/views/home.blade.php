@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Halo Emas - Cek Harga Emas Hari Ini & Toko Emas Terpercaya')
+@section('title', 'Haloemas.id - Terima Jual Emas Harga Terbaik')
 
 @section('meta_description',
     'Cek harga emas hari ini secara real-time. Temukan toko emas terpercaya dan dapatkan

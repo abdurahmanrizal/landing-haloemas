@@ -7,13 +7,13 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="icon" type="image/svg+xml" href="/images/favicon.jpeg" />
     <!-- Title -->
-    <title>@yield('title', 'Halo Emas - Platform Jual Beli Emas Terpercaya di Indonesia')</title>
+    <title>@yield('title', 'Haloemas.id - Terima Jual Emas Harga Terbaik')</title>
     
     <!-- Meta Description -->
-    <meta name="description" content="@yield('meta_description', 'Halo Emas adalah platform terpercaya untuk jual beli emas di Indonesia. Cek harga emas terbaru, temukan toko emas terdekat, dan dapatkan tips investasi emas.')">
+    <meta name="description" content="@yield('meta_description', 'Haloemas.id - Terima Jual Emas Harga Terbaik. Platform terpercaya untuk jual beli emas di Indonesia dengan harga terbaik, proses cepat, dan layanan profesional.')">
     
     <!-- Meta Keywords -->
-    <meta name="keywords" content="@yield('meta_keywords', 'harga emas hari ini, jual beli emas, toko emas, investasi emas, harga emas antam, logam mulia, emas 24 karat, halo emas, haloemas, investasi emas mudah')">
+    <meta name="keywords" content="@yield('meta_keywords', 'harga emas hari ini, jual beli emas, toko emas, investasi emas, harga emas antam, logam mulia, emas 24 karat, halo emas, haloemas, investasi emas mudah, benua jaya gold, haloemas, Haloemas.id')">
     
     <!-- Author -->
     <meta name="author" content="Halo Emas">
@@ -24,8 +24,8 @@
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="@yield('og_type', 'website')">
     <meta property="og:url" content="@yield('og_url', url()->current())">
-    <meta property="og:title" content="@yield('og_title', 'Halo Emas - Platform Jual Beli Emas Terpercaya')">
-    <meta property="og:description" content="@yield('og_description', 'Platform terpercaya untuk jual beli emas di Indonesia. Cek harga emas terbaru dan temukan toko emas terdekat.')">
+    <meta property="og:title" content="@yield('og_title', 'Haloemas.id - Terima Jual Emas Harga Terbaik')">
+    <meta property="og:description" content="@yield('og_description', 'Platform terpercaya untuk jual beli emas di Indonesia. Cek harga emas terbaru dan temukan toko haloemas terdekat.')">
     <meta property="og:image" content="@yield('og_image', asset('images/favicon.jpeg'))">
     <meta property="og:locale" content="id_ID">
     <meta property="og:site_name" content="Halo Emas">
@@ -33,8 +33,8 @@
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="@yield('twitter_url', url()->current())">
-    <meta name="twitter:title" content="@yield('twitter_title', 'Halo Emas - Platform Jual Beli Emas Terpercaya')">
-    <meta name="twitter:description" content="@yield('twitter_description', 'Platform terpercaya untuk jual beli emas di Indonesia. Cek harga emas terbaru.')">
+    <meta name="twitter:title" content="@yield('twitter_title', 'Haloemas.id - Terima Jual Emas Harga Terbaik')">
+    <meta name="twitter:description" content="@yield('twitter_description', 'Haloemas.id - Terima Jual Emas Harga Terbaik. Cek harga emas terbaru dan jual emas dengan proses mudah.')">
     <meta name="twitter:image" content="@yield('twitter_image', asset('images/favicon.jpeg'))">
     
     <!-- Favicon -->

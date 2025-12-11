@@ -10,9 +10,9 @@
     'harga emas hari ini, harga emas 24 karat, harga logam mulia, toko emas terdekat, investasi
     emas, harga emas antam, jual beli emas')
 @section('og_image', asset('img_preview_share.jpeg'))
-@section('og_description','Platform terpercaya untuk terima emas dengan harga terbaik. Cek harga jual terbaru dan dan temukan lokasi terdekat kami.')
+@section('og_description','Platform terpercaya untuk terima emas dengan harga terbaik. Cek harga jual terbaru dan dan temukan outlet terdekat kami.')
 @section('twitter_image', asset('img_preview_share.jpeg'))
-@section('twitter_description','Platform terpercaya untuk terima emas dengan harga terbaik. Cek harga jual terbaru dan dan temukan lokasi terdekat kami.')
+@section('twitter_description','Platform terpercaya untuk terima emas dengan harga terbaik. Cek harga jual terbaru dan dan temukan outlet terdekat kami.')
 @push('structured_data')
         <script type="application/ld+json">
     {

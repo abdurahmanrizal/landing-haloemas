@@ -25,7 +25,7 @@
     <meta property="og:type" content="@yield('og_type', 'website')">
     <meta property="og:url" content="@yield('og_url', url()->current())">
     <meta property="og:title" content="@yield('og_title', 'Haloemas.id - Terima Jual Emas Harga Terbaik')">
-    <meta property="og:description" content="@yield('og_description', 'Platform terpercaya untuk terima emas dengan harga terbaik. Cek harga jual terbaru dan dan temukan lokasi terdekat kami.')">
+    <meta property="og:description" content="@yield('og_description', 'Platform terpercaya untuk terima emas dengan harga terbaik. Cek harga jual terbaru dan dan temukan outlet terdekat kami.')">
     <meta property="og:image" content="@yield('og_image', asset('img_preview_share.jpeg'))">
     <meta property="og:locale" content="id_ID">
     <meta property="og:site_name" content="Halo Emas">
@@ -38,7 +38,7 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="@yield('twitter_url', url()->current())">
     <meta name="twitter:title" content="@yield('twitter_title', 'Haloemas.id - Terima Jual Emas Harga Terbaik')">
-    <meta name="twitter:description" content="@yield('twitter_description', 'Platform terpercaya untuk terima emas dengan harga terbaik. Cek harga jual terbaru dan dan temukan lokasi terdekat kami.')">
+    <meta name="twitter:description" content="@yield('twitter_description', 'Platform terpercaya untuk terima emas dengan harga terbaik. Cek harga jual terbaru dan dan temukan outlet terdekat kami.')">
     <meta name="twitter:image" content="@yield('twitter_image', asset('img_preview_share.jpeg'))">
     
     <!-- Favicon -->

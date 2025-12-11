@@ -25,17 +25,21 @@
     <meta property="og:type" content="@yield('og_type', 'website')">
     <meta property="og:url" content="@yield('og_url', url()->current())">
     <meta property="og:title" content="@yield('og_title', 'Haloemas.id - Terima Jual Emas Harga Terbaik')">
-    <meta property="og:description" content="@yield('og_description', 'Platform terpercaya untuk jual beli emas di Indonesia. Cek harga emas terbaru dan temukan toko haloemas terdekat.')">
-    <meta property="og:image" content="@yield('og_image', asset('images/favicon.jpeg'))">
+    <meta property="og:description" content="@yield('og_description', 'Platform terpercaya untuk terima emas dengan harga terbaik. Cek harga jual terbaru dan dan temukan lokasi terdekat kami.')">
+    <meta property="og:image" content="@yield('og_image', asset('img_preview_share.jpeg'))">
     <meta property="og:locale" content="id_ID">
     <meta property="og:site_name" content="Halo Emas">
-    
+    <meta property="og:image:type" content="image/jpeg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="facebook-domain-verification" content={{ env('FACEBOOK_DOMAIN_VERIFICATION') }} />
+    <meta property="fb:app_id" content={{ env('FACEBOOK_APP_ID') }}>
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="@yield('twitter_url', url()->current())">
     <meta name="twitter:title" content="@yield('twitter_title', 'Haloemas.id - Terima Jual Emas Harga Terbaik')">
-    <meta name="twitter:description" content="@yield('twitter_description', 'Haloemas.id - Terima Jual Emas Harga Terbaik. Cek harga emas terbaru dan jual emas dengan proses mudah.')">
-    <meta name="twitter:image" content="@yield('twitter_image', asset('images/favicon.jpeg'))">
+    <meta name="twitter:description" content="@yield('twitter_description', 'Platform terpercaya untuk terima emas dengan harga terbaik. Cek harga jual terbaru dan dan temukan lokasi terdekat kami.')">
+    <meta name="twitter:image" content="@yield('twitter_image', asset('img_preview_share.jpeg'))">
     
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">

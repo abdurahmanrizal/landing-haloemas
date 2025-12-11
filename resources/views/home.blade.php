@@ -9,8 +9,11 @@
 @section('meta_keywords',
     'harga emas hari ini, harga emas 24 karat, harga logam mulia, toko emas terdekat, investasi
     emas, harga emas antam, jual beli emas')
-
-    @push('structured_data')
+@section('og_image', asset('img_preview_share.jpeg'))
+@section('og_description','Platform terpercaya untuk terima emas dengan harga terbaik. Cek harga jual terbaru dan dan temukan lokasi terdekat kami.')
+@section('twitter_image', asset('img_preview_share.jpeg'))
+@section('twitter_description','Platform terpercaya untuk terima emas dengan harga terbaik. Cek harga jual terbaru dan dan temukan lokasi terdekat kami.')
+@push('structured_data')
         <script type="application/ld+json">
     {
   "@context": "https://schema.org",
@@ -217,11 +220,11 @@
         <!-- Judul dan deskripsi -->
         <div class="w-full flex flex-col items-start justify-start gap-2">
             <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold">
-                Kunjungi <span class="italic font-bold">Lokasi</span> Haloemas.id
+                Kunjungi <span class="italic font-bold">Outlet</span> Haloemas.id
             </h2>
             <p class="text-gray-600 mt-2">
-                Dari toko lokal sampai brand ternama, semuanya terhubung lewat Haloemas.id.
-                Cari toko terdekat atau favoritmu, dan temukan koleksi emas terbaik dengan mudah.
+                Ingin jual emas dengan cepat, aman, dan nilai terbaik?
+                Datang langsung ke outlet haloemas.id dan rasakan pengalaman transaksi emas yang jujur, transparan, dan tanpa ribet.
             </p>
         </div>
 

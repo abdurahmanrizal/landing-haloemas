@@ -1,6 +1,6 @@
 <div class="flex flex-col gap-1 w-full px-4 lg:px-0 max-w-6xl">
     <div class="flex flex-col lg:flex-row justify-between mb-4">
-        <h1 class="text-xl font-semibold italic">Harga Emas Perhiasan</h1>
+        <h1 class="text-xl font-semibold italic">Harga Terima emas</h1>
         <p class="text-md font-normal italic">
             Terakhir Update:
             @if (isset($lastUpdate))

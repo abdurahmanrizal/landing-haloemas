@@ -96,17 +96,22 @@
         class="w-full md:w-[90%] max-w-6xl mx-auto flex flex-col items-center justify-center gap-4 px-4 sm:px-6 lg:px-8 py-10">
         <div class="text-center lg:w-[560px] flex flex-col gap-1">
             <h1 class="text-xl md:text-2xl lg:text-3xl font-bold">Kenapa Harus Haloemas.id?</h1>
-            <p class="text-md md:text-md lg:text-xl font-normal">Kami pengen bikin pengalaman beli emas jadi gampang,
+            <p class="text-md md:text-md lg:text-xl font-normal">Kami menawarkan harga terbaik, proses cepat, dan penilaian emas yang transparan</p>
+            {{-- <p class="text-md md:text-md lg:text-xl font-normal">Kami pengen bikin pengalaman beli emas jadi gampang,
                 aman,
-                dan bikin kamu nyaman.</p>
+                dan bikin kamu nyaman.</p> --}}
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-4 lg:mt-8">
             <!-- Card -->
             <div class="flex flex-col gap-4 items-center">
                 <div
-                    class="w-12 h-12 flex justify-center items-center -rotate-6 bg-gradient-to-t from-[#FBE68E33] to-[#FBE68E1A]">
+                    class="w-16 h-16 flex justify-center items-center -rotate-6 bg-gradient-to-t from-[#FBE68E33] to-[#FBE68E1A]">
                     <img class="rotate-6" src="{{ asset('images/icons/calculator-money.svg') }}" alt="Harga Beli Emas Lebih Tinggi">
                 </div>
+                {{-- <div
+                    class="w-12 h-12 flex justify-center items-center -rotate-6 bg-gradient-to-t from-[#FBE68E33] to-[#FBE68E1A]">
+                    <img class="rotate-6" src="{{ asset('images/icons/calculator-money.svg') }}" alt="Harga Beli Emas Lebih Tinggi">
+                </div> --}}
                 <div class="text-center w-[240px] flex flex-col gap-1">
                     <h3 class="text-xl font-bold">Harga Beli Emas Lebih Tinggi</h3>
                     <span class="text-md font-normal">Kami menghadirkan nilai terbaik agar setiap gram emas Anda dihargai maksimal.</span>
@@ -115,7 +120,7 @@
             <!-- Card -->
             <div class="flex flex-col gap-4 items-center">
                 <div
-                    class="w-12 h-12 flex justify-center items-center rotate-6 bg-gradient-to-t from-[#FBE68E33] to-[#FBE68E1A]">
+                    class="w-16 h-16 flex justify-center items-center rotate-6 bg-gradient-to-t from-[#FBE68E33] to-[#FBE68E1A]">
                     <img class="-rotate-6" src="{{ asset('images/icons/seller-store.svg') }}" alt="Penilaian Profesional & Akurat">
                 </div>
                 <div class="text-center w-[240px] flex flex-col gap-1">
@@ -126,7 +131,7 @@
             <!-- Card -->
             <div class="flex flex-col gap-4 items-center">
                 <div
-                    class="w-12 h-12 flex justify-center items-center -rotate-6 bg-gradient-to-t from-[#FBE68E33] to-[#FBE68E1A]">
+                    class="w-16 h-16 flex justify-center items-center -rotate-6 bg-gradient-to-t from-[#FBE68E33] to-[#FBE68E1A]">
                     <img class="rotate-6" src="{{ asset('images/icons/shield-check.svg') }}" alt="Transparansi Tanpa Kompromi">
                 </div>
                 <div class="text-center w-[240px] flex flex-col gap-1">
@@ -137,7 +142,7 @@
             <!-- Card -->
             <div class="flex flex-col gap-4 items-center">
                 <div
-                    class="w-12 h-12 flex justify-center items-center rotate-6 bg-gradient-to-t from-[#FBE68E33] to-[#FBE68E1A]">
+                    class="w-16 h-16 flex justify-center items-center rotate-6 bg-gradient-to-t from-[#FBE68E33] to-[#FBE68E1A]">
                     <img class="-rotate-6" src="{{ asset('images/icons/time.svg') }}" alt="Proses Cepat & Sangat Praktis">
                 </div>
                 <div class="text-center w-[240px] flex flex-col gap-1">
@@ -152,12 +157,15 @@
     <section id="harga-emas"
         class="w-full md:w-[90%] max-w-6xl mx-auto flex flex-col items-center justify-center gap-4 px-4 sm:px-6 lg:px-8 mt-32">
         <div class="text-centerlg:w-[560px] justify-center items-center flex flex-col gap-3 text-center">
-            <span class="px-4 py-2 text-md font-semibold w-fit bg-[#FEF9E4] border border-[#FBE68E]">
+            {{-- <span class="px-4 py-2 text-md font-semibold w-fit bg-[#FEF9E4] border border-[#FBE68E]">
                 {{ \Carbon\Carbon::now()->locale('id')->isoFormat('DD MMMM YYYY') }}
-            </span>
-            <h2 class="text-xl md:text-2xl lg:text-3xl font-bold">Harga Jual Emas Hari Ini</h2>
-            <p class="text-md md:text-md lg:text-xl font-normal max-w-[644px]">Pantau harga emas terbaru setiap hari.
-                Transparan, gampang dicek, dan selalu update biar kamu lebih yakin sebelum jual.</p>
+            </span> --}}
+            {{-- <h2 class="text-xl md:text-2xl lg:text-3xl font-bold">Harga Jual Emas Hari Ini</h2> --}}
+            <h2 class="text-xl md:text-2xl lg:text-3xl font-bold">Harga Kami Terima Emas Hari ini</h2>
+            {{-- <p class="text-md md:text-md lg:text-xl font-normal max-w-[644px]">Pantau harga emas terbaru setiap hari.
+                Transparan, gampang dicek, dan selalu update biar kamu lebih yakin sebelum jual.</p> --}}
+            <p class="text-md md:text-md lg:text-xl font-normal max-w-[644px]">Harga Terbaik untuk Emas Anda
+Kami selalu memberikan harga emas yang transparan, kompetitif dan tanpa potongan.</p>
         </div>
 
         <div class="w-full flex flex-col gap-4">
@@ -296,10 +304,13 @@
             Apa <span class="italic">Kata Mereka?</span>
         </h2>
         <p class="text-gray-600 mt-2">
+            Setiap pelanggan punya cerita. Di Haloemas.id, mereka berbagi pengalaman tentang bagaimana harga kami lebih tinggi, prosesnya lebih cepat, dan pelayanannya lebih jujur.
+        </p>
+        {{-- <p class="text-gray-600 mt-2">
             Dari pelayanan ramah sampai harga yang transparan, banyak yang udah ngerasain pengalaman belanja emas bareng
             Halo Emas.
             Sekarang giliran kamu buat buktiin sendiri.
-        </p>
+        </p> --}}
     </div>
 
         @if (isset($testimonies) && count($testimonies) > 0)

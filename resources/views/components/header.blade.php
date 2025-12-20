@@ -4,9 +4,9 @@
             <div class="flex items-center justify-between h-full">
                 <!-- Logo -->
                 {{-- <a href="{{ route('home') }}" class="flex items-center space-x-2"> --}}
-                <a href="{{ route('home') }}" class="w-[150px] flex items-center space-x-2">
+                <a href="{{ route('home') }}" class="w-[170px] md:w-[180px] flex items-center space-x-2">
                     {{-- <img src="{{ asset('images/logo-new.png') }}" alt="Halo Emas Logo" class="h-6 sm:h-8 w-auto object-contain"> --}}
-                    <img src="{{ asset('images/logo-new.png') }}" alt="Halo Emas Logo" class="h-10 w-full object-cover">
+                    <img src="{{ asset('images/logo-new.png') }}" alt="Halo Emas Logo" class="h-28 w-full object-contain md:object-cover">
                 </a>
 
                 <!-- Desktop Navigation -->

@@ -132,7 +132,7 @@
             <div class="flex flex-col gap-4 items-center">
                 <div
                     class="w-16 h-16 flex justify-center items-center -rotate-6 bg-gradient-to-t from-[#FBE68E33] to-[#FBE68E1A]">
-                    <img class="rotate-6" src="{{ asset('images/icons/shield-check.svg') }}" alt="Transparansi Tanpa Kompromi">
+                    <img class="rotate-6" src="{{ asset('images/icons/shield-check-1.svg') }}" alt="Transparansi Tanpa Kompromi">
                 </div>
                 <div class="text-center w-[240px] flex flex-col gap-1">
                     <h3 class="text-xl font-semibold">Transparansi Tanpa Kompromi</h3>
